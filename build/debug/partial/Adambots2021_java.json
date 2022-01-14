@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Adambots2021 (in project Adambots2021)",
+    "file": "D:\\Projects\\FRC\\Adambots-2021\\Adambots2021\\build\\libs\\Adambots2021.jar",
+    "extensions": [
+      "D:\\Projects\\FRC\\Adambots-2021\\Adambots2021\\build\\tmp\\expandedArchives\\halsim_gui-2021.2.2-windowsx86-64.zip_d9b742accb7d26f71bdac05b796e7cc3\\windows\\x86-64\\shared\\halsim_gui.dll",
+      "D:\\Projects\\FRC\\Adambots-2021\\Adambots2021\\build\\tmp\\expandedArchives\\halsim_ds_socket-2021.2.2-windowsx86-64.zip_32ee0d595231a6c6d5a0455f7d794cf5\\windows\\x86-64\\shared\\halsim_ds_socket.dll",
+      "D:\\Projects\\FRC\\Adambots-2021\\Adambots2021\\build\\tmp\\expandedArchives\\halsim_ws_client-2021.2.2-windowsx86-64.zip_fb7585e771b06ae675bdee1612a747f5\\windows\\x86-64\\shared\\halsim_ws_client.dll"
+    ],
+    "env": {
+      "HALSIMWS_HOST": "10.0.0.2"
+    },
+    "librarydir": "D:\\Projects\\FRC\\Adambots-2021\\Adambots2021\\build\\tmp\\jniExtractDir",
+    "mainclass": "frc.robot.Main"
+  }
+]

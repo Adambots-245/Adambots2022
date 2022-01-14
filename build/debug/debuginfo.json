@@ -1,0 +1,16 @@
+[
+  {
+    "artifact": "frcJava (in project Adambots2021-Imported)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "Adambots2021-Imported",
+    "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project Adambots2021)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "Adambots2021",
+    "language": "java"
+  }
+]
