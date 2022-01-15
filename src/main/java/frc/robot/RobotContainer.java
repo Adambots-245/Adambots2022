@@ -238,7 +238,12 @@ public class RobotContainer {
 
   // deadzoning
   private double deaden(double rawInput) {
-    return Math.abs(rawInput) < GamepadConstants.DEADZONE ? 0 : rawInput;
+    if (Math.abs(rawInput) < GamepadConstants.DEADZONE) {
+      return 0;
+    }
+    else {
+      return rawInput;
+    }
   }
 
   /**
