@@ -49,7 +49,7 @@ public class BlasterSubsystem extends SubsystemBase {
     }
 
     // get current velocity in raw sensor units per 100ms.
-    public int getVelocity() {
+    public double getVelocity() {
 
         // SmartDashboard.putNumber("Current", blasterMotor.getSupplyCurrent());
         return blasterMotor.getSelectedSensorVelocity();

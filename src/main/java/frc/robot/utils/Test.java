@@ -7,7 +7,7 @@ import java.util.logging.Level;
 
 import com.revrobotics.ColorMatch;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class Test {
@@ -19,7 +19,7 @@ public class Test {
         Log.info("Test2", "Waiting for input2", args.length);
         Log.infoF("Test this %% %s - %d", "log message:", args.length);
 
-        Color color = ColorMatch.makeColor(0.311, 0.566, 0.121);
+        Color color = Color.kRed;
         Log.infoF("Color: %f", color.red);
 
         // Logg.setLevel(Level.INFO);

@@ -199,7 +199,7 @@ public boolean isFinished(Modes event) {
 //Gets color provided by FMS
 public Color getFmsColor() {
     String gameData;
-    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    gameData = DriverStation.getGameSpecificMessage();
     Color retVal = Constants.UNKNOWN_TARGET;
 
     if (gameData.length() > 0) {

@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.commands.autonCommands.TurnCommand;
 import frc.robot.sensors.Gyro;
 import frc.robot.subsystems.*;
 import frc.robot.vision.GripPipeline;

@@ -16,6 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.sensors.ColorSensor;
 import frc.robot.sensors.Gyro;
@@ -29,12 +30,12 @@ import frc.robot.sensors.PhotoEye;
 public class RobotMap {
 
     public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
-    public static final Solenoid BlasterHood = new Solenoid(Constants.RAISE_BLASTER_HOOD_SOL_PORT);
+    public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
     
     public static final Gyro GyroSensor = Gyro.getInstance();
     public static final Lidar LidarSensor = Lidar.getInstance();
 
-    public static final Solenoid GearShifter = new Solenoid(Constants.HIGH_GEAR_SOL_PORT);
+    public static final Solenoid GearShifter = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.HIGH_GEAR_SOL_PORT);
 	public static final WPI_TalonFX FrontRightMotor = new WPI_TalonFX(Constants.FR_TALON);
 	public static final WPI_TalonFX FrontLeftMotor = new WPI_TalonFX(Constants.FL_TALON);
 	public static final WPI_TalonFX BackLeftMotor = new WPI_TalonFX(Constants.BL_TALON);
@@ -54,7 +55,7 @@ public class RobotMap {
     public static final DigitalInput LimitSwitch1 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_1_PORT);
     public static final DigitalInput LimitSwitch2 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_2_PORT);
 
-    public static final DoubleSolenoid ArmMover = new DoubleSolenoid(Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
+    public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
     public static final WPI_VictorSPX IntakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR_PORT);
     public static final WPI_VictorSPX FeedToBlasterMotor = new WPI_VictorSPX(Constants.FEED_TO_BLASTER_MOTOR_PORT);
     
@@ -62,7 +63,7 @@ public class RobotMap {
 	public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
 	public static final DigitalInput RightLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
 
-    public static final Solenoid RingLight = new Solenoid(Constants.RING_LIGHT_PORT);
+    public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
 
     public static final PhotoEye IntakePhotoEye = new PhotoEye(7);
 	public static final PhotoEye SpacingPhotoEye = new PhotoEye(8);

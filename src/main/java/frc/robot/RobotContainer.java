@@ -9,7 +9,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -136,7 +135,7 @@ public class RobotContainer {
       Buttons.secondaryDPadN.whenPressed(new RaiseIntakeArmCommand(intakeSubsystem));
       Buttons.secondaryDPadS.whenPressed(new LowerIntakeArmCommand(intakeSubsystem));    
       Buttons.secondaryXButton.whileHeld(new TurnToTargetCommand(turretSubsystem, RobotMap.LidarSensor), false);
-      // turretSubsystem.setDefaultCommand(new TurretManualCommand(turretSubsystem, ()->Buttons.secondaryJoystick.getTriggerAxis(Hand.kLeft), ()->Buttons.secondaryJoystick.getTriggerAxis(Hand.kRight)));
+      // turretSubsystem.setDefaultCommand(new TurretManualCommand(turretSubsystem, ()->Buttons.secondaryJoystick.getLeftTriggerAxis(), ()->Buttons.secondaryJoystick.getRightTriggerAxis()));
       
       // lidar susbsystem
         // Buttons.primaryXButton.whenPressed(new MeasureDistanceCommand(RobotMap.LidarSensor));
@@ -145,12 +144,12 @@ public class RobotContainer {
       // Buttons.secondaryLB.toggleWhenPressed(new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor));
       Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
       Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
-      // blasterSubsystem.setDefaultCommand(new BlasterPercentOutput(blasterSubsystem, () -> Buttons.primaryJoystick.getTriggerAxis(Hand.kRight)));
+      // blasterSubsystem.setDefaultCommand(new BlasterPercentOutput(blasterSubsystem, () -> Buttons.primaryJoystick.getRightTriggerAxis()));
       // hang 
       
       Buttons.secondaryAButton.whenHeld(new WinchCommand(hangSubsystem), false);
-      //raiseElevatorCommand = new RaiseElevatorCommand(hangSubsystem, () -> Buttons.secondaryJoystick.getY(Hand.kLeft));    
-      //gondolaCommand = new GondolaCommand(hangSubsystem, ()->Buttons.secondaryJoystick.getX(Hand.kLeft));
+      //raiseElevatorCommand = new RaiseElevatorCommand(hangSubsystem, () -> Buttons.secondaryJoystick.getLeftY());    
+      //gondolaCommand = new GondolaCommand(hangSubsystem, ()->Buttons.secondaryJoystick.getLeftX());
       
     // dashboard control buttons  
       SmartDashboard.putData("10 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY));
@@ -171,7 +170,7 @@ public class RobotContainer {
 
       // Turret subsystem
       //TurretManualCommand turretManualCommand = new TurretManualCommand(turretSubsystem,
-      //    () -> Buttons.secondaryJoystick.getTriggerAxis(Hand.kLeft), () -> Buttons.secondaryJoystick.getTriggerAxis(Hand.kRight));
+      //    () -> Buttons.secondaryJoystick.getLeftTriggerAxis(), () -> Buttons.secondaryJoystick.getRightTriggerAxis());
       //Buttons.secondaryLB.whenHeld(new TurnToTargetCommand(turretSubsystem));
 
   }
@@ -205,34 +204,34 @@ public class RobotContainer {
   private void setupDefaultCommands(){
     driveTrainSubsystem.setDefaultCommand(
         new DriveCommand(driveTrainSubsystem, 
-        () -> deaden(Buttons.primaryJoystick.getY(Hand.kLeft)),
-        () -> Buttons.primaryJoystick.getX(Hand.kRight))
+        () -> deaden(Buttons.primaryJoystick.getLeftY()),
+        () -> Buttons.primaryJoystick.getRightX())
         );  
 
     intakeSubsystem.setDefaultCommand(
         new StartIntakeCommand(intakeSubsystem, 
-        () -> deaden(Buttons.secondaryJoystick.getY(Hand.kRight)))
+        () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
         
     conveyorSubsystem.setDefaultCommand(
         new ConveyorCommand(conveyorSubsystem, 
-        ()-> deaden(Buttons.secondaryJoystick.getY(Hand.kRight)))
+        ()-> deaden(Buttons.secondaryJoystick.getRightY()))
         );
 
     hangSubsystem.setDefaultCommand(
         new RaiseElevatorCommand(hangSubsystem, 
-        () -> deaden(Buttons.secondaryJoystick.getY(Hand.kLeft)), Buttons.secondaryStartButton.get())
+        () -> deaden(Buttons.secondaryJoystick.getLeftY()), Buttons.secondaryStartButton.get())
         );
         
     gondolaSubsystem.setDefaultCommand(
         new GondolaCommand(gondolaSubsystem, 
-        () -> deaden(Buttons.secondaryJoystick.getX(Hand.kLeft)))
+        () -> deaden(Buttons.secondaryJoystick.getLeftX()))
         );
     
     turretSubsystem.setDefaultCommand(
         new ManualTurretCommand(turretSubsystem,
-          ()->Math.pow(Buttons.secondaryJoystick.getTriggerAxis(Hand.kLeft), 2), 
-          ()->Math.pow(deaden(Buttons.secondaryJoystick.getTriggerAxis(Hand.kRight)), 2))
+          ()->Math.pow(Buttons.secondaryJoystick.getLeftTriggerAxis(), 2), 
+          ()->Math.pow(deaden(Buttons.secondaryJoystick.getRightTriggerAxis()), 2))
         );
   }
 

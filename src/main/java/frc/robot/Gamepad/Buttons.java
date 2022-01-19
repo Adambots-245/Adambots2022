@@ -42,12 +42,12 @@ public class Buttons {
     public static final DPad_JoystickButton primaryDPadNE = new DPad_JoystickButton(secondaryJoystick, GamepadConstants.DPAD_NE_ANGLE);
     
     //primary axes
-    //RIGHT TRIGGER       primaryJoystick.getTriggerAxis(Hand.kRight)
-    //LEFT TRIGGER        primaryJoystick.getTriggerAxis(Hand.kLeft)
-    //LEFT STICK X AXIS   primaryJoystick.getX(Hand.kLeft)
-    //LEFT STICK Y AXIS   primaryJoystick.getY(Hand.kLeft)
-    //RIGHT STICK X AXIS  primaryJoystick.getX(Hand.kRight)
-    //RIGHT STICK Y AXIS  primaryJoystick.getY(Hand.kRight)
+    //RIGHT TRIGGER       primaryJoystick.getRightTriggerAxis()
+    //LEFT TRIGGER        primaryJoystick.getLeftTriggerAxis()
+    //LEFT STICK X AXIS   primaryJoystick.getLeftX()
+    //LEFT STICK Y AXIS   primaryJoystick.getLeftY()
+    //RIGHT STICK X AXIS  primaryJoystick.getRightX()
+    //RIGHT STICK Y AXIS  primaryJoystick.getRightY()
     
     //secondary buttons
     public static final JoystickButton secondaryBackButton = new JoystickButton(secondaryJoystick, GamepadConstants.BUTTON_BACK);
@@ -72,10 +72,10 @@ public class Buttons {
     public static final DPad_JoystickButton secondaryDPadNE = new DPad_JoystickButton(secondaryJoystick, GamepadConstants.DPAD_NE_ANGLE);
     
     //secondary axes    
-    //RIGHT TRIGGER       secondaryJoystick.getTriggerAxis(Hand.kRight)
-    //LEFT TRIGGER        secondaryJoystick.getTriggerAxis(Hand.kLeft)
-    //LEFT STICK X AXIS   secondaryJoystick.getX(Hand.kLeft)
-    //LEFT STICK Y AXIS   secondaryJoystick.getY(Hand.kLeft)
-    //RIGHT STICK X AXIS  secondaryJoystick.getX(Hand.kRight)
-    //RIGHT STICK Y AXIS  secondaryJoystick.getY(Hand.kRight)
+    //RIGHT TRIGGER       secondaryJoystick.getRightTriggerAxis()
+    //LEFT TRIGGER        secondaryJoystick.getLeftTriggerAxis()
+    //LEFT STICK X AXIS   secondaryJoystick.getLeftX()
+    //LEFT STICK Y AXIS   secondaryJoystick.getLeftY()
+    //RIGHT STICK X AXIS  secondaryJoystick.getRightX()
+    //RIGHT STICK Y AXIS  secondaryJoystick.getRightY()
 }

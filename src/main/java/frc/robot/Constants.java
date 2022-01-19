@@ -94,11 +94,12 @@ public final class Constants {
 
     public final static I2C.Port I2C_PORT = I2C.Port.kOnboard;
 
-    public final static Color UNKNOWN_TARGET = ColorMatch.makeColor(0, 0, 0);
-    public final static Color BLUE_TARGET = ColorMatch.makeColor(0.125, 0.424, 0.450);
-    public final static Color GREEN_TARGET = ColorMatch.makeColor(0.167, 0.580, 0.252);
-    public final static Color RED_TARGET = ColorMatch.makeColor(0.518, 0.347, 0.134);
-    public final static Color YELLOW_TARGET = ColorMatch.makeColor(0.311, 0.566, 0.121);
+    public final static Color UNKNOWN_TARGET = Color.fromHSV(0, 0, 0);
+    
+    public final static Color BLUE_TARGET = Color.kBlue; //ColorMatch.makeColor(0.125, 0.424, 0.450);
+    public final static Color GREEN_TARGET = Color.kGreen; // ColorMatch.makeColor(0.167, 0.580, 0.252);
+    public final static Color RED_TARGET = Color.kRed; //ColorMatch.makeColor(0.518, 0.347, 0.134);
+    public final static Color YELLOW_TARGET = Color.kYellow; // ColorMatch.makeColor(0.311, 0.566, 0.121);
 
     // The following color order is defined for the sensor moving in a clockwise
     // direction
