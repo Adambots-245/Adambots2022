@@ -15,6 +15,8 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
 
+import edu.wpi.first.vision.VisionPipeline;
+
 /**
 * GripPipeline class.
 *
@@ -22,7 +24,7 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GripPipeline {
+public class RedGripPipeline implements VisionPipeline{
 
 	//Outputs
 	private Mat hsvThresholdOutput = new Mat();
@@ -39,9 +41,9 @@ public class GripPipeline {
 	public void process(Mat source0) {
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = source0;
-		double[] hsvThresholdHue = {51.798561151079134, 104.24242424242425};
-		double[] hsvThresholdSaturation = {114.65827338129499, 255.0};
-		double[] hsvThresholdValue = {45, 255.0};
+		double[] hsvThresholdHue = {0.0, 180.0};
+		double[] hsvThresholdSaturation = {179.13135873412335, 255.0};
+		double[] hsvThresholdValue = {162.81474820143885, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step Find_Contours0:
@@ -51,14 +53,14 @@ public class GripPipeline {
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 15.0;
-		double filterContoursMinPerimeter = 30.0;
-		double filterContoursMinWidth = 0.0;
-		double filterContoursMaxWidth = 1000.0;
-		double filterContoursMinHeight = 0.0;
-		double filterContoursMaxHeight = 1000.0;
-		double[] filterContoursSolidity = {0, 100};
-		double filterContoursMaxVertices = 1000000.0;
+		double filterContoursMinArea = 100.0;
+		double filterContoursMinPerimeter = 100.0;
+		double filterContoursMinWidth = 25.0;
+		double filterContoursMaxWidth = 250.0;
+		double filterContoursMinHeight = 40.0;
+		double filterContoursMaxHeight = 500.0;
+		double[] filterContoursSolidity = {62.05035971223022, 100};
+		double filterContoursMaxVertices = 8000090.0;
 		double filterContoursMinVertices = 0.0;
 		double filterContoursMinRatio = 0.0;
 		double filterContoursMaxRatio = 1000.0;
@@ -177,8 +179,6 @@ public class GripPipeline {
 			output.add(contour);
 		}
 	}
-
-
 
 
 }

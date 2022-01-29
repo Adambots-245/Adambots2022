@@ -128,10 +128,11 @@ public final class Constants {
     public static final double SEC_NEUTRAL_TO_FULL = 0.4;
 
     // Vision Constants
-    public static final int CAM_NUMBER = 0;
+    public static final int BALL_CAM_NUMBER = 0;
+    public static final int HUB_CAM_NUMBER = 1;
     public static final int CAM_EXPOSURE = 5;
-    public static final int IMG_WIDTH = 320;
-    public static final int IMG_HEIGHT = 240;
+    public static final int IMG_WIDTH = 1920;
+    public static final int IMG_HEIGHT = 1080;
     public static final int HOR_FOV_DEGREES = 60;
     public static final double HOR_DEGREES_PER_PIXEL = (double) HOR_FOV_DEGREES / IMG_WIDTH;
     public static final int IMG_HOR_MID = IMG_WIDTH / 2;

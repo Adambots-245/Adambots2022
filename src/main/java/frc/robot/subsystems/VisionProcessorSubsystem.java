@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.vision.GripPipeline;
+import frc.robot.vision.HubGripPipeline;
+import frc.robot.vision.RedGripPipeline;
 import edu.wpi.first.cscore.*;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.networktables.*;
@@ -15,10 +16,14 @@ import org.opencv.imgproc.Imgproc;
 
 public class VisionProcessorSubsystem extends SubsystemBase {
 
-    private static UsbCamera camera;
-    private static CvSource processedOutputStream;
+    private static UsbCamera ballDetectionCamera;
+    private static UsbCamera hubDetectionCamera;
+    private static CvSource processedOutputStreamHub;
+    private static CvSource processedOutputStreamRed;
+    private static CvSource processedOutputStreamBlue;
     private static CvSink cvSink;
-    private static GripPipeline grip;
+    private static HubGripPipeline hubGrip;
+    private static RedGripPipeline redGrip;
     private static Mat mat;
     private static Point crosshair;
     private static Point[] pts = new Point[4];
@@ -29,11 +34,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private NetworkTableEntry angleEntry;
     private Solenoid ringLight;
 
-    public VisionProcessorSubsystem(Solenoid ringLight, GripPipeline grip) {
+    public VisionProcessorSubsystem(Solenoid ringLight, RedGripPipeline redGrip, HubGripPipeline hubGrip) {
         this.ringLight = ringLight;
 
         init();
-        this.grip = grip;
+        this.redGrip = redGrip;
+        this.hubGrip = hubGrip;
     }
 
     public void init() {
@@ -41,18 +47,30 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         // if pcm status is flashing orange (sticky fault), run once
         // ringLight = new Solenoid(Constants.RING_LIGHT_PORT);
         ringLight.set(true);
-        camera = CameraServer.startAutomaticCapture(Constants.CAM_NUMBER);
-        camera.setExposureManual(Constants.CAM_EXPOSURE);
-        processedOutputStream = CameraServer.putVideo("Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
-        processedOutputStream.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
-        processedOutputStream.setFPS(Constants.DRIVER_STATION_FPS);
-        processedOutputStream.setPixelFormat(PixelFormat.kGray);
+        ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
+        hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
+        // camera.setExposureManual(Constants.CAM_EXPOSURE);
+        processedOutputStreamHub = CameraServer.putVideo("CameraHub-Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
+        processedOutputStreamHub.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
+        processedOutputStreamHub.setFPS(Constants.DRIVER_STATION_FPS);
+        processedOutputStreamHub.setPixelFormat(PixelFormat.kGray);
+
+        processedOutputStreamRed = CameraServer.putVideo("CameraRed-Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
+        processedOutputStreamRed.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
+        processedOutputStreamRed.setFPS(Constants.DRIVER_STATION_FPS);
+        processedOutputStreamRed.setPixelFormat(PixelFormat.kGray);
+
+        processedOutputStreamBlue = CameraServer.putVideo("CameraBlue-Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
+        processedOutputStreamBlue.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
+        processedOutputStreamBlue.setFPS(Constants.DRIVER_STATION_FPS);
+        processedOutputStreamBlue.setPixelFormat(PixelFormat.kGray);
 
         cvSink = CameraServer.getVideo();
         // grip = new GripPipeline();
         mat = new Mat();
 
-        camera.setVideoMode(VideoMode.PixelFormat.kMJPEG, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
+        ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kMJPEG, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
+        hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
         // camera.setPixelFormat(VideoMode.PixelFormat.kMJPEG);
         // camera.setFPS(Constants.PROCESSING_FPS);
         // camera.setResolution(Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
@@ -73,12 +91,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         while (!Thread.interrupted()) {
             crosshair = null;
             if (cvSink.grabFrame(mat) == 0) {
-                processedOutputStream.notifyError(cvSink.getError());
+                processedOutputStreamRed.notifyError(cvSink.getError());
                 continue;
 
             }
 
-            grip.process(mat);
+            redGrip.process(mat);
 
             RotatedRect[] rects = findBoundingBoxes();
             if (rects.length != 0) {
@@ -95,7 +113,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             }
             
             if (frameCount == 1) {
-                processedOutputStream.putFrame(mat);
+                processedOutputStreamRed.putFrame(redGrip.hsvThresholdOutput());
                 frameCount = 0;
             }
 
@@ -105,7 +123,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     public RotatedRect[] findBoundingBoxes() {
-        ArrayList<MatOfPoint> contours = grip.filterContoursOutput();
+        ArrayList<MatOfPoint> contours = redGrip.filterContoursOutput();
         // System.out.println(contours.size());
         RotatedRect[] rects = new RotatedRect[contours.size()];
         for (int i = 0; i < contours.size(); i++)
