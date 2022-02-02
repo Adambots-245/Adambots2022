@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.vision.HubGripPipeline;
 import frc.robot.vision.RedGripPipeline;
+import frc.robot.vision.BlueGripPipeline;
 import edu.wpi.first.cscore.*;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.networktables.*;
@@ -24,6 +25,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private static CvSink cvSink;
     private static HubGripPipeline hubGrip;
     private static RedGripPipeline redGrip;
+    private static BlueGripPipeline blueGrip;
     private static Mat mat;
     private static Point crosshair;
     private static Point[] pts = new Point[4];
@@ -34,12 +36,13 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private NetworkTableEntry angleEntry;
     private Solenoid ringLight;
 
-    public VisionProcessorSubsystem(Solenoid ringLight, RedGripPipeline redGrip, HubGripPipeline hubGrip) {
+    public VisionProcessorSubsystem(Solenoid ringLight, RedGripPipeline redGrip, HubGripPipeline hubGrip, BlueGripPipeline blueGrip) {
         this.ringLight = ringLight;
 
         init();
         this.redGrip = redGrip;
         this.hubGrip = hubGrip;
+        this.blueGrip = blueGrip;
     }
 
     public void init() {
@@ -96,7 +99,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
             }
 
-            redGrip.process(mat);
+            hubGrip.process(mat);
+            //redGrip.process(mat);
+            //blueGrip.process(mat);
 
             RotatedRect[] rects = findBoundingBoxes();
             if (rects.length != 0) {
@@ -113,7 +118,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             }
             
             if (frameCount == 1) {
-                processedOutputStreamRed.putFrame(redGrip.hsvThresholdOutput());
+                processedOutputStreamHub.putFrame(mat);
+                //processedOutputStreamRed.putFrame(redGrip.hsvThresholdOutput());
+                //processedOutputStreamBlue.putFrame(blueGrip.hsvThresholdOutput());
                 frameCount = 0;
             }
 
@@ -124,10 +131,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     public RotatedRect[] findBoundingBoxes() {
         ArrayList<MatOfPoint> contours = redGrip.filterContoursOutput();
-        // System.out.println(contours.size());
+        System.out.println(contours.size());
         RotatedRect[] rects = new RotatedRect[contours.size()];
         for (int i = 0; i < contours.size(); i++)
             rects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
+
+        System.out.print(rects.length);
 
         return rects;
 
