@@ -44,9 +44,9 @@ public class ConveyorSubsystem extends SubsystemBase {
   }
 
   public boolean allSensorsDetected() {
-    System.out.println("Intake: " + intakePhotoEye.isDetecting());
-    System.out.println("Spacing: " + spacingPhotoEye.isDetecting());
-    System.out.println("Final: " + finalPhotoEye.isDetecting());
+    //System.out.println("Intake: " + intakePhotoEye.isDetecting());
+    //System.out.println("Spacing: " + spacingPhotoEye.isDetecting());
+    //System.out.println("Final: " + finalPhotoEye.isDetecting());
     return intakePhotoEye.isDetecting() && spacingPhotoEye.isDetecting() && finalPhotoEye.isDetecting();
   }
 

@@ -58,6 +58,7 @@ public class RobotContainer {
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.ArmMover, RobotMap.IntakeMotor, RobotMap.FeedToBlasterMotor);
   private TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
+  private CatapultSubsystem catapultSubsystem = new CatapultSubsystem();
   
   // commands
   private BackboardToggleCommand backboardToggleCommand;
@@ -69,6 +70,7 @@ public class RobotContainer {
   private RaiseElevatorCommand raiseElevatorCommand;
   private SequentialCommandGroup autonDriveForwardGyroDistanceCommand;
   private WinchCommand winchCommand;
+  private CatapultTestCommand catapultTestCommand;
   
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -108,8 +110,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
+    System.out.println("Configuring Stuff");
       // primary controls
       Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
+      Buttons.primaryXButton.whenPressed(new CatapultTestCommand(catapultSubsystem));
       Buttons.primaryYButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
       Buttons.primaryLB.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem));
       Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
@@ -206,7 +210,7 @@ public class RobotContainer {
         new DriveCommand(driveTrainSubsystem, 
         () -> deaden(Buttons.primaryJoystick.getLeftY()),
         () -> Buttons.primaryJoystick.getRightX())
-        );  
+        );   
 
     intakeSubsystem.setDefaultCommand(
         new StartIntakeCommand(intakeSubsystem, 
