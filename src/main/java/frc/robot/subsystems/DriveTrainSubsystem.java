@@ -92,19 +92,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double getLeftDriveEncoderVelocity() {
-    return frontLeftMotor.getSelectedSensorVelocity();
+    return backLeftMotor.getSelectedSensorVelocity();
   }
 
   public double getRightDriveEncoderVelocity() {
-    return frontRightMotor.getSelectedSensorVelocity();
+    return backRightMotor.getSelectedSensorVelocity();
   }
 
   public double getLeftDistanceInch(){
-    return frontLeftMotor.getSelectedSensorPosition() * Constants.ENCODER_TICKS_PER_INCH;
+    return backLeftMotor.getSelectedSensorPosition() * Constants.ENCODER_TICKS_PER_INCH;
   }
 
   public double getRightDistanceInch(){
-    return frontRightMotor.getSelectedSensorPosition() * Constants.ENCODER_TICKS_PER_INCH;
+    return backRightMotor.getSelectedSensorPosition() * Constants.ENCODER_TICKS_PER_INCH;
   }
 
   public void setLowSpeed() {

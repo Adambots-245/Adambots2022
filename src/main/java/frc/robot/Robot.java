@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     
-    if (Robot.isReal()) {
+    if (Robot.isReal() && false) { // Disable vision for Practice bot
       // Starts vision thread only if not running in simulation mode
       // Vision System calculates the angle to the target and posts it to the NetworkTable
       vision = new VisionProcessorSubsystem(RobotMap.RingLight, new GripPipeline());
@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     
     if (Robot.isReal()) {
-      SmartDashboard.putNumber("ANGLE", vision.getAngle());
+      // SmartDashboard.putNumber("ANGLE", vision.getAngle());
     }
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
@@ -114,6 +114,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
+      System.out.println("Auton Scheduling...");
       m_autonomousCommand.schedule();
     }
     
