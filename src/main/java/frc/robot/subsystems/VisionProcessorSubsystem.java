@@ -125,7 +125,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             RotatedRect[] rects = findBoundingBoxes();
             
 
-
+/*
             if (crosshair != null) {
                 synchronized (lock) {
                     calculateAngle();
@@ -133,7 +133,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                 }
                 
             }
-            
+*/            
             if (frameCount == 1) {
                 processedOutputStreamHub.putFrame(mat);
                 //processedOutputStreamRed.putFrame(redGrip.hsvThresholdOutput());
@@ -159,12 +159,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("rect0 y", rects[0].boundingRect().y);
         SmartDashboard.putNumber("rect last y-1", rects[rects.length - 1].boundingRect().y);
 */
-        int minX = rects[0].boundingRect().x;
-        int maxX = 0;
-        int minY = rects[0].boundingRect().y;
-        int maxY = 0;
+        double minX = rects[0].boundingRect().x;
+        double maxX = 0;
+        double minY = rects[0].boundingRect().y;
+        double maxY = 0;
 
-        for(int a=0; a==rects.length; a++ ) {
+        for(int a=0; a<rects.length; a++ ) {
             minX = Math.min(minX, rects[a].boundingRect().x);
             maxX = Math.max(maxX, rects[a].boundingRect().x);
             minY = Math.min(minY, rects[a].boundingRect().y);
@@ -179,14 +179,18 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         
 
         RotatedRect boundingBox = new RotatedRect();
+     
+        pts[0] = new Point(minX, minY);
+        pts[1] = new Point(maxX, minY);
+        pts[2] = new Point(maxX, maxY);
+        pts[3] = new Point(minX, maxY);
 
-        boundingBox.boundingRect().x = minX;
-        boundingBox.boundingRect().y = minY;
-        boundingBox.boundingRect().width = maxX - minX;
-        boundingBox.boundingRect().height = maxY - minY;
+        drawRect(pts);
 
-        draw(boundingBox);
-           
+        findCrosshair(pts);
+
+        if (crosshair != null)
+            drawCrosshair();
 
         return rects;
 
@@ -204,22 +208,25 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         return rect;
     }
 
+    
     public void draw(RotatedRect rect) {
 
-        rect.points(pts);
+        //rect.points(pts);
         
         drawRect(pts);
+        /*
         findCrosshair(pts);
 
         if (crosshair != null)
             drawCrosshair();
+            */
 
     }
 
     // Draw bounding box around the reflective tape
     public void drawRect(Point[] pts) {
         for (int i = 0; i < 4; i++)
-            Imgproc.line(mat, pts[i], pts[(i + 1) % 4], Constants.GREEN, 1);
+            Imgproc.line(mat, pts[i], pts[(i + 1) % 4], Constants.RED, 2);
 
     }
 
@@ -238,8 +245,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     // Draw the crosshair on the frame
     public void drawCrosshair() {
-        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.RED, 3);
-        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.RED, 3);
+        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLUE, 3);
+        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLUE, 3);
 
     }
 
