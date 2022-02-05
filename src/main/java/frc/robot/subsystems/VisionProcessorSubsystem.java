@@ -159,7 +159,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("rect0 y", rects[0].boundingRect().y);
         SmartDashboard.putNumber("rect last y-1", rects[rects.length - 1].boundingRect().y);
 */
-        double minX = rects[0].boundingRect().x;
+        if (contours.size() != 0){
+            double minX = rects[0].boundingRect().x;
         double maxX = 0;
         double minY = rects[0].boundingRect().y;
         double maxY = 0;
@@ -185,13 +186,24 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         pts[2] = new Point(maxX, maxY);
         pts[3] = new Point(minX, maxY);
 
-        drawRect(pts);
+        double rows = mat.rows();
+        double cols = mat.cols();
+        Size s = mat.size();
 
-        findCrosshair(pts);
-
+        rows = s.height;
+        cols = s.width;
+        //double rowcol[] = mat.get(row, col);
+        SmartDashboard.putNumber("row", rows);
+        SmartDashboard.putNumber("col", cols);
+        
+        //if ()
+            drawRect(pts);
+            findCrosshair(pts);
+        
         if (crosshair != null)
             drawCrosshair();
-
+        }
+        
         return rects;
 
     }
