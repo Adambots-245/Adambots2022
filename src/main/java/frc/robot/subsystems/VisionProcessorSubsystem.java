@@ -202,7 +202,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         int pixels = (int) (maxY - minY);
         int initialDistance = 156;
         int calculatedDistance = 0; 
-        int width = 60;
+        double width = 8.5;
         //focalLength = (pixels * initialDistance) / width;
         double radVal = Math.toRadians(fieldOfView);
         double arcTanVal = Constants.IMG_HEIGHT / Constants.IMG_WIDTH;
