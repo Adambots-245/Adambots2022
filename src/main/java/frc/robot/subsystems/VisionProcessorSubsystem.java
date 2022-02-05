@@ -173,10 +173,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
 
         }
+        /*
         SmartDashboard.putNumber("minX", minX);
         SmartDashboard.putNumber("minY", minY);
         SmartDashboard.putNumber("maxX", maxX);
         SmartDashboard.putNumber("maxY", maxY);
+        */
         
 
         RotatedRect boundingBox = new RotatedRect();
@@ -193,8 +195,26 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         rows = s.height;
         cols = s.width;
         //double rowcol[] = mat.get(row, col);
-        SmartDashboard.putNumber("row", rows);
-        SmartDashboard.putNumber("col", cols);
+        //SmartDashboard.putNumber("row", rows);
+        //SmartDashboard.putNumber("col", cols);
+
+        double fieldOfView = 68.5;
+        int pixels = (int) (maxY - minY);
+        int initialDistance = 156;
+        int calculatedDistance = 0; 
+        int width = 60;
+        //focalLength = (pixels * initialDistance) / width;
+        double radVal = Math.toRadians(fieldOfView);
+        double arcTanVal = Constants.IMG_HEIGHT / Constants.IMG_WIDTH;
+        double cosVal = Math.cos(arcTanVal);
+        double tanVal = Math.tan(radVal * cosVal);
+        double angrad = Math.atan(tanVal);
+        double horizontalFieldOfView = Math.toDegrees(angrad);
+        // H_FOV = np.degrees(np.arctan(np.tan(np.radians(D_FOV)*np.cos(np.arctan(height/width)))))
+        double focalLength = Constants.IMG_WIDTH / (2*Math.tan(Math.toRadians(horizontalFieldOfView/2)));
+        calculatedDistance = (int) ((width * focalLength) / pixels);
+
+        SmartDashboard.putNumber("distance", calculatedDistance);
         
         //if ()
             drawRect(pts);
