@@ -8,15 +8,21 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import frc.robot.utils.Log;
 
 public class CatapultSubsystem extends SubsystemBase {
   /**
    * Creates a new CatapultSubsystem.
    */
 
-  public CatapultSubsystem() {
+  public WPI_VictorSPX catapultMotor;
+
+  public CatapultSubsystem(/*WPI_VictorSPX catapultMotor*/) {
     super();
 
+    //this.catapultMotor = catapultMotor; //new WPI_VictorSPX(Constants.CATAPULT_MOTOR_PORT);
+    Log.info("Initializing Gondola");
   }
 
   public void printSomething(String print) {
@@ -25,7 +31,7 @@ public class CatapultSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //System.out.println("hello2!");
+    //System.out.println("hello");
     //printSomething();
   }
 }

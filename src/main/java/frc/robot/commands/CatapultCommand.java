@@ -10,13 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CatapultSubsystem;
 
-public class CatapultTestCommand extends CommandBase {
+public class CatapultCommand extends CommandBase {
   /**
    * Creates a new Command for testing.
    */
 
   private final CatapultSubsystem catapultSubsystem;
-  public CatapultTestCommand(CatapultSubsystem catapultSubsystem) {
+  public CatapultCommand(CatapultSubsystem catapultSubsystem) {
     this.catapultSubsystem = catapultSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(catapultSubsystem);

@@ -20,21 +20,7 @@ import frc.robot.Gamepad.GamepadConstants;
 
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
-import frc.robot.commands.autonCommands.autonCommandGroups.BarrelPathAuton;
-import frc.robot.commands.autonCommands.autonCommandGroups.CrossBaseline;
-import frc.robot.commands.autonCommands.autonCommandGroups.NerdsAuton;
-import frc.robot.commands.autonCommands.autonCommandGroups.NoTurnAuton;
-import frc.robot.commands.autonCommands.autonCommandGroups.Nom2Turn45Yeet5;
-import frc.robot.commands.autonCommands.autonCommandGroups.Nom2Yeet5;
-import frc.robot.commands.autonCommands.autonCommandGroups.PushNom2Yeet5;
-import frc.robot.commands.autonCommands.autonCommandGroups.PushNom2Yeet5Nom1;
-import frc.robot.commands.autonCommands.autonCommandGroups.SlalomPathAuton;
-import frc.robot.commands.autonCommands.autonCommandGroups.SnagNYeetCommandGroup;
-import frc.robot.commands.autonCommands.autonCommandGroups.Yeet3;
-import frc.robot.commands.autonCommands.autonCommandGroups.Yeet3FinalsAuton;
-import frc.robot.commands.autonCommands.autonCommandGroups.Yeet3New;
-import frc.robot.commands.autonCommands.autonCommandGroups.Yeet3Nom3Yeet3;
-import frc.robot.commands.autonCommands.autonCommandGroups.Yeet3PushNom3;
+import frc.robot.commands.autonCommands.autonCommandGroups.*;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Log;
 
@@ -50,7 +36,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // subsystems
-  private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
   private final ControlPanelSubsystem panelSubsystem = new ControlPanelSubsystem(RobotMap.PanelMotor, RobotMap.ColorSensor);
   private final ConveyorSubsystem conveyorSubsystem = new ConveyorSubsystem(RobotMap.ConveyorMotor, RobotMap.AlignmentBeltMotor, RobotMap.IntakePhotoEye, RobotMap.SpacingPhotoEye, RobotMap.ExitPhotoEye);
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
@@ -70,7 +55,7 @@ public class RobotContainer {
   private RaiseElevatorCommand raiseElevatorCommand;
   private SequentialCommandGroup autonDriveForwardGyroDistanceCommand;
   private WinchCommand winchCommand;
-  private CatapultTestCommand catapultTestCommand;
+  private CatapultCommand catapultTestCommand;
   
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -113,7 +98,7 @@ public class RobotContainer {
     System.out.println("Configuring Stuff");
       // primary controls
       Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
-      Buttons.primaryXButton.whenPressed(new CatapultTestCommand(catapultSubsystem));
+      Buttons.primaryXButton.whenPressed(new CatapultCommand(catapultSubsystem));
       Buttons.primaryYButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
       Buttons.primaryLB.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem));
       Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
@@ -146,8 +131,8 @@ public class RobotContainer {
       
       // blaster  
       // Buttons.secondaryLB.toggleWhenPressed(new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor));
-      Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
-      Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
+      //Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
+      //Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
       // blasterSubsystem.setDefaultCommand(new BlasterPercentOutput(blasterSubsystem, () -> Buttons.primaryJoystick.getRightTriggerAxis()));
       // hang 
       
@@ -156,9 +141,7 @@ public class RobotContainer {
       //gondolaCommand = new GondolaCommand(hangSubsystem, ()->Buttons.secondaryJoystick.getLeftX());
       
     // dashboard control buttons  
-      SmartDashboard.putData("10 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY));
       // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, shooterVelocity));
-      SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.TRENCH_SHOOTER_VELOCITY));
       SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
 
     // mode switching 
@@ -181,24 +164,24 @@ public class RobotContainer {
 
   private void dash(){
     // autoChooser.setDefaultOption("None", null);
-    autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
+    //autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
     // autoChooser.addOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
-    autoChooser.addOption("Yeet3Nom3Yeet3", new Yeet3Nom3Yeet3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
+    //autoChooser.addOption("Yeet3Nom3Yeet3", new Yeet3Nom3Yeet3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("PushNom2Yeet5Nom1", new PushNom2Yeet5Nom1(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
-    autoChooser.setDefaultOption("yeet3", new Yeet3(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
+    //autoChooser.setDefaultOption("yeet3", new Yeet3(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("noturn", new NoTurnAuton(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("NERDSAUTO", new NerdsAuton(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem));
-    autoChooser.addOption("CrossBaseline", new CrossBaseline(driveTrainSubsystem));
+    //autoChooser.addOption("CrossBaseline", new CrossBaseline(driveTrainSubsystem));
     // autoChooser.addOption("Yeet3FinalsAuton", new Yeet3FinalsAuton(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("90Degrees", autonTurn90DegreeCommand);
-    autoChooser.addOption("yeet3New", new Yeet3New(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
+    //autoChooser.addOption("yeet3New", new Yeet3New(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("0 to 45 to 0", new );
     // autoChooser.addOption("Nom2Yeet5", new Nom2Yeet5(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("Nom2Turn45Yeet5", new Nom2Turn45Yeet5(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
     // dashboard control buttons  
-    SmartDashboard.putData("10 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY));
-    SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.TRENCH_SHOOTER_VELOCITY));
+    //SmartDashboard.putData("10 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY));
+    //SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.TRENCH_SHOOTER_VELOCITY));
    
     SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
 

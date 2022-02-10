@@ -28,8 +28,6 @@ import frc.robot.sensors.PhotoEye;
  * Add your docs here.
  */
 public class RobotMap {
-
-    public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
     public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
     
     public static final Gyro GyroSensor = Gyro.getInstance();
@@ -47,6 +45,7 @@ public class RobotMap {
     public static final WPI_VictorSPX AlignmentBeltMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_INDEXER_MOTOR_PORT);
 
     public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
+    public static final WPI_VictorSPX ChooChooMotor = new WPI_VictorSPX(Constants.CHOO_CHOO_MOTOR_PORT);
 
     public static final WPI_VictorSPX HangMotor = new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
     public static final WPI_VictorSPX WinchMotor1 = new WPI_VictorSPX(Constants.CLIMBING_1_MOTOR_PORT);

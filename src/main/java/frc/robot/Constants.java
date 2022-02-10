@@ -31,7 +31,7 @@ public final class Constants {
     public static final int BL_TALON = 11;
     public static final int FR_TALON = 12;
     public static final int BR_TALON = 13;
-    public static final int BLASTER_MOTOR_PORT = 14;
+    public static final int CHOO_CHOO_MOTOR_PORT = 14;
 
     public static final int CLIMBING_1_MOTOR_PORT = 15;
     public static final int CLIMBING_2_MOTOR_PORT = 16;
@@ -45,8 +45,6 @@ public final class Constants {
 
     public static final int TURRET_MOTOR_PORT = 22;
 
-    // TODO: Add accurate PANEL_MOTOR_PORTs (ports of motors that spin control
-    // panel)
     public static final int PANEL_MOTOR_PORT = 1;
 
     // solenoid IDs
