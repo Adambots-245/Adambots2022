@@ -22,8 +22,6 @@ import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.*;
 import frc.robot.subsystems.*;
-import frc.robot.utils.Log;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -42,8 +40,8 @@ public class RobotContainer {
   private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.ArmMover, RobotMap.IntakeMotor, RobotMap.FeedToBlasterMotor);
-  private TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
-  private CatapultSubsystem catapultSubsystem = new CatapultSubsystem();
+  private final TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
+  private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch);
   
   // commands
   private BackboardToggleCommand backboardToggleCommand;
@@ -55,7 +53,7 @@ public class RobotContainer {
   private RaiseElevatorCommand raiseElevatorCommand;
   private SequentialCommandGroup autonDriveForwardGyroDistanceCommand;
   private WinchCommand winchCommand;
-  private CatapultCommand catapultTestCommand;
+  private CatapultCommand catapultCommand;
   
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -95,7 +93,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    System.out.println("Configuring Stuff");
       // primary controls
       Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
       Buttons.primaryXButton.whenPressed(new CatapultCommand(catapultSubsystem));
@@ -106,11 +103,8 @@ public class RobotContainer {
       //control panel
       Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
       Buttons.primaryBButton.whenPressed(new AlignColorCommand(panelSubsystem));
-      // Buttons.secondaryXButton.whenHeld(new PanelMotor(panelSubsystem)); //CHANGE THIS TO PRIMARY SOMEHOW
 
       // secondary controls
-      // intake 
-      
       Buttons.secondaryDPadN.whenPressed(new RaiseIntakeArmCommand(intakeSubsystem));
       Buttons.secondaryDPadS.whenPressed(new LowerIntakeArmCommand(intakeSubsystem));    
       // Buttons.secondaryYButton.whenHeld(new IndexToBlasterCommand(intakeSubsystem));  

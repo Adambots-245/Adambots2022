@@ -7,11 +7,13 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import frc.robot.utils.Log;
 
 public class CatapultSubsystem extends SubsystemBase {
@@ -20,21 +22,26 @@ public class CatapultSubsystem extends SubsystemBase {
    */
 
   public WPI_VictorSPX catapultMotor;
+  private DigitalInput limitSwitch;
 
-  public CatapultSubsystem(/*WPI_VictorSPX catapultMotor*/) {
+  public CatapultSubsystem(WPI_VictorSPX catapultMotor, DigitalInput limitSwitch) {
     super();
 
-    //this.catapultMotor = catapultMotor; //new WPI_VictorSPX(Constants.CATAPULT_MOTOR_PORT);
-    Log.info("Initializing Gondola");
+    this.catapultMotor = catapultMotor;
+    this.limitSwitch = limitSwitch;
+    Log.info("Initializing Catapult");
   }
 
   public void printSomething(String print) {
     System.out.println(print);
   }
 
+  public void catapultMotor(double speed) {
+    catapultMotor.set(ControlMode.PercentOutput, speed);
+  }
+
   @Override
   public void periodic() {
-    //System.out.println("hello");
-    //printSomething();
+
   }
 }

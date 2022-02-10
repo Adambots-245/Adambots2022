@@ -39,7 +39,7 @@ public class RobotMap {
 	public static final WPI_TalonFX BackLeftMotor = new WPI_TalonFX(Constants.BL_TALON);
 	public static final BaseMotorController PanelMotor = new WPI_TalonSRX(Constants.PANEL_MOTOR_PORT);;
 	public static final ColorSensor ColorSensor = new ColorSensor();
-    public static WPI_TalonFX BackRightMotor = new WPI_TalonFX(Constants.BR_TALON);
+    public static final WPI_TalonFX BackRightMotor = new WPI_TalonFX(Constants.BR_TALON);
 
     public static final WPI_VictorSPX ConveyorMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_MOTOR_PORT);
     public static final WPI_VictorSPX AlignmentBeltMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_INDEXER_MOTOR_PORT);
@@ -61,6 +61,7 @@ public class RobotMap {
     public static final VictorSPX TurretMotor = new VictorSPX(Constants.TURRET_MOTOR_PORT);
 	public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
 	public static final DigitalInput RightLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
+	public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
 

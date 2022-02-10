@@ -16,33 +16,37 @@ public class CatapultCommand extends CommandBase {
    */
 
   private final CatapultSubsystem catapultSubsystem;
+
   public CatapultCommand(CatapultSubsystem catapultSubsystem) {
     this.catapultSubsystem = catapultSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
+
     addRequirements(catapultSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.printSomething("Initializing");
+    catapultSubsystem.printSomething("Starting Motor");
+    catapultSubsystem.catapultMotor(100);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    catapultSubsystem.printSomething("Executing");
+    catapultSubsystem.printSomething("Waiting For Limit Switch");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    catapultSubsystem.printSomething("Ending");
+    catapultSubsystem.printSomething("Catapult Ready");
+    catapultSubsystem.catapultMotor(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
