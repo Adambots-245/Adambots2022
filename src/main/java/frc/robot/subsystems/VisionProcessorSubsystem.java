@@ -9,6 +9,7 @@ import frc.robot.vision.RedGripPipeline;
 import frc.robot.vision.BlueGripPipeline;
 import edu.wpi.first.cscore.*;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,6 +37,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private Thread visionThread;
     private NetworkTableEntry angleEntry;
     private Solenoid ringLight;
+    private MedianFilter maxYFilter;
+    private MedianFilter minYFilter;
+    private MedianFilter maxXFilter;
+    private MedianFilter minXFilter;
 
     public VisionProcessorSubsystem(Solenoid ringLight, RedGripPipeline redGrip, HubGripPipeline hubGrip, BlueGripPipeline blueGrip) {
         this.ringLight = ringLight;
@@ -50,6 +55,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         // ringLight.clearAllPCMStickyFaults();
         // if pcm status is flashing orange (sticky fault), run once
         // ringLight = new Solenoid(Constants.RING_LIGHT_PORT);
+        // Creates a MedianFilter with a window size of 5 samples
+        maxYFilter = new MedianFilter(5);
+        minYFilter = new MedianFilter(5);
+        maxXFilter = new MedianFilter(5);
+        minXFilter = new MedianFilter(5);
+ 
         ringLight.set(true);
         ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
         hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
@@ -173,36 +184,32 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
 
         }
-        /*
-        SmartDashboard.putNumber("minX", minX);
-        SmartDashboard.putNumber("minY", minY);
-        SmartDashboard.putNumber("maxX", maxX);
-        SmartDashboard.putNumber("maxY", maxY);
-        */
+
+        double fMinY = minYFilter.calculate(minY);
+        double fMaxY = maxYFilter.calculate(maxY);
+        double fMinX = minXFilter.calculate(minX);
+        double fMaxX = maxXFilter.calculate(maxX);
+        
+        SmartDashboard.putNumber("minX", fMinY);
+        SmartDashboard.putNumber("minY", fMaxY);
+        SmartDashboard.putNumber("maxX", fMinX);
+        SmartDashboard.putNumber("maxY", fMaxX);
+        
         
 
-        RotatedRect boundingBox = new RotatedRect();
+        //RotatedRect boundingBox = new RotatedRect();
      
-        pts[0] = new Point(minX, minY);
-        pts[1] = new Point(maxX, minY);
-        pts[2] = new Point(maxX, maxY);
-        pts[3] = new Point(minX, maxY);
+        pts[0] = new Point(fMinX, fMinY);
+        pts[1] = new Point(fMaxX, fMinY);
+        pts[2] = new Point(fMaxX, fMaxY);
+        pts[3] = new Point(fMinX, fMaxY);
 
-        double rows = mat.rows();
-        double cols = mat.cols();
-        Size s = mat.size();
-
-        rows = s.height;
-        cols = s.width;
-        //double rowcol[] = mat.get(row, col);
-        //SmartDashboard.putNumber("row", rows);
-        //SmartDashboard.putNumber("col", cols);
 
         double fieldOfView = 68.5;
-        int pixels = (int) (maxY - minY);
+        int pixelWidth = (int) (fMaxX - fMinX);
         int initialDistance = 156;
         int calculatedDistance = 0; 
-        double width = 8.5;
+        double width = 1016; // width of the hub in mm
         //focalLength = (pixels * initialDistance) / width;
         double radVal = Math.toRadians(fieldOfView);
         double arcTanVal = Constants.IMG_HEIGHT / Constants.IMG_WIDTH;
@@ -212,13 +219,16 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         double horizontalFieldOfView = Math.toDegrees(angrad);
         // H_FOV = np.degrees(np.arctan(np.tan(np.radians(D_FOV)*np.cos(np.arctan(height/width)))))
         double focalLength = Constants.IMG_WIDTH / (2*Math.tan(Math.toRadians(horizontalFieldOfView/2)));
-        calculatedDistance = (int) ((width * focalLength) / pixels);
+        //focalLength = 60; // mm https://commons.wikimedia.org/wiki/File:Microsoft_Lifecam_HD-3000_webcam.jpg
+        calculatedDistance = (int) (((width * focalLength) / pixelWidth)/25.4); // in inch
 
         SmartDashboard.putNumber("distance", calculatedDistance);
+        SmartDashboard.putNumber("focalLength", focalLength);
+        SmartDashboard.putNumber("pixelWidth", pixelWidth);
         
         //if ()
-            drawRect(pts);
-            findCrosshair(pts);
+        drawRect(pts);
+        findCrosshair(pts);
         
         if (crosshair != null)
             drawCrosshair();
@@ -238,21 +248,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
 
         return rect;
-    }
-
-    
-    public void draw(RotatedRect rect) {
-
-        //rect.points(pts);
-        
-        drawRect(pts);
-        /*
-        findCrosshair(pts);
-
-        if (crosshair != null)
-            drawCrosshair();
-            */
-
     }
 
     // Draw bounding box around the reflective tape
@@ -284,9 +279,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     // Calculate horizontal turret angle
     public void calculateAngle() {
-        pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
-        angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
-        angleEntry.setDouble(angle);
+        //pixelDistance = Math.abs(a) 
+        //pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
+        //angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
+        //angleEntry.setDouble(angle);
 
     }
 
