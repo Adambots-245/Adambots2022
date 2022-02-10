@@ -207,8 +207,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
         double fieldOfView = 68.5;
         int pixelWidth = (int) (fMaxX - fMinX);
-        int initialDistance = 156;
+        int initialDistance = 96;
         int calculatedDistance = 0; 
+        int error = 8;
+        double slope = 0.125;
+
+        
         double width = 1016; // width of the hub in mm
         //focalLength = (pixels * initialDistance) / width;
         double radVal = Math.toRadians(fieldOfView);
@@ -222,7 +226,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         //focalLength = 60; // mm https://commons.wikimedia.org/wiki/File:Microsoft_Lifecam_HD-3000_webcam.jpg
         calculatedDistance = (int) (((width * focalLength) / pixelWidth)/25.4); // in inch
 
-        SmartDashboard.putNumber("distance", calculatedDistance);
+        // equation for accurate distance to hub
+        double finalDistance = error + slope * (calculatedDistance - initialDistance);
+        // =8+0.125*(A10-96)
+        
+        SmartDashboard.putNumber("initial distance", calculatedDistance);
+        SmartDashboard.putNumber("final distance", finalDistance);
         SmartDashboard.putNumber("focalLength", focalLength);
         SmartDashboard.putNumber("pixelWidth", pixelWidth);
         
