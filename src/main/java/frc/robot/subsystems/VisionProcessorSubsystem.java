@@ -133,7 +133,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
               }
 
                */
-            RotatedRect[] rects = findBoundingBoxes();
+            RotatedRect[] rects = findBoundingBoxesHub();
             
 
 /*
@@ -157,7 +157,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     }
 
-    public RotatedRect[] findBoundingBoxes() {
+    public RotatedRect[] findBoundingBoxesHub() {
         ArrayList<MatOfPoint> contours = hubGrip.filterContoursOutput();
         //System.out.println(contours.size());
         RotatedRect[] rects = new RotatedRect[contours.size()];
@@ -227,14 +227,24 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         calculatedDistance = (int) (((width * focalLength) / pixelWidth)/25.4); // in inch
 
         // equation for accurate distance to hub
-        double finalDistance = error + slope * (calculatedDistance - initialDistance);
+        //double finalError = error + slope * (calculatedDistance - initialDistance);
         // =8+0.125*(A10-96)
+        double a =0.00199916;
+        double b = -0.450253;
+        double c = 35.7879;
+
+        double parabolaError = a * Math.pow(calculatedDistance, 2) + b * calculatedDistance + c;
+        //0.00199916x^{2}-0.450253x+35.7879
+
+        double finalDistance = calculatedDistance + parabolaError;
         
         SmartDashboard.putNumber("initial distance", calculatedDistance);
         SmartDashboard.putNumber("final distance", finalDistance);
         SmartDashboard.putNumber("focalLength", focalLength);
         SmartDashboard.putNumber("pixelWidth", pixelWidth);
-        
+        SmartDashboard.putNumber("parabola Error", parabolaError);
+        SmartDashboard.putNumber("angle", angle);
+
         //if ()
         drawRect(pts);
         findCrosshair(pts);
@@ -288,10 +298,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     // Calculate horizontal turret angle
     public void calculateAngle() {
-        //pixelDistance = Math.abs(a) 
-        //pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
-        //angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
-        //angleEntry.setDouble(angle);
+        pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
+        angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
+        angleEntry.setDouble(angle);
 
     }
 
