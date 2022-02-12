@@ -39,22 +39,15 @@ public class RobotContainer {
 
   // subsystems
   private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
-  private final ControlPanelSubsystem panelSubsystem = new ControlPanelSubsystem(RobotMap.PanelMotor, RobotMap.ColorSensor);
-  private final ConveyorSubsystem conveyorSubsystem = new ConveyorSubsystem(RobotMap.ConveyorMotor, RobotMap.AlignmentBeltMotor, RobotMap.IntakePhotoEye, RobotMap.SpacingPhotoEye, RobotMap.ExitPhotoEye);
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
   private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
-  private TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
   
   // commands
-  private BackboardToggleCommand backboardToggleCommand;
-  private ConveyorCommand conveyorCommand;
   private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
   private TurnToAngleCommand autonTurn90DegreeCommand;
-  private GondolaCommand gondolaCommand;
   private GyroDriveForDistCommand autonGyroDriveForwardDistanceCommand;
-  private RaiseElevatorCommand raiseElevatorCommand;
   private SequentialCommandGroup autonDriveForwardGyroDistanceCommand;
   private WinchCommand winchCommand;
   
@@ -102,8 +95,8 @@ public class RobotContainer {
       Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
 
       //control panel
-      Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
-      Buttons.primaryBButton.whenPressed(new AlignColorCommand(panelSubsystem));
+      // Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
+      // Buttons.primaryBButton.whenPressed(new AlignColorCommand(panelSubsystem));
       // Buttons.secondaryXButton.whenHeld(new PanelMotor(panelSubsystem)); //CHANGE THIS TO PRIMARY SOMEHOW
 
       // secondary controls
@@ -121,7 +114,7 @@ public class RobotContainer {
      
      // Buttons.secondaryDPadN.whenPressed(new RaiseIntakeArmCommand(intakeSubsystem));
      // Buttons.secondaryDPadS.whenPressed(new LowerIntakeArmCommand(intakeSubsystem));    
-      Buttons.secondaryXButton.whileHeld(new TurnToTargetCommand(turretSubsystem, RobotMap.LidarSensor), false);
+      // Buttons.secondaryXButton.whileHeld(new TurnToTargetCommand(turretSubsystem, RobotMap.LidarSensor), false);
       // turretSubsystem.setDefaultCommand(new TurretManualCommand(turretSubsystem, ()->Buttons.secondaryJoystick.getLeftTriggerAxis(), ()->Buttons.secondaryJoystick.getRightTriggerAxis()));
       
       // lidar susbsystem
@@ -200,10 +193,10 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
         
-    conveyorSubsystem.setDefaultCommand(
-        new ConveyorCommand(conveyorSubsystem, 
-        ()-> deaden(Buttons.secondaryJoystick.getRightY()))
-        );
+    // conveyorSubsystem.setDefaultCommand(
+        // new ConveyorCommand(conveyorSubsystem, 
+        // ()-> deaden(Buttons.secondaryJoystick.getRightY()))
+        // );
 
     hangSubsystem.setDefaultCommand(
         new RaiseElevatorCommand(hangSubsystem, 
@@ -215,11 +208,11 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getLeftX()))
         );
     
-    turretSubsystem.setDefaultCommand(
-        new ManualTurretCommand(turretSubsystem,
-          ()->Math.pow(Buttons.secondaryJoystick.getLeftTriggerAxis(), 2), 
-          ()->Math.pow(deaden(Buttons.secondaryJoystick.getRightTriggerAxis()), 2))
-        );
+    // turretSubsystem.setDefaultCommand(
+    //     new ManualTurretCommand(turretSubsystem,
+    //       ()->Math.pow(Buttons.secondaryJoystick.getLeftTriggerAxis(), 2), 
+    //       ()->Math.pow(deaden(Buttons.secondaryJoystick.getRightTriggerAxis()), 2))
+    //     );
   }
 
   // deadzoning

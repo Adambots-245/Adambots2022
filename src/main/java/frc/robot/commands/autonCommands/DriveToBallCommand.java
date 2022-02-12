@@ -14,16 +14,16 @@ public class DriveToBallCommand extends CommandBase {
     private boolean closeToBall = false;
     private DriveTrainSubsystem driveTrainSubsystem;
     private IntakeSubsystem intakeSubsystem;
-    private ConveyorSubsystem conveyorSubsystem;
+    // private ConveyorSubsystem conveyorSubsystem;
     private double distanceFromIntakeArm;
     private double calculatedDistance;
     private boolean intakeDetectedBall = false;
     private PhotoEye intakePhotoEye;
 
-    public DriveToBallCommand(DriveTrainSubsystem driveTrainSubsystem, IntakeSubsystem intakeSubsystem, ConveyorSubsystem conveyorSubsystem, PhotoEye intakePhotoEye) {
+    public DriveToBallCommand(DriveTrainSubsystem driveTrainSubsystem, IntakeSubsystem intakeSubsystem,  PhotoEye intakePhotoEye) {
         table = NetworkTableInstance.getDefault().getTable("limelight");
         this.driveTrainSubsystem = driveTrainSubsystem;
-        this.conveyorSubsystem = conveyorSubsystem;
+        // this.conveyorSubsystem = conveyorSubsystem;
         this.intakePhotoEye = intakePhotoEye;
         this.intakeSubsystem = intakeSubsystem;
         addRequirements(driveTrainSubsystem, intakeSubsystem);
@@ -42,8 +42,8 @@ public class DriveToBallCommand extends CommandBase {
 
         // start the intake and conveyor motors so that they ball moves into the intake photo eye
         intakeSubsystem.intake(-1.0);
-        conveyorSubsystem.runConveyor(0.5, true); //Set boolean to false to enable photo eyes
-        conveyorSubsystem.runAlignmentBelt(0.5);
+        // conveyorSubsystem.runConveyor(0.5, true); //Set boolean to false to enable photo eyes
+        // conveyorSubsystem.runAlignmentBelt(0.5);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class DriveToBallCommand extends CommandBase {
     public void end(boolean interrupted) {
         driveTrainSubsystem.arcadeDrive(0.0, 0.0);
         intakeSubsystem.intake(0.0);
-        conveyorSubsystem.stopConveyorMotor();
+        // conveyorSubsystem.stopConveyorMotor();
         driveTrainSubsystem.arcadeDrive(0.0, 0.0);
         
         if(interrupted)

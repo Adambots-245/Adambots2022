@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -26,7 +25,6 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem(WPI_VictorSPX intakeMotor) {
     super();
     
-  
     this.intakeMotor = intakeMotor; 
     this.intakeMotor.setInverted(true);
 
@@ -53,5 +51,4 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
 }
