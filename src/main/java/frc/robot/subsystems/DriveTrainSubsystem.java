@@ -57,9 +57,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     this.backRightMotor.follow(frontRightMotor);
 
     this.backLeftMotor.setInverted(false);
-    frontLeftMotor.setInverted(false);
+    frontLeftMotor.setInverted(true);
     backRightMotor.setInverted(false);
-    frontRightMotor.setInverted(false);
+    frontRightMotor.setInverted(true);
 
     frontLeftMotor.configOpenloopRamp(Constants.SEC_NEUTRAL_TO_FULL);
     frontRightMotor.configOpenloopRamp(Constants.SEC_NEUTRAL_TO_FULL);
@@ -124,17 +124,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     drive.arcadeDrive(straightSpeed, turnSpeed * speedModifier);
   }
 
-  public void shiftHighGear() {
-
-    Log.info("Shifting to high gear");
-    gearShifter.set(true);
-  }
-
-  public void shiftLowGear() {
-
-    Log.info("Shifting to low gear");
-    gearShifter.set(false);
-  }
+  
 
   @Override
   public void periodic() {
