@@ -10,14 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CatapultSubsystem;
 
-public class ChooChooStopCommand extends CommandBase {
+public class CatapultFireCommand extends CommandBase {
   /**
    * Creates a new Command for testing.
    */
 
   private final CatapultSubsystem catapultSubsystem;
 
-  public ChooChooStopCommand(CatapultSubsystem catapultSubsystem) {
+  public CatapultFireCommand(CatapultSubsystem catapultSubsystem) {
     this.catapultSubsystem = catapultSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
 
@@ -27,8 +27,8 @@ public class ChooChooStopCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.printSomething("Stopping Motor");
-    catapultSubsystem.catapultMotor(0);
+    catapultSubsystem.catapultMotor(100);
+    catapultSubsystem.catapultState = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

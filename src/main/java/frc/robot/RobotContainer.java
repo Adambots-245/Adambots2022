@@ -94,8 +94,7 @@ public class RobotContainer {
     
       // primary controls
       Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
-      Buttons.primaryXButton.whenPressed(new ChooChooStartCommand(catapultSubsystem));
-      Buttons.primaryBButton.whenPressed(new ChooChooStopCommand(catapultSubsystem));
+      Buttons.primaryXButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
       Buttons.primaryYButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
       Buttons.primaryLB.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem));
       Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
@@ -103,7 +102,6 @@ public class RobotContainer {
       //control panel
       Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
       Buttons.primaryBButton.whenPressed(new AlignColorCommand(panelSubsystem));
-
       // secondary controls
       Buttons.secondaryDPadN.whenPressed(new RaiseIntakeArmCommand(intakeSubsystem));
       Buttons.secondaryDPadS.whenPressed(new LowerIntakeArmCommand(intakeSubsystem));    
