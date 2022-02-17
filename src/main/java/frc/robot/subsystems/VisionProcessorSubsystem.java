@@ -231,7 +231,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             redPts[3] = new Point(frMinX, frMaxY);
 
             drawRect(redPts, redMat);
-            findCrosshair(redPts);
+            findCrosshair(redPts, hubCrosshair);
         
             if (redCrosshair != null){
                 drawCrosshair(redCrosshair, redMat);
@@ -272,7 +272,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             bluePts[3] = new Point(fbMinX, fbMaxY);
 
             drawRect(bluePts, blueMat);
-            findCrosshair(bluePts);
+            findCrosshair(bluePts, hubCrosshair);
         
             if (blueCrosshair != null){
                 drawCrosshair(blueCrosshair, blueMat);
@@ -358,7 +358,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 */
             //if ()
             drawRect(hubPts, hubMat);
-            findCrosshair(hubPts);
+            findCrosshair(hubPts, hubCrosshair);
         
             if (hubCrosshair != null)
                 drawCrosshair(hubCrosshair, hubMat);
@@ -385,13 +385,13 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Calculate the crosshair position
-    public void findCrosshair(Point[] pts) {
+    public void findCrosshair(Point[] pts, Point crosshair) {
         // i is starting point for line, j is next point
         int j;
         for (int i = 0; i < 4; i++) {
             j = (i + 1) % 4;
-            if (hubCrosshair == null || (pts[i].y + pts[j].y) / 2 < hubCrosshair.y)
-                hubCrosshair = new Point((pts[i].x + pts[j].x) / 2, (pts[i].y + pts[j].y) / 2);
+            if (crosshair == null || (pts[i].y + pts[j].y) / 2 < crosshair.y)
+            crosshair = new Point((pts[i].x + pts[j].x) / 2, (pts[i].y + pts[j].y) / 2);
         }
     }
 
