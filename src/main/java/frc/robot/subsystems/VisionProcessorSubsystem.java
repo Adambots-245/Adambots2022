@@ -207,20 +207,20 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         ArrayList<MatOfPoint> contours = redGrip.filterContoursOutput();
         redRects = new RotatedRect[contours.size()];
         for (int i = 0; i < contours.size(); i++){
-            rects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
+            redRects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
         }
 
         if (contours.size() != 0) {
-            double rMinX = rects[0].boundingRect().x;
+            double rMinX = redRects[0].boundingRect().x;
             double rMaxX = 0;
-            double rMinY = rects[0].boundingRect().y;
+            double rMinY = redRects[0].boundingRect().y;
             double rMaxY = 0;
 
-            for (int a = 0; a < rects.length; a++) {
-                rMinX = Math.min(rMinX, rects[a].boundingRect().x);
-                rMaxX = Math.max(rMaxX, rects[a].boundingRect().x);
-                rMinY = Math.min(rMinY, rects[a].boundingRect().y);
-                rMaxY = Math.max(rMaxY, rects[a].boundingRect().y);
+            for (int a = 0; a < redRects.length; a++) {
+                rMinX = Math.min(rMinX, redRects[a].boundingRect().x);
+                rMaxX = Math.max(rMaxX, redRects[a].boundingRect().x);
+                rMinY = Math.min(rMinY, redRects[a].boundingRect().y);
+                rMaxY = Math.max(rMaxY, redRects[a].boundingRect().y);
             }
 
             double frMinX = redMinXFilter.calculate(rMinX);
