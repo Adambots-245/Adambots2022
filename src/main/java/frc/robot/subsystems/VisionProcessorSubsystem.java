@@ -24,7 +24,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private static CvSource processedOutputStreamHub;
     private static CvSource processedOutputStreamRed;
     private static CvSource processedOutputStreamBlue;
-    private static CvSink cvSink;
+    private static CvSink ballCvSink;
+    private static CvSink hubCvSink;
     private static HubGripPipeline hubGrip;
     private static RedGripPipeline redGrip;
     private static BlueGripPipeline blueGrip;
@@ -60,6 +61,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     RotatedRect[] hubRects;
     RotatedRect[] redRects;
     RotatedRect[] blueRects;
+    ArrayList<MatOfPoint> hubContours;
+    ArrayList<MatOfPoint> redContours;
+    ArrayList<MatOfPoint> blueContours;
     //int finalAngle;
 
     public VisionProcessorSubsystem(Solenoid ringLight, RedGripPipeline redGrip, HubGripPipeline hubGrip, BlueGripPipeline blueGrip) {
@@ -112,7 +116,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         processedOutputStreamBlue.setFPS(Constants.DRIVER_STATION_FPS);
         processedOutputStreamBlue.setPixelFormat(PixelFormat.kGray);
 
-        cvSink = CameraServer.getVideo();
+        ballCvSink = CameraServer.getVideo();
+        hubCvSink = CameraServer.getVideo();
         // grip = new GripPipeline();
         hubMat = new Mat();
         redMat = new Mat();
@@ -139,19 +144,22 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         int frameCount = 0;
         while (!Thread.interrupted()) {
             hubCrosshair = null;
-            if (cvSink.grabFrame(hubMat) == 0) {
-                processedOutputStreamHub.notifyError(cvSink.getError());
-            }
-            if (cvSink.grabFrame(redMat) == 0) {
-                processedOutputStreamRed.notifyError(cvSink.getError());
-            }
-            if (cvSink.grabFrame(blueMat) == 0) {
-                processedOutputStreamBlue.notifyError(cvSink.getError());
-            }
+            if (hubCvSink.grabFrame(hubMat) == 0) {
+                processedOutputStreamHub.notifyError(hubCvSink.getError());
             
-            hubGrip.process(hubMat);
-            redGrip.process(redMat);
-            blueGrip.process(blueMat);
+            }
+            /*
+            if (ballCvSink.grabFrame(redMat) == 0) {
+                processedOutputStreamRed.notifyError(ballCvSink.getError());
+            }
+            if (ballCvSink.grabFrame(blueMat) == 0) {
+                processedOutputStreamBlue.notifyError(ballCvSink.getError());
+            }
+            */
+            
+           // hubGrip.process(hubMat);
+           // redGrip.process(redMat);
+           // blueGrip.process(blueMat);
 
         /*    RotatedRect[] rects = findBoundingBoxes();
             if (rects.length != 0) {
@@ -171,10 +179,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
               }
 
                */
-            findBoundingBoxesHub();
-            findBoundingBoxesBlue();
-            findBoundingBoxesRed();
-
+            //findBoundingBoxesHub();
+            //findBoundingBoxesBlue();
+            //findBoundingBoxesRed();
+/*
             if (hubCrosshair != null) {
                 synchronized (lock) {
                     calculateAngle(hubAngle, hubCrosshair);
@@ -190,11 +198,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                     calculateAngle(blueAngle, blueCrosshair);
                 }
             }
+            */
           
             if (frameCount == 1) {
-                processedOutputStreamHub.putFrame(hubMat);
-                processedOutputStreamRed.putFrame(redMat);
-                processedOutputStreamBlue.putFrame(blueMat);
+                processedOutputStreamHub.putFrame(hubGrip.hsvThresholdOutput());
+               // processedOutputStreamRed.putFrame(redMat);
+               // processedOutputStreamBlue.putFrame(blueMat);
                 frameCount = 0;
             }
 
@@ -204,13 +213,13 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }    
 
     public void findBoundingBoxesRed() {
-        ArrayList<MatOfPoint> contours = redGrip.filterContoursOutput();
-        redRects = new RotatedRect[contours.size()];
-        for (int i = 0; i < contours.size(); i++){
-            redRects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
+        redContours = redGrip.filterContoursOutput();
+        redRects = new RotatedRect[redContours.size()];
+        for (int i = 0; i < redContours.size(); i++){
+            redRects[i] = Imgproc.minAreaRect(new MatOfPoint2f(redContours.get(i).toArray()));
         }
 
-        if (contours.size() != 0) {
+        if (redContours.size() != 0) {
             double rMinX = redRects[0].boundingRect().x;
             double rMaxX = 0;
             double rMinY = redRects[0].boundingRect().y;
@@ -245,23 +254,21 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     public void findBoundingBoxesBlue() {
-        ArrayList<MatOfPoint> contours = blueGrip.filterContoursOutput();
-        RotatedRect[] rects = new RotatedRect[contours.size()];
-        for (int i = 0; i < contours.size(); i++){
-            rects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
+        blueContours = blueGrip.filterContoursOutput();
+        blueRects = new RotatedRect[blueContours.size()];
+        for (int i = 0; i < blueContours.size(); i++){
+            blueRects[i] = Imgproc.minAreaRect(new MatOfPoint2f(blueContours.get(i).toArray()));
         }
 
-        if (contours.size() != 0) {
-            double bMinX = rects[0].boundingRect().x;
+        if (blueContours.size() != 0) {
+            double bMinX = blueRects[0].boundingRect().x;
             double bMaxX = 0;
-            double bMinY = rects[0].boundingRect().y;
+            double bMinY = blueRects[0].boundingRect().y;
             double bMaxY = 0;
 
-            for (int a = 0; a <rects.length; a++) {
-                bMinX = Math.min(bMinX, rects[a].boundingRect().x);
-                bMaxX = Math.max(bMaxX, rects[a].boundingRect().x);
-                bMinY = Math.min(bMinY, rects[a].boundingRect().y);
-                bMaxY = Math.max(bMaxY, rects[a].boundingRect().y);
+            for (int a = 0; a <blueRects.length; a++) {
+                bMinX = Math.min(bMinX, blueRects[a].boundingRect().y);
+                bMaxY = Math.max(bMaxY, blueRects[a].boundingRect().y);
             }
 
             double fbMinX = blueMinXFilter.calculate(bMinX);
@@ -286,23 +293,23 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     public void findBoundingBoxesHub() {
-        ArrayList<MatOfPoint> contours = hubGrip.filterContoursOutput();
+        hubContours = hubGrip.filterContoursOutput();
         //System.out.println(contours.size());
-        RotatedRect[] rects = new RotatedRect[contours.size()];
-        for (int i = 0; i < contours.size(); i++)
-            rects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
+        hubRects = new RotatedRect[hubContours.size()];
+        for (int i = 0; i < hubContours.size(); i++)
+            hubRects[i] = Imgproc.minAreaRect(new MatOfPoint2f(hubContours.get(i).toArray()));
 
-        if (contours.size() != 0){
-            double hMinX = rects[0].boundingRect().x;
+        if (hubContours.size() != 0){
+            double hMinX = hubRects[0].boundingRect().x;
             double hMaxX = 0;
-            double hMinY = rects[0].boundingRect().y;
+            double hMinY = hubRects[0].boundingRect().y;
             double hMaxY = 0;
 
-            for(int a=0; a<rects.length; a++ ) {
-                hMinX = Math.min(hMinX, rects[a].boundingRect().x);
-                hMaxX = Math.max(hMaxX, rects[a].boundingRect().x);
-                hMinY = Math.min(hMinY, rects[a].boundingRect().y);
-                hMaxY = Math.max(hMaxY, rects[a].boundingRect().y);
+            for(int a=0; a<hubRects.length; a++ ) {
+                hMinX = Math.min(hMinX, hubRects[a].boundingRect().x);
+                hMaxX = Math.max(hMaxX, hubRects[a].boundingRect().x);
+                hMinY = Math.min(hMinY, hubRects[a].boundingRect().y);
+                hMaxY = Math.max(hMaxY, hubRects[a].boundingRect().y);
             }
 
             double fhMinY = hubMinYFilter.calculate(hMinY);
