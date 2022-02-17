@@ -231,7 +231,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             redPts[3] = new Point(frMinX, frMaxY);
 
             drawRect(redPts, redMat);
-            findCrosshair(redPts, hubCrosshair);
+            findCrosshair(redPts, redCrosshair);
         
             if (redCrosshair != null){
                 drawCrosshair(redCrosshair, redMat);
@@ -272,7 +272,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             bluePts[3] = new Point(fbMinX, fbMaxY);
 
             drawRect(bluePts, blueMat);
-            findCrosshair(bluePts, hubCrosshair);
+            findCrosshair(bluePts, blueCrosshair);
         
             if (blueCrosshair != null){
                 drawCrosshair(blueCrosshair, blueMat);
@@ -350,12 +350,12 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
             int finalDistance = (int) (calculatedDistance + parabolaError);
         
-            /*SmartDashboard.putNumber("initial distance", calculatedDistance);
+            SmartDashboard.putNumber("initial distance", calculatedDistance);
             SmartDashboard.putNumber("final distance", finalDistance);
             SmartDashboard.putNumber("focalLength", focalLength);
             SmartDashboard.putNumber("pixelWidth", pixelWidth);
             SmartDashboard.putNumber("parabola Error", parabolaError);
-*/
+
             //if ()
             drawRect(hubPts, hubMat);
             findCrosshair(hubPts, hubCrosshair);
@@ -366,15 +366,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                //. SmartDashboard.putNumber("finalAngle", finalAngle);
             }
             SmartDashboard.putNumber("hubAngle", hubAngle);
-    }
-
-    public RotatedRect findLargestRect(RotatedRect[] rects) {
-        RotatedRect rect = rects[0];
-        for (int i = 0; i < rects.length; i++) {
-            if (rects[i].size.area() > rect.size.area())
-                rect = rects[i];
-        }
-        return rect;
     }
 
     // Draw bounding box around the reflective tape
@@ -425,5 +416,14 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     public Thread getVisionThread() {
         return visionThread;
+    }
+
+    public RotatedRect findLargestRect(RotatedRect[] rects) {
+        RotatedRect rect = rects[0];
+        for (int i = 0; i < rects.length; i++) {
+            if (rects[i].size.area() > rect.size.area())
+                rect = rects[i];
+        }
+        return rect;
     }
 }
