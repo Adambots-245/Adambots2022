@@ -57,6 +57,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private MedianFilter blueMinYFilter;
     private MedianFilter blueMaxXFilter;
     private MedianFilter blueMinXFilter;
+    RotatedRect[] hubRects;
+    RotatedRect[] redRects;
+    RotatedRect[] blueRects;
     //int finalAngle;
 
     public VisionProcessorSubsystem(Solenoid ringLight, RedGripPipeline redGrip, HubGripPipeline hubGrip, BlueGripPipeline blueGrip) {
@@ -202,7 +205,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     public void findBoundingBoxesRed() {
         ArrayList<MatOfPoint> contours = redGrip.filterContoursOutput();
-        RotatedRect[] rects = new RotatedRect[contours.size()];
+        redRects = new RotatedRect[contours.size()];
         for (int i = 0; i < contours.size(); i++){
             rects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
         }
