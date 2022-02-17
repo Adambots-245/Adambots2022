@@ -28,7 +28,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private static HubGripPipeline hubGrip;
     private static RedGripPipeline redGrip;
     private static BlueGripPipeline blueGrip;
-    private static Mat mat;
+    private static Mat hubMat;
+    private static Mat blueMat;
+    private static Mat redMat;
     private static Point hubCrosshair;
     private static Point blueCrosshair;
     private static Point redCrosshair;
@@ -109,7 +111,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
         cvSink = CameraServer.getVideo();
         // grip = new GripPipeline();
-        mat = new Mat();
+        hubMat = new Mat();
+        redMat = new Mat();
+        blueMat = new Mat();
 
         ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kMJPEG, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
         hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
@@ -132,16 +136,19 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         int frameCount = 0;
         while (!Thread.interrupted()) {
             hubCrosshair = null;
-            if (cvSink.grabFrame(mat) == 0) {
+            if (cvSink.grabFrame(hubMat) == 0) {
                 processedOutputStreamHub.notifyError(cvSink.getError());
-                processedOutputStreamRed.notifyError(cvSink.getError());
-                processedOutputStreamBlue.notifyError(cvSink.getError());
-                continue;
-
             }
-            hubGrip.process(mat);
-            redGrip.process(mat);
-            blueGrip.process(mat);
+            if (cvSink.grabFrame(redMat) == 0) {
+                processedOutputStreamRed.notifyError(cvSink.getError());
+            }
+            if (cvSink.grabFrame(blueMat) == 0) {
+                processedOutputStreamBlue.notifyError(cvSink.getError());
+            }
+            
+            hubGrip.process(hubMat);
+            redGrip.process(redMat);
+            blueGrip.process(blueMat);
 
         /*    RotatedRect[] rects = findBoundingBoxes();
             if (rects.length != 0) {
@@ -170,18 +177,28 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                     calculateAngle(hubAngle, hubCrosshair);
                 }
             }
+            if (redCrosshair != null) {
+                synchronized (lock) {
+                    calculateAngle(redAngle, redCrosshair);
+                }
+            }
+            if (blueCrosshair != null) {
+                synchronized (lock) {
+                    calculateAngle(blueAngle, blueCrosshair);
+                }
+            }
           
             if (frameCount == 1) {
-                processedOutputStreamHub.putFrame(mat);
-                processedOutputStreamRed.putFrame(mat);
-                processedOutputStreamBlue.putFrame(mat);
+                processedOutputStreamHub.putFrame(hubMat);
+                processedOutputStreamRed.putFrame(redMat);
+                processedOutputStreamBlue.putFrame(blueMat);
                 frameCount = 0;
             }
 
             frameCount++;
+    
         }
-
-    }
+    }    
 
     public void findBoundingBoxesRed() {
         ArrayList<MatOfPoint> contours = redGrip.filterContoursOutput();
@@ -213,14 +230,14 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             redPts[2] = new Point(frMaxX, frMaxY);
             redPts[3] = new Point(frMinX, frMaxY);
 
-            drawRect(redPts);
+            drawRect(redPts, redMat);
             findCrosshair(redPts);
         
             if (redCrosshair != null){
-                drawCrosshair(redCrosshair);
+                drawCrosshair(redCrosshair, redMat);
                 calculateAngle(redAngle, redCrosshair);
             }
-            SmartDashboard.putNumber("Angle", hubAngle);
+            SmartDashboard.putNumber("redAngle", redAngle);
         }
     }
 
@@ -254,14 +271,14 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             bluePts[2] = new Point(fbMaxX, fbMaxY);
             bluePts[3] = new Point(fbMinX, fbMaxY);
 
-            drawRect(bluePts);
+            drawRect(bluePts, blueMat);
             findCrosshair(bluePts);
         
             if (blueCrosshair != null){
-                drawCrosshair(blueCrosshair);
+                drawCrosshair(blueCrosshair, blueMat);
                 calculateAngle(blueAngle, blueCrosshair);
             }
-            SmartDashboard.putNumber("Angle", hubAngle);
+            SmartDashboard.putNumber("blueAngle", blueAngle);
         }
     }
 
@@ -333,22 +350,22 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
             int finalDistance = (int) (calculatedDistance + parabolaError);
         
-            SmartDashboard.putNumber("initial distance", calculatedDistance);
+            /*SmartDashboard.putNumber("initial distance", calculatedDistance);
             SmartDashboard.putNumber("final distance", finalDistance);
             SmartDashboard.putNumber("focalLength", focalLength);
             SmartDashboard.putNumber("pixelWidth", pixelWidth);
             SmartDashboard.putNumber("parabola Error", parabolaError);
-
+*/
             //if ()
-            drawRect(hubPts);
+            drawRect(hubPts, hubMat);
             findCrosshair(hubPts);
         
             if (hubCrosshair != null)
-                drawCrosshair(hubCrosshair);
+                drawCrosshair(hubCrosshair, hubMat);
                 calculateAngle(hubAngle, hubCrosshair);
-                SmartDashboard.putNumber("Angle", hubAngle);
                //. SmartDashboard.putNumber("finalAngle", finalAngle);
             }
+            SmartDashboard.putNumber("hubAngle", hubAngle);
     }
 
     public RotatedRect findLargestRect(RotatedRect[] rects) {
@@ -361,7 +378,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Draw bounding box around the reflective tape
-    public void drawRect(Point[] pts) {
+    public void drawRect(Point[] pts, Mat mat) {
         for (int i = 0; i < 4; i++)
             Imgproc.line(mat, pts[i], pts[(i + 1) % 4], Constants.RED, 2);
 
@@ -379,7 +396,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Draw the crosshair on the frame
-    public void drawCrosshair(Point crosshair) {
+    public void drawCrosshair(Point crosshair, Mat mat) {
         Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLUE, 3);
         Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLUE, 3);
     }
@@ -387,7 +404,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     // Calculate horizontal turret angle
     public void calculateAngle(double angle, Point crosshair) {
         pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
-        SmartDashboard.putNumber("pixelDistance", pixelDistance);
+        //SmartDashboard.putNumber("pixelDistance", pixelDistance);
         angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
         //double a = -0.00549184;
         //double b = 0.100438;
@@ -409,5 +426,4 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     public Thread getVisionThread() {
         return visionThread;
     }
-
 }
