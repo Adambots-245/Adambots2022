@@ -40,7 +40,7 @@ public class RobotContainer {
   private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.ArmMover, RobotMap.IntakeMotor, RobotMap.FeedToBlasterMotor);
-  private final TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
+  private final TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.ChooChooLimitSwitch);
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch);
   
   // commands
@@ -53,7 +53,6 @@ public class RobotContainer {
   private RaiseElevatorCommand raiseElevatorCommand;
   private SequentialCommandGroup autonDriveForwardGyroDistanceCommand;
   private WinchCommand winchCommand;
-  private CatapultCommand catapultCommand;
   
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -95,7 +94,8 @@ public class RobotContainer {
     
       // primary controls
       Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
-      Buttons.primaryXButton.whenPressed(new CatapultCommand(catapultSubsystem));
+      Buttons.primaryXButton.whenPressed(new ChooChooStartCommand(catapultSubsystem));
+      Buttons.primaryBButton.whenPressed(new ChooChooStopCommand(catapultSubsystem));
       Buttons.primaryYButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
       Buttons.primaryLB.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem));
       Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));

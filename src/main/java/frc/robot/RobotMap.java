@@ -60,8 +60,7 @@ public class RobotMap {
     
     public static final VictorSPX TurretMotor = new VictorSPX(Constants.TURRET_MOTOR_PORT);
 	public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
-	public static final DigitalInput RightLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
-	public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
+	public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
 
