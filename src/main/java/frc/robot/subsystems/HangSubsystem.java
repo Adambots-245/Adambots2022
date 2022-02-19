@@ -32,6 +32,7 @@ public class HangSubsystem extends SubsystemBase {
 
         Log.info("Initializing Hang Subsystem");
     }
+    
 
     public void climb(double speed, boolean overrideFlag) {
         if (!limitSwitch1.get() && !limitSwitch2.get() && speed >= 0 && !overrideFlag) {
