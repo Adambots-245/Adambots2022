@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     
     if (Robot.isReal()) {
-      SmartDashboard.putNumber("ANGLE", vision.getAngle());
+      //SmartDashboard.putNumber("ANGLE", vision.getAngle());
     }
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or

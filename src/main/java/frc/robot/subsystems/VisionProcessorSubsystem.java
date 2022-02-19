@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.print.DocFlavor.STRING;
 
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.FixedSpaceIndenter;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -34,15 +36,18 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private static BlueGripPipeline blueGrip;
     private static Mat hubMat;
     private static Mat redMat;
+    private static Mat blueMat;
     private static Point hubCrosshair;
     private static Point ballCrosshair;
     private static Point[] hubPts = new Point[4];
     private static Point[] ballPts = new Point[4];
     private static int pixelDistance;
-    private static double angle;
+    private static double hubAngle;
+    private static double ballAngle;
     private Object lock = new Object();
     private Thread visionThread;
-    private NetworkTableEntry angleEntry;
+    private NetworkTableEntry hubAngleEntry;
+    private NetworkTableEntry ballAngleEntry;
     private Solenoid ringLight;
     private MedianFilter hubMaxYFilter;
     private MedianFilter hubMinYFilter;
@@ -83,7 +88,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         ringLight.set(true);
         ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
         hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
-        // ballDetectionCamera.setExposureManual(12);
+
         processedOutputStreamHub = CameraServer.putVideo("CameraHub-Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
         processedOutputStreamHub.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
         processedOutputStreamHub.setFPS(Constants.DRIVER_STATION_FPS);
@@ -105,6 +110,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         // grip = new GripPipeline();
         hubMat = new Mat();
         redMat = new Mat();
+        blueMat = new Mat();
+
 
         ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kMJPEG, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
         hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
@@ -114,7 +121,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
         NetworkTableInstance instance = NetworkTableInstance.getDefault();
         NetworkTable table = instance.getTable("Vision");
-        angleEntry = table.getEntry("Angle");
+        hubAngleEntry = table.getEntry("hubAngle");
+        ballAngleEntry = table.getEntry("ballAngle");
 
         visionThread = new Thread(() -> {
             run();
@@ -134,40 +142,52 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             }else if(ballCvSink.grabFrame(redMat) == 0) {
                 processedOutputStreamRed.notifyError(ballCvSink.getError());
                 continue;
+            }else if(ballCvSink.grabFrame(blueMat) == 0) {
+                processedOutputStreamBlue.notifyError(ballCvSink.getError());
+                continue;
             }
 
             hubGrip.process(hubMat);
             redGrip.process(redMat);
-            //blueGrip.process(mat);
+            blueGrip.process(blueMat);
 
             redContours = redGrip.filterContoursOutput();
             blueContours = blueGrip.filterContoursOutput();
 
-            RotatedRect[] rects = findBoundingBoxes(redContours);
-            SmartDashboard.putNumber("rectslength", rects.length);
-            SmartDashboard.putNumber("redContourslength", redContours.size());
+            RotatedRect[] rects = findBoundingBoxes(blueContours);
+            //SmartDashboard.putNumber("rectslength", rects.length);
+            //SmartDashboard.putNumber("redContourslength", blueContours.size());
             if (rects.length != 0) {
                 //RotatedRect rect = findLargestRect(rects);
                 RotatedRect rect = rects[0];
-                draw(rect);
+                draw(rect, blueMat);
+                //findCrosshair(ballPts, ballCrosshair);
+                //drawCrosshair(ballCrosshair, blueMat);
             }
 
             findBoundingBoxesHub();
+            
             //findBoundingBoxesBall(redContours, redMat);
 
 
-/*
-            if (crosshair != null) {
+
+            if(hubCrosshair != null) {
                 synchronized (lock) {
-                    calculateAngle();
+                    hubAngle = calculateAngle(hubCrosshair, hubAngleEntry);
                 }
-                
             }
-*/            
+            if(ballCrosshair != null) {
+                synchronized (lock) {
+                    ballAngle = calculateAngle(ballCrosshair, ballAngleEntry);
+                }
+            }
+            SmartDashboard.putNumber("hubAngle", hubAngle);
+            SmartDashboard.putNumber("ballAngle", ballAngle);
+            
             if (frameCount == 1) {
                 processedOutputStreamHub.putFrame(hubMat);
                 processedOutputStreamRed.putFrame(redMat);
-                //processedOutputStreamBlue.putFrame(blueGrip.hsvThresholdOutput());
+                processedOutputStreamBlue.putFrame(blueMat);
                 frameCount = 0;
             }
 
@@ -256,14 +276,13 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("focalLength", focalLength);
         SmartDashboard.putNumber("pixelWidth", pixelWidth);
         SmartDashboard.putNumber("parabola Error", parabolaError);
-        SmartDashboard.putNumber("angle", angle);
 
         //if ()
         drawRect(hubPts, hubMat);
-        findCrosshair(hubPts, hubCrosshair);
+        hubCrosshair = findCrosshair(hubPts, hubCrosshair);
         
         if (hubCrosshair != null)
-            drawCrosshair(hubCrosshair, hubMat);
+            drawCrosshair(hubCrosshair, hubMat);        
         }
     }
 
@@ -289,13 +308,13 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         return rect;
     }
 
-    public void draw(RotatedRect rect) {
+    public void draw(RotatedRect rect, Mat mat) {
         rect.points(ballPts);
-        drawRect(ballPts, redMat);
-        findCrosshair(ballPts, ballCrosshair);
+        drawRect(ballPts, mat);
+        ballCrosshair = findCrosshair(ballPts, ballCrosshair);
 
         if (ballCrosshair != null)
-            drawCrosshair(ballCrosshair, redMat);
+            drawCrosshair(ballCrosshair, mat);
     }
 
     // Draw bounding box around the reflective tape
@@ -306,37 +325,40 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Calculate the crosshair position
-    public void findCrosshair(Point[] pts, Point crosshair) {
+    public Point findCrosshair(Point[] pts, Point crosshair) {
         // i is starting point for line, j is next point
-        int j;
+        //int j;
+        crosshair = new Point((pts[0].x + pts[2].x) / 2, (pts[0].y + pts[2].y) / 2);
+        /*
         for (int i = 0; i < 4; i++) {
             j = (i + 1) % 4;
             if (crosshair == null || (pts[i].y + pts[j].y) / 2 < crosshair.y)
                 crosshair = new Point((pts[i].x + pts[j].x) / 2, (pts[i].y + pts[j].y) / 2);
 
         }
-
+        */
+        return crosshair;
     }
 
     // Draw the crosshair on the frame
     public void drawCrosshair(Point crosshair, Mat mat) {
-        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLUE, 3);
-        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLUE, 3);
+        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLACK, 3);
+        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLACK, 3);
 
     }
 
     // Calculate horizontal turret angle
-    public void calculateAngle(Point crosshair) {
+    public double calculateAngle(Point crosshair, NetworkTableEntry angleEntry) {
         pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
-        angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
+        double angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
         angleEntry.setDouble(angle);
-
+        return angle;
     }
 
     // Getter for angle
-    public double getAngle() { 
-        return angle;
-    }
+    //public double getAngle() { 
+        //return angle;
+    //}
 
     public Thread getVisionThread() {
         return visionThread;
