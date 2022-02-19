@@ -83,7 +83,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         ringLight.set(true);
         ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
         hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
-        // camera.setExposureManual(Constants.CAM_EXPOSURE);
+        // ballDetectionCamera.setExposureManual(12);
         processedOutputStreamHub = CameraServer.putVideo("CameraHub-Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
         processedOutputStreamHub.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
         processedOutputStreamHub.setFPS(Constants.DRIVER_STATION_FPS);
@@ -140,26 +140,20 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             redGrip.process(redMat);
             //blueGrip.process(mat);
 
-        /*    RotatedRect[] rects = findBoundingBoxes();
-            if (rects.length != 0) {
-              RotatedRect rect = findLargestRect(rects);
-              draw(rect);
-            }
-           
-            RotatedRect[] rects = findBoundingBoxes();
-            if (rects.length != 0) {
-                for (int i = 0; i < rects.length; i++) {
-                    draw(rects[i]);
-                    
-                }
-                RotatedRect rect = findLargestRect(rects);
-                draw(rect);
-              }
-               */
-            findBoundingBoxesHub();
             redContours = redGrip.filterContoursOutput();
             blueContours = blueGrip.filterContoursOutput();
-            findBoundingBoxesBall(redContours, redMat);
+
+            RotatedRect[] rects = findBoundingBoxes(redContours);
+            SmartDashboard.putNumber("rectslength", rects.length);
+            SmartDashboard.putNumber("redContourslength", redContours.size());
+            if (rects.length != 0) {
+                //RotatedRect rect = findLargestRect(rects);
+                RotatedRect rect = rects[0];
+                draw(rect);
+            }
+
+            findBoundingBoxesHub();
+            //findBoundingBoxesBall(redContours, redMat);
 
 
 /*
@@ -172,7 +166,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 */            
             if (frameCount == 1) {
                 processedOutputStreamHub.putFrame(hubMat);
-                processedOutputStreamRed.putFrame(redGrip.hsvThresholdOutput());
+                processedOutputStreamRed.putFrame(redMat);
                 //processedOutputStreamBlue.putFrame(blueGrip.hsvThresholdOutput());
                 frameCount = 0;
             }
@@ -189,17 +183,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         for (int i = 0; i < contours.size(); i++)
             rects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
 
-        /*System.out.print(rects.length);
-        SmartDashboard.putNumber("rect0 x", rects[0].boundingRect().x);
-        SmartDashboard.putNumber("rect last x-1", rects[rects.length - 1].boundingRect().x);
-        SmartDashboard.putNumber("rect0 y", rects[0].boundingRect().y);
-        SmartDashboard.putNumber("rect last y-1", rects[rects.length - 1].boundingRect().y);
-*/
         if (contours.size() != 0){
             double minX = rects[0].boundingRect().x;
-        double maxX = 0;
-        double minY = rects[0].boundingRect().y;
-        double maxY = 0;
+            double maxX = 0;
+            double minY = rects[0].boundingRect().y;
+            double maxY = 0;
 
         for(int a=0; a<rects.length; a++ ) {
             minX = Math.min(minX, rects[a].boundingRect().x);
@@ -215,19 +203,19 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         double fMinX = hubMinXFilter.calculate(minX);
         double fMaxX = hubMaxXFilter.calculate(maxX);
         
-        SmartDashboard.putNumber("minX", fMinY);
-        SmartDashboard.putNumber("minY", fMaxY);
-        SmartDashboard.putNumber("maxX", fMinX);
-        SmartDashboard.putNumber("maxY", fMaxX);
+        //SmartDashboard.putNumber("minX", fMinY);
+        //SmartDashboard.putNumber("minY", fMaxY);
+        //SmartDashboard.putNumber("maxX", fMinX);
+        //SmartDashboard.putNumber("maxY", fMaxX);
         
         
 
         //RotatedRect boundingBox = new RotatedRect();
      
-        pts[0] = new Point(fMinX, fMinY);
-        pts[1] = new Point(fMaxX, fMinY);
-        pts[2] = new Point(fMaxX, fMaxY);
-        pts[3] = new Point(fMinX, fMaxY);
+        hubPts[0] = new Point(fMinX, fMinY);
+        hubPts[1] = new Point(fMaxX, fMinY);
+        hubPts[2] = new Point(fMaxX, fMaxY);
+        hubPts[3] = new Point(fMinX, fMaxY);
 
 
         double fieldOfView = 68.5;
@@ -271,71 +259,26 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("angle", angle);
 
         //if ()
-        drawRect(pts, hubMat);
-        findCrosshair(pts, hubCrosshair);
+        drawRect(hubPts, hubMat);
+        findCrosshair(hubPts, hubCrosshair);
         
         if (hubCrosshair != null)
-            drawCrosshair(hubCrosshair);
+            drawCrosshair(hubCrosshair, hubMat);
         }
     }
 
-    public void findBoundingBoxesBall(ArrayList<MatOfPoint> contours, Mat mat) {
-        //System.out.println(contours.size());
+    public RotatedRect[] findBoundingBoxes(ArrayList<MatOfPoint> contours) {
+        // System.out.println(contours.size());
         RotatedRect[] rects = new RotatedRect[contours.size()];
         for (int i = 0; i < contours.size(); i++)
             rects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
 
-        /*System.out.print(rects.length);
-        SmartDashboard.putNumber("rect0 x", rects[0].boundingRect().x);
-        SmartDashboard.putNumber("rect last x-1", rects[rects.length - 1].boundingRect().x);
-        SmartDashboard.putNumber("rect0 y", rects[0].boundingRect().y);
-        SmartDashboard.putNumber("rect last y-1", rects[rects.length - 1].boundingRect().y);
-*/
-        if (contours.size() != 0){
-            double minX = rects[0].boundingRect().x;
-        double maxX = 0;
-        double minY = rects[0].boundingRect().y;
-        double maxY = 0;
-
-        for(int a=0; a<rects.length; a++ ) {
-            minX = Math.min(minX, rects[a].boundingRect().x);
-            maxX = Math.max(maxX, rects[a].boundingRect().x);
-            minY = Math.min(minY, rects[a].boundingRect().y);
-            maxY = Math.max(maxY, rects[a].boundingRect().y);
-
-
-        }
-
-        double fMinY = ballMinYFilter.calculate(minY);
-        double fMaxY = ballMaxYFilter.calculate(maxY);
-        double fMinX = ballMinXFilter.calculate(minX);
-        double fMaxX = ballMaxXFilter.calculate(maxX);
-        
-        SmartDashboard.putNumber("minX", fMinY);
-        SmartDashboard.putNumber("minY", fMaxY);
-        SmartDashboard.putNumber("maxX", fMinX);
-        SmartDashboard.putNumber("maxY", fMaxX);
-        
-        
-
-        //RotatedRect boundingBox = new RotatedRect();
-     
-        pts[0] = new Point(fMinX, fMinY);
-        pts[1] = new Point(fMaxX, fMinY);
-        pts[2] = new Point(fMaxX, fMaxY);
-        pts[3] = new Point(fMinX, fMaxY);
-
-        //if ()
-        drawRect(pts, mat);
-        findCrosshair(pts, ballCrosshair);
-        
-        if (ballCrosshair != null)
-            drawCrosshair(ballCrosshair);
-        }
+        return rects;
     }
 
     public RotatedRect findLargestRect(RotatedRect[] rects) {
         RotatedRect rect = rects[0];
+       
         for (int i = 0; i < rects.length; i++) {
             if (rects[i].size.area() > rect.size.area())
                 rect = rects[i];
@@ -346,10 +289,19 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         return rect;
     }
 
+    public void draw(RotatedRect rect) {
+        rect.points(ballPts);
+        drawRect(ballPts, redMat);
+        findCrosshair(ballPts, ballCrosshair);
+
+        if (ballCrosshair != null)
+            drawCrosshair(ballCrosshair, redMat);
+    }
+
     // Draw bounding box around the reflective tape
     public void drawRect(Point[] pts, Mat mat) {
         for (int i = 0; i < 4; i++)
-            Imgproc.line(mat, pts[i], pts[(i + 1) % 4], Constants.BLACK, 2);
+            Imgproc.line(mat, pts[i], pts[(i + 1) % 4], Constants.GREEN, 2);
 
     }
 
@@ -367,9 +319,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Draw the crosshair on the frame
-    public void drawCrosshair(Point crosshair) {
-        Imgproc.line(hubMat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLUE, 3);
-        Imgproc.line(hubMat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLUE, 3);
+    public void drawCrosshair(Point crosshair, Mat mat) {
+        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLUE, 3);
+        Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLUE, 3);
 
     }
 
