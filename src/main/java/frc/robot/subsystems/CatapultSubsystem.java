@@ -7,32 +7,28 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Gamepad.Buttons;
 import frc.robot.utils.Log;
-
 public class CatapultSubsystem extends SubsystemBase {
   /**
    * Creates a new CatapultSubsystem.
    */
 
   private WPI_VictorSPX catapultMotor;
-  private DigitalInput bucketLimitSwitch;
-  public Boolean catapultState = true;
-  private Boolean limitSim = false;
+  private DigitalInput chooChooLimitSwitch;
+  private DigitalInput bandLimitSwitch;
   private Boolean prevLimitSwitchState = false;
 
-  public CatapultSubsystem(WPI_VictorSPX catapultMotor, DigitalInput bucketLimitSwitch) {
+  public CatapultSubsystem(WPI_VictorSPX catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandLimitSwitch) {
     super();
 
     this.catapultMotor = catapultMotor;
-    this.bucketLimitSwitch = bucketLimitSwitch;
+    this.chooChooLimitSwitch = chooChooLimitSwitch;
+    this.bandLimitSwitch = bandLimitSwitch;
     Log.info("Initializing Catapult");
   }
 
@@ -42,14 +38,10 @@ public class CatapultSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    limitSim = Buttons.primaryAButton.get();
-
-    if (limitSim == true && prevLimitSwitchState == false && catapultState == false) {
+    if (chooChooLimitSwitch.get() == true && prevLimitSwitchState == false) {
       catapultMotor.set(ControlMode.PercentOutput, 0);
-      catapultState = true;
     }
 
-    System.out.println(catapultState);
-    prevLimitSwitchState = limitSim;
+    prevLimitSwitchState = chooChooLimitSwitch.get();
   }
 }

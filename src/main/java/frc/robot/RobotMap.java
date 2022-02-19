@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.sensors.ColorSensor;
 import frc.robot.sensors.Gyro;
-import frc.robot.sensors.Lidar;
 import frc.robot.sensors.PhotoEye;
 
 
@@ -31,7 +30,6 @@ public class RobotMap {
     public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
     
     public static final Gyro GyroSensor = Gyro.getInstance();
-    public static final Lidar LidarSensor = Lidar.getInstance();
 
     public static final Solenoid GearShifter = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.HIGH_GEAR_SOL_PORT);
 	public static final WPI_TalonFX FrontRightMotor = new WPI_TalonFX(Constants.FR_TALON);
@@ -51,16 +49,14 @@ public class RobotMap {
     public static final WPI_VictorSPX WinchMotor1 = new WPI_VictorSPX(Constants.CLIMBING_1_MOTOR_PORT);
     public static final WPI_VictorSPX WinchMotor2 = new WPI_VictorSPX(Constants.CLIMBING_2_MOTOR_PORT);
 
-    public static final DigitalInput LimitSwitch1 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_1_PORT);
-    public static final DigitalInput LimitSwitch2 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_2_PORT);
-
     public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
     public static final WPI_VictorSPX IntakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR_PORT);
     public static final WPI_VictorSPX FeedToBlasterMotor = new WPI_VictorSPX(Constants.FEED_TO_BLASTER_MOTOR_PORT);
     
     public static final VictorSPX TurretMotor = new VictorSPX(Constants.TURRET_MOTOR_PORT);
-	public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
-	public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
+
+	public static final DigitalInput BandLimitSwitch = new DigitalInput(Constants.BAND_DIO);
+	public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
 

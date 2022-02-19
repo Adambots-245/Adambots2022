@@ -28,19 +28,16 @@ public class CatapultFireCommand extends CommandBase {
   @Override
   public void initialize() {
     catapultSubsystem.catapultMotor(100);
-    catapultSubsystem.catapultState = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
   }
 
   // Returns true when the command should end.
