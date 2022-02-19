@@ -143,6 +143,7 @@ public final class Constants {
     public static final Scalar RED = new Scalar(0, 0, 255);
     public static final Scalar GREEN = new Scalar(0, 255, 0);
     public static final Scalar BLUE = new Scalar(255, 0, 0);
+    public static final Scalar BLACK = new Scalar(0, 0, 0);
 
     // turret PID constants
     // public static double TURRET_kP = 0.0325;

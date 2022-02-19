@@ -53,11 +53,11 @@ public class RedGripPipeline implements VisionPipeline{
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 100.0;
-		double filterContoursMinPerimeter = 100.0;
-		double filterContoursMinWidth = 25.0;
+		double filterContoursMinArea = 130.0;
+		double filterContoursMinPerimeter = 119.0;
+		double filterContoursMinWidth = 35.0;
 		double filterContoursMaxWidth = 250.0;
-		double filterContoursMinHeight = 40.0;
+		double filterContoursMinHeight = 20.0;
 		double filterContoursMaxHeight = 500.0;
 		double[] filterContoursSolidity = {62.05035971223022, 100};
 		double filterContoursMaxVertices = 8000090.0;
@@ -182,4 +182,3 @@ public class RedGripPipeline implements VisionPipeline{
 
 
 }
-

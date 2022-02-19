@@ -34,18 +34,27 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private static BlueGripPipeline blueGrip;
     private static Mat hubMat;
     private static Mat redMat;
-    private static Point crosshair;
-    private static Point[] pts = new Point[4];
+    private static Point hubCrosshair;
+    private static Point ballCrosshair;
+    private static Point[] hubPts = new Point[4];
+    private static Point[] ballPts = new Point[4];
     private static int pixelDistance;
     private static double angle;
     private Object lock = new Object();
     private Thread visionThread;
     private NetworkTableEntry angleEntry;
     private Solenoid ringLight;
-    private MedianFilter maxYFilter;
-    private MedianFilter minYFilter;
-    private MedianFilter maxXFilter;
-    private MedianFilter minXFilter;
+    private MedianFilter hubMaxYFilter;
+    private MedianFilter hubMinYFilter;
+    private MedianFilter hubMaxXFilter;
+    private MedianFilter hubMinXFilter;
+    private MedianFilter ballMaxYFilter;
+    private MedianFilter ballMinYFilter;
+    private MedianFilter ballMaxXFilter;
+    private MedianFilter ballMinXFilter;
+    ArrayList<MatOfPoint> redContours;
+    ArrayList<MatOfPoint> blueContours;
+
 
     public VisionProcessorSubsystem(Solenoid ringLight, RedGripPipeline redGrip, HubGripPipeline hubGrip, BlueGripPipeline blueGrip) {
         this.ringLight = ringLight;
@@ -61,11 +70,16 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         // if pcm status is flashing orange (sticky fault), run once
         // ringLight = new Solenoid(Constants.RING_LIGHT_PORT);
         // Creates a MedianFilter with a window size of 5 samples
-        maxYFilter = new MedianFilter(5);
-        minYFilter = new MedianFilter(5);
-        maxXFilter = new MedianFilter(5);
-        minXFilter = new MedianFilter(5);
+        hubMaxYFilter = new MedianFilter(5);
+        hubMinYFilter = new MedianFilter(5);
+        hubMaxXFilter = new MedianFilter(5);
+        hubMinXFilter = new MedianFilter(5);
  
+        ballMaxYFilter = new MedianFilter(5);
+        ballMinYFilter = new MedianFilter(5);
+        ballMaxXFilter = new MedianFilter(5);
+        ballMinXFilter = new MedianFilter(5);
+
         ringLight.set(true);
         ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
         hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
@@ -112,7 +126,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         // Main vision loop
         int frameCount = 0;
         while (!Thread.interrupted()) {
-            crosshair = null;
+            hubCrosshair = null;
+            ballCrosshair = null;
             if (hubCvSink.grabFrame(hubMat) == 0) {
                 processedOutputStreamHub.notifyError(hubCvSink.getError());
                 continue;
@@ -142,7 +157,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
               }
                */
             findBoundingBoxesHub();
-            
+            redContours = redGrip.filterContoursOutput();
+            blueContours = blueGrip.filterContoursOutput();
+            findBoundingBoxesBall(redContours, redMat);
+
 
 /*
             if (crosshair != null) {
@@ -154,7 +172,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 */            
             if (frameCount == 1) {
                 processedOutputStreamHub.putFrame(hubMat);
-                processedOutputStreamRed.putFrame(redMat);
+                processedOutputStreamRed.putFrame(redGrip.hsvThresholdOutput());
                 //processedOutputStreamBlue.putFrame(blueGrip.hsvThresholdOutput());
                 frameCount = 0;
             }
@@ -192,10 +210,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
         }
 
-        double fMinY = minYFilter.calculate(minY);
-        double fMaxY = maxYFilter.calculate(maxY);
-        double fMinX = minXFilter.calculate(minX);
-        double fMaxX = maxXFilter.calculate(maxX);
+        double fMinY = hubMinYFilter.calculate(minY);
+        double fMaxY = hubMaxYFilter.calculate(maxY);
+        double fMinX = hubMinXFilter.calculate(minX);
+        double fMaxX = hubMaxXFilter.calculate(maxX);
         
         SmartDashboard.putNumber("minX", fMinY);
         SmartDashboard.putNumber("minY", fMaxY);
@@ -253,16 +271,15 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("angle", angle);
 
         //if ()
-        drawRect(pts);
-        findCrosshair(pts);
+        drawRect(pts, hubMat);
+        findCrosshair(pts, hubCrosshair);
         
-        if (crosshair != null)
-            drawCrosshair();
+        if (hubCrosshair != null)
+            drawCrosshair(hubCrosshair);
         }
     }
 
-    public void findBoundingBoxesBall() {
-        ArrayList<MatOfPoint> contours = redGrip.filterContoursOutput();
+    public void findBoundingBoxesBall(ArrayList<MatOfPoint> contours, Mat mat) {
         //System.out.println(contours.size());
         RotatedRect[] rects = new RotatedRect[contours.size()];
         for (int i = 0; i < contours.size(); i++)
@@ -289,10 +306,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
         }
 
-        double fMinY = minYFilter.calculate(minY);
-        double fMaxY = maxYFilter.calculate(maxY);
-        double fMinX = minXFilter.calculate(minX);
-        double fMaxX = maxXFilter.calculate(maxX);
+        double fMinY = ballMinYFilter.calculate(minY);
+        double fMaxY = ballMaxYFilter.calculate(maxY);
+        double fMinX = ballMinXFilter.calculate(minX);
+        double fMaxX = ballMaxXFilter.calculate(maxX);
         
         SmartDashboard.putNumber("minX", fMinY);
         SmartDashboard.putNumber("minY", fMaxY);
@@ -309,11 +326,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         pts[3] = new Point(fMinX, fMaxY);
 
         //if ()
-        drawRect(pts);
-        findCrosshair(pts);
+        drawRect(pts, mat);
+        findCrosshair(pts, ballCrosshair);
         
-        if (crosshair != null)
-            drawCrosshair();
+        if (ballCrosshair != null)
+            drawCrosshair(ballCrosshair);
         }
     }
 
@@ -330,14 +347,14 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Draw bounding box around the reflective tape
-    public void drawRect(Point[] pts) {
+    public void drawRect(Point[] pts, Mat mat) {
         for (int i = 0; i < 4; i++)
-            Imgproc.line(hubMat, pts[i], pts[(i + 1) % 4], Constants.RED, 2);
+            Imgproc.line(mat, pts[i], pts[(i + 1) % 4], Constants.BLACK, 2);
 
     }
 
     // Calculate the crosshair position
-    public void findCrosshair(Point[] pts) {
+    public void findCrosshair(Point[] pts, Point crosshair) {
         // i is starting point for line, j is next point
         int j;
         for (int i = 0; i < 4; i++) {
@@ -350,14 +367,14 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Draw the crosshair on the frame
-    public void drawCrosshair() {
+    public void drawCrosshair(Point crosshair) {
         Imgproc.line(hubMat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLUE, 3);
         Imgproc.line(hubMat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLUE, 3);
 
     }
 
     // Calculate horizontal turret angle
-    public void calculateAngle() {
+    public void calculateAngle(Point crosshair) {
         pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
         angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
         angleEntry.setDouble(angle);
