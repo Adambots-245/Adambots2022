@@ -33,6 +33,7 @@ public final class Constants {
     public static final int BR_TALON = 13;
 
     public static final int CHOO_CHOO_MOTOR_PORT = 14;
+    public static final int BAND_MOTOR_PORT = 12;
     public static final int CLIMBING_1_MOTOR_PORT = 15;
     public static final int CLIMBING_2_MOTOR_PORT = 16;
     public static final int CLIMBING_RAISE_ELEVATOR_MOTOR_PORT = 23;
@@ -71,7 +72,6 @@ public final class Constants {
     
 	public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
 	public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
-
 
     // speed values
     public static final int INTAKE_SPEED = 1;

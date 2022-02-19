@@ -10,15 +10,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CatapultSubsystem;
 
-public class CatapultFireCommand extends CommandBase {
+public class BandMoveCommand extends CommandBase {
   /**
    * Creates a new Command for testing.
    */
 
   private final CatapultSubsystem catapultSubsystem;
+  private final Double speed;
 
-  public CatapultFireCommand(CatapultSubsystem catapultSubsystem) {
+  public BandMoveCommand(CatapultSubsystem catapultSubsystem, Double speed) {
     this.catapultSubsystem = catapultSubsystem;
+    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(catapultSubsystem);
@@ -27,13 +29,12 @@ public class CatapultFireCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.catapultMotor(1);
+    catapultSubsystem.bandMotor(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Running");
   }
 
   // Called once the command ends or is interrupted.
