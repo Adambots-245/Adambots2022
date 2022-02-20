@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -39,14 +40,14 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     
-    // if (Robot.isReal()) {
-    //   // Starts vision thread only if not running in simulation mode
-    //   // Vision System calculates the angle to the target and posts it to the NetworkTable
-    //   vision = new VisionProcessorSubsystem(RobotMap.RingLight, new GripPipeline());
-    //   visionThread = vision.getVisionThread();
-    //   visionThread.setDaemon(true);
-    //   visionThread.start();
-    // }
+    if (Robot.isReal()) {
+      // Starts vision thread only if not running in simulation mode
+      // Vision System calculates the angle to the target and posts it to the NetworkTable
+      vision = new VisionProcessorSubsystem(RobotMap.RingLight, new GripPipeline());
+      visionThread = vision.getVisionThread();
+      visionThread.setDaemon(true);
+      visionThread.start();
+    }
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
@@ -64,11 +65,11 @@ public class Robot extends TimedRobot {
    * This runs after the mode specific periodic functions, but before LiveWindow
    * and SmartDashboard integrated updating.
    */
-
   @Override
-  public void robotPeriodic() {    
+  public void robotPeriodic() {
+    
     if (Robot.isReal()) {
-      // SmartDashboard.putNumber("ANGLE", vision.getAngle());
+      SmartDashboard.putNumber("ANGLE", vision.getAngle());
     }
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
@@ -76,8 +77,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods. This must be called from the
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
-
     CommandScheduler.getInstance().run();
+    
   }
 
   /**

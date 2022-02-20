@@ -10,11 +10,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Log;
+
 public class CatapultSubsystem extends SubsystemBase {
   /**
    * Creates a new CatapultSubsystem.
@@ -53,16 +52,15 @@ public class CatapultSubsystem extends SubsystemBase {
   public void initialize() {
     bandMotor.setNeutralMode(NeutralMode.Brake);
     catapultMotor.setNeutralMode(NeutralMode.Brake);
-
     bandMotor.set(ControlMode.PercentOutput, -0.5);
   }
 
   @Override
   public void periodic() {
-    if (chooChooLimitSwitch.get() == true && prevChooChooLimitSwitchState == false) {
+    if (chooChooLimitSwitch.get() == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
-    if (bandLimitSwitch.get() == true && prevBandLimitSwitchState == false) {
+    if (bandLimitSwitch.get() == true && prevBandLimitSwitchState == false) { //Testing if Band limit switch goes from low -> high and stopping the motor + zeroing encoder
       bandMotor.set(ControlMode.PercentOutput, 0);
       bandMotor.setSelectedSensorPosition(0);
     }
