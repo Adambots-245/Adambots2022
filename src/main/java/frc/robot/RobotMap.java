@@ -22,12 +22,18 @@ import frc.robot.sensors.ColorSensor;
 import frc.robot.sensors.Gyro;
 import frc.robot.sensors.Lidar;
 import frc.robot.sensors.PhotoEye;
+import frc.robot.vision.BlueGripPipeline;
+import frc.robot.vision.HubGripPipeline;
+import frc.robot.vision.RedGripPipeline;
 
 
 /**
  * Add your docs here.
  */
 public class RobotMap {
+    public static final RedGripPipeline RedGrip = new RedGripPipeline();
+    public static final BlueGripPipeline BlueGrip = new BlueGripPipeline();
+    public static final HubGripPipeline HubGrip = new HubGripPipeline();
 
     public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
     public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);

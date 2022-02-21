@@ -38,8 +38,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private static Point[] hubPts = new Point[4];
     private static Point[] ballPts = new Point[4];
     private static int pixelDistance;
-    private static double hubAngle;
-    private static double ballAngle;
+    public static double hubAngle;
+    public static double ballAngle;
     private Object lock = new Object();
     private Thread visionThread;
     private NetworkTableEntry hubAngleEntry;
@@ -352,9 +352,13 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Getter for angle
-    //public double getAngle() { 
-        //return angle;
-    //}
+    public double getHubAngle() { 
+        return hubAngle;
+    }
+
+    public double getBallAngle() {
+        return ballAngle;
+    }
 
     public Thread getVisionThread() {
         return visionThread;

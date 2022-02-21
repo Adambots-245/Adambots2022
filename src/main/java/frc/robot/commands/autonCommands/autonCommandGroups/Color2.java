@@ -1,5 +1,6 @@
 package frc.robot.commands.autonCommands.autonCommandGroups;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -15,6 +16,7 @@ import frc.robot.subsystems.BlasterSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.subsystems.VisionProcessorSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -23,11 +25,25 @@ public class Color2 extends SequentialCommandGroup {
   /**
    * Creates a new SnagNYeetCommandGroup.
    */
-  public Color2(DriveTrainSubsystem driveTrainSubsystem, IntakeSubsystem intakeSubsystem, Lidar lidar, BlasterSubsystem blasterSubsystem, XboxController joystick) {
+  public Color2(DriveTrainSubsystem driveTrainSubsystem, IntakeSubsystem intakeSubsystem, VisionProcessorSubsystem visionSubsystem, XboxController joystick) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-        
+        //new CatapultFireCommand()
+        //new WaitCommand(5),
+        new ParallelDeadlineGroup(
+            new DriveForwardDistanceCommand(driveTrainSubsystem, 3, 0.5),
+            new StartIntakeCommand(intakeSubsystem, () -> -1.0)
+        ),
+        new ParallelRaceGroup(
+            new TurnToAngleCommand(driveTrainSubsystem, 0.5, 180, true),
+            new StopIntakeOuttakeCommand(intakeSubsystem)
+        ),
+        new TurnToAngleCommand(driveTrainSubsystem, 0.5, VisionProcessorSubsystem.hubAngle, true)
+        //new CatapultFireCommand()
+
+
+
         /*
       new LowerIntakeArmCommand(intakeSubsystem),
 

@@ -23,6 +23,8 @@ import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Color2;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Log;
+import frc.robot.vision.BlueGripPipeline;
+import frc.robot.vision.RedGripPipeline;
 
 
 /**
@@ -34,12 +36,12 @@ import frc.robot.utils.Log;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
   // subsystems
   private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
+  private final VisionProcessorSubsystem visionSubsystem = new VisionProcessorSubsystem(RobotMap.RingLight, RobotMap.RedGrip, RobotMap.HubGrip, RobotMap.BlueGrip);
   
   // commands
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -78,7 +80,7 @@ public class RobotContainer {
   }
 
   private void dash(){
-    autoChooser.addOption("Snag N' Yeet", new Color2(driveTrainSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
+    autoChooser.addOption("Color2", new Color2(driveTrainSubsystem, intakeSubsystem, visionSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("None", null);
    // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
