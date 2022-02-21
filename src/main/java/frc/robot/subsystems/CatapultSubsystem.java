@@ -44,14 +44,14 @@ public class CatapultSubsystem extends SubsystemBase {
     catapultMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setBandTarget (Double target) {
+  public void setBandTarget(Double target) {
     bandTarget = target;
   }
 
   public void bandMotor() {
-    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/1000;
-    error = Math.min(error, 1);
-    error = Math.max(error, -1);
+    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000;
+    error = Math.min(error, 0.3);
+    error = Math.max(error, -0.3);
 
     bandMotor.set(ControlMode.PercentOutput, error);
   }
@@ -76,7 +76,7 @@ public class CatapultSubsystem extends SubsystemBase {
       enableBand = true;
     }
 
-    if (enableBand) {bandMotor();}
+    if (enableBand == true) {bandMotor();}
 
     prevChooChooLimitSwitchState = chooChooLimitSwitch.get();
     prevBandLimitSwitchState = bandLimitSwitch.get();

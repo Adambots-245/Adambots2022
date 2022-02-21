@@ -43,7 +43,7 @@ public class RobotContainer {
   private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
-  private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch, RobotMap.BandMotor, RobotMap.ChooChooLimitSwitch);
+  private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch, RobotMap.BandMotor, RobotMap.BandLimitSwitch);
   
   // commands
   private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
