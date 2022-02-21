@@ -16,11 +16,11 @@ public class BandMoveCommand extends CommandBase {
    */
 
   private final CatapultSubsystem catapultSubsystem;
-  private final Double speed;
+  private final Double pos;
 
-  public BandMoveCommand(CatapultSubsystem catapultSubsystem, Double speed) {
+  public BandMoveCommand(CatapultSubsystem catapultSubsystem, Double pos) {
     this.catapultSubsystem = catapultSubsystem;
-    this.speed = speed;
+    this.pos = pos;
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(catapultSubsystem);
@@ -29,7 +29,7 @@ public class BandMoveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.bandMotor(speed);
+    catapultSubsystem.setBandTarget(pos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

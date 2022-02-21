@@ -25,6 +25,8 @@ public class CatapultSubsystem extends SubsystemBase {
   private DigitalInput bandLimitSwitch;
   private Boolean prevChooChooLimitSwitchState = false;
   private Boolean prevBandLimitSwitchState = false;
+  private Double bandTarget = 0D;
+  private Boolean enableBand = false;
 
   public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, BaseMotorController bandMotor, DigitalInput bandLimitSwitch) {
     super();
@@ -38,21 +40,28 @@ public class CatapultSubsystem extends SubsystemBase {
     initialize();
   }
 
-  public void catapultMotor(double speed) {
+  public void setCatapultMotor(double speed) {
     catapultMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void bandMotor(double speed) {
-    if (speed < 0 && bandLimitSwitch.get()) {
-      speed = 0;
-    }
-    bandMotor.set(ControlMode.PercentOutput, speed);
+  public void setBandTarget (Double target) {
+    bandTarget = target;
+  }
+
+  public void bandMotor() {
+    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/1000;
+    error = Math.min(error, 1);
+    error = Math.max(error, -1);
+
+    bandMotor.set(ControlMode.PercentOutput, error);
   }
 
   public void initialize() {
     bandMotor.setNeutralMode(NeutralMode.Brake);
     catapultMotor.setNeutralMode(NeutralMode.Brake);
+
     bandMotor.set(ControlMode.PercentOutput, -0.5);
+    enableBand = false;
   }
 
   @Override
@@ -60,14 +69,16 @@ public class CatapultSubsystem extends SubsystemBase {
     if (chooChooLimitSwitch.get() == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
+
     if (bandLimitSwitch.get() == true && prevBandLimitSwitchState == false) { //Testing if Band limit switch goes from low -> high and stopping the motor + zeroing encoder
       bandMotor.set(ControlMode.PercentOutput, 0);
       bandMotor.setSelectedSensorPosition(0);
+      enableBand = true;
     }
+
+    if (enableBand) {bandMotor();}
 
     prevChooChooLimitSwitchState = chooChooLimitSwitch.get();
     prevBandLimitSwitchState = bandLimitSwitch.get();
-
-    //System.out.println(bandMotor.getSelectedSensorPosition());
   }
 }

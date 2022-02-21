@@ -91,14 +91,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
       // primary controls
-      Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
-      Buttons.primaryYButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
-      Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
 
-      // TODO: Get a control map so there are no conflicts, will work fine until we put it on the robot
-      Buttons.primaryXButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
-      Buttons.primaryYButton.whenPressed(new BandMoveCommand(catapultSubsystem, 0.5));
-      Buttons.primaryAButton.whenPressed(new BandMoveCommand(catapultSubsystem, -0.5));
+      Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
+      Buttons.primaryDPadN.whenPressed(new BandMoveCommand(catapultSubsystem, 3000D));
+      Buttons.primaryDPadS.whenPressed(new BandMoveCommand(catapultSubsystem, 1000D));
 
       //control panel
       // Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
