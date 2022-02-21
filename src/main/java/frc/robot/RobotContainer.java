@@ -20,6 +20,7 @@ import frc.robot.Gamepad.GamepadConstants;
 
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
+import frc.robot.commands.autonCommands.autonCommandGroups.Color2;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Log;
 
@@ -77,6 +78,7 @@ public class RobotContainer {
   }
 
   private void dash(){
+    autoChooser.addOption("Snag N' Yeet", new Color2(driveTrainSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("None", null);
    // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
