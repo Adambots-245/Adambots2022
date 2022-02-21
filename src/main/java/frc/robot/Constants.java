@@ -128,7 +128,8 @@ public final class Constants {
     public static final double SEC_NEUTRAL_TO_FULL = 0.4;
 
     // Vision Constants
-    public static final int CAM_NUMBER = 0;
+    public static final int BALL_CAM_NUMBER = 1;
+    public static final int HUB_CAM_NUMBER = 0;
     public static final int CAM_EXPOSURE = 5;
     public static final int IMG_WIDTH = 320;
     public static final int IMG_HEIGHT = 240;
@@ -142,6 +143,7 @@ public final class Constants {
     public static final Scalar RED = new Scalar(0, 0, 255);
     public static final Scalar GREEN = new Scalar(0, 255, 0);
     public static final Scalar BLUE = new Scalar(255, 0, 0);
+    public static final Scalar BLACK = new Scalar(0, 0, 0);
 
     // turret PID constants
     // public static double TURRET_kP = 0.0325;

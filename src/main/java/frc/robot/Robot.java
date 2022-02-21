@@ -9,7 +9,9 @@ package frc.robot;
 
 import frc.robot.sensors.Gyro;
 import frc.robot.subsystems.*;
-import frc.robot.vision.GripPipeline;
+import frc.robot.vision.BlueGripPipeline;
+import frc.robot.vision.HubGripPipeline;
+import frc.robot.vision.RedGripPipeline;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -40,10 +42,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     
-    if (Robot.isReal()) {
+    if (Robot.isReal()|| true) {
       // Starts vision thread only if not running in simulation mode
       // Vision System calculates the angle to the target and posts it to the NetworkTable
-      vision = new VisionProcessorSubsystem(RobotMap.RingLight, new GripPipeline());
+      vision = new VisionProcessorSubsystem(RobotMap.RingLight, new RedGripPipeline(), new HubGripPipeline(), new BlueGripPipeline());
       visionThread = vision.getVisionThread();
       visionThread.setDaemon(true);
       visionThread.start();
@@ -52,7 +54,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    // m_robotContainer = new RobotContainer();
 
   }
 
@@ -69,7 +71,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     
     if (Robot.isReal()) {
-      SmartDashboard.putNumber("ANGLE", vision.getAngle());
+      //SmartDashboard.putNumber("ANGLE", vision.getAngle());
     }
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
