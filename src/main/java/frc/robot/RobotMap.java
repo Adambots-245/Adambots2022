@@ -39,14 +39,14 @@ public class RobotMap {
 	public static final WPI_TalonFX FrontRightMotor = new WPI_TalonFX(Constants.FR_TALON);
 	public static final WPI_TalonFX FrontLeftMotor = new WPI_TalonFX(Constants.FL_TALON);
 	public static final WPI_TalonFX BackLeftMotor = new WPI_TalonFX(Constants.BL_TALON);
-	public static final BaseMotorController PanelMotor = new WPI_TalonSRX(Constants.PANEL_MOTOR_PORT);;
-	public static final ColorSensor ColorSensor = new ColorSensor();
+	// public static final BaseMotorController PanelMotor = new WPI_TalonSRX(Constants.PANEL_MOTOR_PORT);;
+	// public static final ColorSensor ColorSensor = new ColorSensor();
     public static WPI_TalonFX BackRightMotor = new WPI_TalonFX(Constants.BR_TALON);
 
-    public static final WPI_VictorSPX ConveyorMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_MOTOR_PORT);
-    public static final WPI_VictorSPX AlignmentBeltMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_INDEXER_MOTOR_PORT);
+    // public static final WPI_VictorSPX ConveyorMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_MOTOR_PORT);
+    // public static final WPI_VictorSPX AlignmentBeltMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_INDEXER_MOTOR_PORT);
 
-    public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
+    // public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
 
     public static final WPI_VictorSPX HangMotor = new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
     public static final WPI_VictorSPX WinchMotor1 = new WPI_VictorSPX(Constants.CLIMBING_1_MOTOR_PORT);
@@ -55,20 +55,20 @@ public class RobotMap {
     public static final DigitalInput LimitSwitch1 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_1_PORT);
     public static final DigitalInput LimitSwitch2 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_2_PORT);
 
-    public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
+    // public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
     public static final WPI_VictorSPX IntakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR_PORT);
-    public static final WPI_VictorSPX FeedToBlasterMotor = new WPI_VictorSPX(Constants.FEED_TO_BLASTER_MOTOR_PORT);
+    // public static final WPI_VictorSPX FeedToBlasterMotor = new WPI_VictorSPX(Constants.FEED_TO_BLASTER_MOTOR_PORT);
     
-    public static final VictorSPX TurretMotor = new VictorSPX(Constants.TURRET_MOTOR_PORT);
-	public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
-	public static final DigitalInput RightLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
+    // public static final VictorSPX TurretMotor = new VictorSPX(Constants.TURRET_MOTOR_PORT);
+	// public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
+	// public static final DigitalInput RightLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
 
-    public static final PhotoEye IntakePhotoEye = new PhotoEye(7);
-	public static final PhotoEye SpacingPhotoEye = new PhotoEye(8);
-    public static final PhotoEye ExitPhotoEye = new PhotoEye(9);
+    // public static final PhotoEye IntakePhotoEye = new PhotoEye(7);
+	// public static final PhotoEye SpacingPhotoEye = new PhotoEye(8);
+    // public static final PhotoEye ExitPhotoEye = new PhotoEye(9);
 
-    public static final Counter IntakeCounter = new Counter(IntakePhotoEye.getDigitalInput());
-    public static final Counter ExitCounter = new Counter(ExitPhotoEye.getDigitalInput());
+    // public static final Counter IntakeCounter = new Counter(IntakePhotoEye.getDigitalInput());
+    // public static final Counter ExitCounter = new Counter(ExitPhotoEye.getDigitalInput());
 }

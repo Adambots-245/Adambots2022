@@ -36,42 +36,29 @@ public final class Constants {
     public static final int CLIMBING_1_MOTOR_PORT = 15;
     public static final int CLIMBING_2_MOTOR_PORT = 16;
     public static final int CLIMBING_RAISE_ELEVATOR_MOTOR_PORT = 23;
-    public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
+    // public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
 
     public static final int INTAKE_MOTOR_PORT = 8;
-    public static final int INFEED_CONVEYOR_MOTOR_PORT = 19;
-    public static final int INFEED_CONVEYOR_INDEXER_MOTOR_PORT = 20;
+    // public static final int INFEED_CONVEYOR_MOTOR_PORT = 19;
+    // public static final int INFEED_CONVEYOR_INDEXER_MOTOR_PORT = 20;
     public static final int FEED_TO_BLASTER_MOTOR_PORT = 21;
-
-    public static final int TURRET_MOTOR_PORT = 22;
-
-    // TODO: Add accurate PANEL_MOTOR_PORTs (ports of motors that spin control
-    // panel)
-    public static final int PANEL_MOTOR_PORT = 1;
 
     // solenoid IDs
     public static final int HIGH_GEAR_SOL_PORT = 7;
 
-    public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
-    public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
+    // public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
+    // public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
 
-    public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
+    // public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
 	public static final int RING_LIGHT_PORT = 5;
 
     public static final int YELLOW_LEDS_SOL_PORT = 6;
 
-
-	
     // sensor IDs
     public static final int LIDAR_DIO = 5;
-
-    public static final int TURRET_LEFT_DIO = 4;
-    public static final int TURRET_RIGHT_DIO = 3;
-    
 	public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
 	public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
-
 
     // speed values
     public static final int INTAKE_SPEED = 1;
@@ -81,16 +68,9 @@ public final class Constants {
     public static final double LOW_SPEED_MODIFIER = 0.5;
     public static final double MAX_MOTOR_SPEED = 1;
     public static final double WINCH_SPEED = -.75;
-    public static final double CONVEYOR_SPEED = 0.5; // test speeds
-    public static final double CONVEYOR_INDEXER_SPEED = 0.5;
+    // public static final double CONVEYOR_SPEED = 0.5; // test speeds
+    // public static final double CONVEYOR_INDEXER_SPEED = 0.5;
     public static final double FEED_TO_BLASTER_SPEED = 0.5;
-
-    // control panel constants - count 2 times for each rotation
-    public final static int MIN_ROTATIONS = 7-1; // = 4 rotations //7-1 means compensating for overshooting
-    public final static int MAX_ROTATIONS = 10;
-    // TODO: Add accurate panel motor speeds (motors that spin control panel)
-    public static final double PANEL_MOTOR_SPEED_ROTATION = 0.65;
-    public static final double PANEL_MOTOR_SPEED_ALIGNMENT = 0.175;
 
     public final static I2C.Port I2C_PORT = I2C.Port.kOnboard;
 
@@ -101,15 +81,8 @@ public final class Constants {
     public final static Color RED_TARGET = Color.kRed; //ColorMatch.makeColor(0.518, 0.347, 0.134);
     public final static Color YELLOW_TARGET = Color.kYellow; // ColorMatch.makeColor(0.311, 0.566, 0.121);
 
-    // The following color order is defined for the sensor moving in a clockwise
-    // direction
-    // If the control panel itself turns clockwise, the sensor will move in a
-    // counterclockwise direction
-    public final static Color[] COLOR_ORDER = { BLUE_TARGET, GREEN_TARGET, RED_TARGET, YELLOW_TARGET };
-
     // Note: The direction that the color wheel itself turns will be the opposite of
     // the below direction
-
     public enum DIRECTIONS {
         CLOCKWISE,
         COUNTERCLOCKWISE
@@ -145,18 +118,6 @@ public final class Constants {
     public static final Scalar BLUE = new Scalar(255, 0, 0);
     public static final Scalar BLACK = new Scalar(0, 0, 0);
 
-    // turret PID constants
-    // public static double TURRET_kP = 0.0325;
-    public static double TURRET_kP = 0.04;
-    // public static double TURRET_kI = 0.01;
-    public static double TURRET_kI = 0;
-    // public static double TURRET_kD = 40;
-    // public static double TURRET_kD = 35; //second value
-    public static double TURRET_kD = 0; //6.8
-
-    public static double TURRET_TOLERANCE = 0.25; //0.25;
-    public static final double TURRET_TARGET_ANGLE = 0;
-    public static final double TURRET_SPEED = 0.5;
 	public static final double CAMERA_OFFSET = 4;
 
     // blaster PID constants
@@ -207,6 +168,4 @@ public final class Constants {
     // CALIBRATE THESE
 	public static final double AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY = 10343;
 	public static final double TRENCH_SHOOTER_VELOCITY = 10343;
-    
-
 }

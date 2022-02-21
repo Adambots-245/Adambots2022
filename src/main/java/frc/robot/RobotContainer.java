@@ -54,7 +54,6 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-    driveTrainSubsystem.resetEncoders();
 
     // configure the dashboard
     dash();
