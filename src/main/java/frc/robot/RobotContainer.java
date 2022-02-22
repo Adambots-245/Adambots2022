@@ -20,6 +20,7 @@ import frc.robot.Gamepad.GamepadConstants;
 
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
+import frc.robot.commands.autonCommands.autonCommandGroups.GyroShootTwoBalls;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Log;
 
@@ -39,6 +40,7 @@ public class RobotContainer {
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
+  private final GyroPIDSubsystem gyroSubsystem = new GyroPIDSubsystem();
   
   // commands
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -79,7 +81,7 @@ public class RobotContainer {
     // autoChooser.setDefaultOption("None", null);
    // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
-   
+   autoChooser.addOption("GyroShootTwoBalls", new GyroShootTwoBalls(driveTrainSubsystem, intakeSubsystem, gyroSubsystem));
   //`  SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
 
     SmartDashboard.putData("Auton Mode", autoChooser);
