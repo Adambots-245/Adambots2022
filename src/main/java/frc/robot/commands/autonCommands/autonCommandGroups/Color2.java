@@ -29,6 +29,8 @@ public class Color2 extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
+        new DriveForwardDistanceCommand(driveTrainSubsystem, 3, 0.5)
+        /*
         //new CatapultFireCommand()
         //new WaitCommand(5),
         new ParallelDeadlineGroup(
@@ -41,6 +43,7 @@ public class Color2 extends SequentialCommandGroup {
         ),
         new TurnToAngleCommand(driveTrainSubsystem, 0.5, VisionProcessorSubsystem.hubAngle, true)
         //new CatapultFireCommand()
+        */
 
 
 
