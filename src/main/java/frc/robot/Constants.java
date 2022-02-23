@@ -31,14 +31,12 @@ public final class Constants {
     public static final int BL_TALON = 11;
     public static final int FR_TALON = 12;
     public static final int BR_TALON = 13;
-    public static final int BLASTER_MOTOR_PORT = 14;
 
     public static final int CLIMBING_1_MOTOR_PORT = 15;
     public static final int CLIMBING_2_MOTOR_PORT = 16;
-    public static final int CLIMBING_RAISE_ELEVATOR_MOTOR_PORT = 23;
     // public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
 
-    public static final int INTAKE_MOTOR_PORT = 8;
+    public static final int INTAKE_MOTOR_PORT = 18;
     // public static final int INFEED_CONVEYOR_MOTOR_PORT = 19;
     // public static final int INFEED_CONVEYOR_INDEXER_MOTOR_PORT = 20;
     public static final int FEED_TO_BLASTER_MOTOR_PORT = 21;

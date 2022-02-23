@@ -37,7 +37,7 @@ public class RobotContainer {
   // subsystems
   // private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
-  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
+  // private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
   
   // commands
@@ -97,10 +97,10 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
         
-    hangSubsystem.setDefaultCommand(
-        new RaiseElevatorCommand(hangSubsystem, 
-        () -> deaden(Buttons.secondaryJoystick.getLeftY()), Buttons.secondaryStartButton.get())
-        );
+    // hangSubsystem.setDefaultCommand(
+    //     new RaiseElevatorCommand(hangSubsystem, 
+    //     () -> deaden(Buttons.secondaryJoystick.getLeftY()), Buttons.secondaryStartButton.get())
+    //     );
         
   }
 
