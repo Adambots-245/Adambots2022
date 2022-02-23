@@ -34,8 +34,8 @@ public class GyroShootTwoBalls extends SequentialCommandGroup{
             new DriveForwardDistanceCommand(driveTrain, 2, 0.5),
             // shoot
             new DriveForwardDistanceCommand(driveTrain, 3, 0.5),
-            new StartOuttakeCommand(intake)
-            //shoot
+            new StopIntakeOuttakeCommand(intake);
+            // shoot
 
         );
 
