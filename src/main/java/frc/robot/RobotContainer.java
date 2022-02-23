@@ -21,6 +21,7 @@ import frc.robot.Gamepad.GamepadConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.GyroShootTwoBalls;
+import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Log;
 
@@ -82,6 +83,7 @@ public class RobotContainer {
    // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    autoChooser.addOption("GyroShootTwoBalls", new GyroShootTwoBalls(driveTrainSubsystem, intakeSubsystem, gyroSubsystem));
+   autoChooser.addOption("Test", new Test(driveTrainSubsystem));
   //`  SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
 
     SmartDashboard.putData("Auton Mode", autoChooser);
