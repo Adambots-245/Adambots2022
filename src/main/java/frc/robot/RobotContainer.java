@@ -40,7 +40,7 @@ public class RobotContainer {
   // private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
   // private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
-  private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch, RobotMap.BandMotor, RobotMap.BandLimitSwitch);
+  private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch, RobotMap.BandMotor, RobotMap.BandLimitSwitch, RobotMap.CatapultStop);
   
   // commands
   private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
@@ -83,8 +83,6 @@ public class RobotContainer {
       // Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
 
       Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
-      Buttons.primaryDPadN.whenPressed(new BandMoveCommand(catapultSubsystem, 3000D));
-      Buttons.primaryDPadS.whenPressed(new BandMoveCommand(catapultSubsystem, 1000D));
 
       //control panel
       // Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));

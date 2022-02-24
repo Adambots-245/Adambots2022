@@ -28,6 +28,7 @@ import frc.robot.sensors.PhotoEye;
  * Add your docs here.
  */
 public class RobotMap {
+    public static final Solenoid CatapultStop = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_CATAPULT_STOP_SOL_PORT);
 
     // public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
     // public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
