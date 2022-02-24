@@ -31,6 +31,8 @@ public class CatapultSubsystem extends SubsystemBase {
   private Boolean enableBand = false;
   private Solenoid catapultStop;
 
+  public double error = 0;
+
   public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, BaseMotorController bandMotor, DigitalInput bandLimitSwitch, Solenoid catapultStop) {
     super();
 
@@ -53,7 +55,7 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void bandMotor() {
-    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjust when we have robot
+    error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjust when we have robot
     error = Math.min(error, Constants.MAX_BAND_MOVE_SPEED);
     error = Math.max(error, -Constants.MAX_BAND_MOVE_SPEED);
 

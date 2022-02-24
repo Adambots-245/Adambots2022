@@ -165,6 +165,9 @@ public final class Constants {
     public static final double TURRET_SPEED = 0.5;
 	public static final double CAMERA_OFFSET = 4;
 
+    //Catapult Constants
+    public static final double ACCEPTABLE_BAND_ERROR = 0.05;
+
     // blaster PID constants
     public static final double BLASTER_KF = .054;
 	public static final double BLASTER_KP = 1.1367;
