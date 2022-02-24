@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.CatapultSubsystem;
 
-public class CatapultFireWithDistanceCommand extends CommandBase {
+public class CatapultAutoDistanceFireCommand extends CommandBase {
   /**
    * Creates a new Command for testing.
    */
@@ -22,7 +22,7 @@ public class CatapultFireWithDistanceCommand extends CommandBase {
   private final CatapultSubsystem catapultSubsystem;
   private NetworkTableEntry distanceEntry;
 
-  public CatapultFireWithDistanceCommand(CatapultSubsystem catapultSubsystem) {
+  public CatapultAutoDistanceFireCommand(CatapultSubsystem catapultSubsystem) {
     this.catapultSubsystem = catapultSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
 

@@ -93,8 +93,6 @@ public class RobotContainer {
       // primary controls
 
       Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
-      Buttons.primaryDPadN.whenPressed(new BandMoveCommand(catapultSubsystem, 3000D));
-      Buttons.primaryDPadS.whenPressed(new BandMoveCommand(catapultSubsystem, 1000D));
 
       //control panel
       // Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
