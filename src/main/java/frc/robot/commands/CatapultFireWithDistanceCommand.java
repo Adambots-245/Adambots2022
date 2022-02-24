@@ -7,6 +7,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.CatapultSubsystem;
@@ -17,6 +20,7 @@ public class CatapultFireWithDistanceCommand extends CommandBase {
    */
 
   private final CatapultSubsystem catapultSubsystem;
+  private NetworkTableEntry distanceEntry;
 
   public CatapultFireWithDistanceCommand(CatapultSubsystem catapultSubsystem) {
     this.catapultSubsystem = catapultSubsystem;
@@ -28,7 +32,15 @@ public class CatapultFireWithDistanceCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.setBandTarget(target);
+    NetworkTableInstance instance = NetworkTableInstance.getDefault();
+    NetworkTable table = instance.getTable("Vision");
+    distanceEntry = table.getEntry("distance");
+
+    double target = distanceEntry.getDouble(420)/1; //TODO: Callibrate formula to convert from distance to band tension encoder ticks
+
+    if (distanceEntry.exists()) { //Only worry about moving the bands if the entry actually exists
+      catapultSubsystem.setBandTarget(target);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,6 +57,7 @@ public class CatapultFireWithDistanceCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(catapultSubsystem.error) < Constants.ACCEPTABLE_BAND_ERROR;
+    //Terminate once we have reached the band target or if there is no distance entry
+    return Math.abs(catapultSubsystem.error) < Constants.ACCEPTABLE_BAND_ERROR || !distanceEntry.exists(); 
   }
 }
