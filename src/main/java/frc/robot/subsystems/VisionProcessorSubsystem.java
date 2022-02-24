@@ -44,6 +44,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private Thread visionThread;
     private NetworkTableEntry hubAngleEntry;
     private NetworkTableEntry ballAngleEntry;
+    private NetworkTableEntry distanceEntry;
     private Solenoid ringLight;
     private MedianFilter hubMaxYFilter;
     private MedianFilter hubMinYFilter;
@@ -119,6 +120,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         NetworkTable table = instance.getTable("Vision");
         hubAngleEntry = table.getEntry("hubAngle");
         ballAngleEntry = table.getEntry("ballAngle");
+        distanceEntry = table.getEntry("distance");
 
         visionThread = new Thread(() -> {
             run();
@@ -272,6 +274,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("focalLength", focalLength);
         SmartDashboard.putNumber("pixelWidth", pixelWidth);
         SmartDashboard.putNumber("parabola Error", parabolaError);
+
+        distanceEntry.setDouble(finalDistance);
 
         //if ()
         drawRect(hubPts, hubMat);
