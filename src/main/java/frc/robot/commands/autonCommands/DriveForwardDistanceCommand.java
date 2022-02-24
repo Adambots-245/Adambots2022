@@ -49,6 +49,7 @@ public class DriveForwardDistanceCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    System.out.println("Encoder Ticks: " + driveTrain.getAverageDriveEncoderValue());
     return (driveTrain.getAverageDriveEncoderValue() >= distance);
   }
 }

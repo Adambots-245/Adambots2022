@@ -30,7 +30,7 @@ public final class Constants {
     public static final int FL_TALON = 0;
     public static final int BL_TALON = 1;
     public static final int FR_TALON = 2;
-    public static final int BR_TALON = 4;
+    public static final int BR_TALON = 3;
     public static final int BLASTER_MOTOR_PORT = 14;
 
     public static final int CLIMBING_1_MOTOR_PORT = 15;

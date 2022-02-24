@@ -21,7 +21,7 @@ public class GyroTwoPracticeTest extends SequentialCommandGroup {
 
     public GyroTwoPracticeTest (DriveTrainSubsystem driveTrain) {
         super(
-            new DriveForwardDistanceCommand(driveTrain, 2, 0.5)
+            new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 12, 0.5)
         );
     }
 
