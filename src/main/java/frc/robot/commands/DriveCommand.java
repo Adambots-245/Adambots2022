@@ -41,7 +41,7 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //System.out.println("FBI: " + forwardBackwardInput.getAsDouble() + " - RI:" + rotationInput.getAsDouble());
+    // System.out.println("FBI: " + forwardBackwardInput.getAsDouble() + " - RI:" + rotationInput.getAsDouble());
     // rotationInput.getAsDouble());
     drivetrain.getAverageDriveEncoderValue();
     // System.out.println("Rotation: " + rotationInput.getAsDouble());
