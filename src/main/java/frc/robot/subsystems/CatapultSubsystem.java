@@ -11,10 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.utils.Log;
 
 public class CatapultSubsystem extends SubsystemBase {
@@ -54,9 +53,9 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void bandMotor() {
-    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000;
-    error = Math.min(error, 0.3);
-    error = Math.max(error, -0.3);
+    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjustment when we have robot
+    error = Math.min(error, Constants.MAX_BAND_MOVE_SPEED);
+    error = Math.max(error, -Constants.MAX_BAND_MOVE_SPEED);
 
     bandMotor.set(ControlMode.PercentOutput, error);
   }
