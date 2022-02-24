@@ -53,7 +53,7 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void bandMotor() {
-    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjustment when we have robot
+    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjust when we have robot
     error = Math.min(error, Constants.MAX_BAND_MOVE_SPEED);
     error = Math.max(error, -Constants.MAX_BAND_MOVE_SPEED);
 
