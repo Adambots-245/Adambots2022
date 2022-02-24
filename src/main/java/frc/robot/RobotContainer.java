@@ -37,11 +37,19 @@ public class RobotContainer {
   // subsystems
   // private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
+  // private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
   // private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
+  private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch, RobotMap.BandMotor, RobotMap.BandLimitSwitch);
   
   // commands
-    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
+  private TurnToAngleCommand autonTurn90DegreeCommand;
+  private GyroDriveForDistCommand autonGyroDriveForwardDistanceCommand;
+  // private SequentialCommandGroup autonDriveForwardGyroDistanceCommand;
+  // private WinchCommand winchCommand;
+  
+  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -68,11 +76,75 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
       // primary controls
-      Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
-      Buttons.primaryYButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
+      // Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
+      // Buttons.primaryYButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
       Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
 
       // Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
+
+      Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
+      Buttons.primaryDPadN.whenPressed(new BandMoveCommand(catapultSubsystem, 3000D));
+      Buttons.primaryDPadS.whenPressed(new BandMoveCommand(catapultSubsystem, 1000D));
+
+      //control panel
+      // Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
+      // Buttons.primaryBButton.whenPressed(new AlignColorCommand(panelSubsystem));
+      // Buttons.secondaryXButton.whenHeld(new PanelMotor(panelSubsystem)); //CHANGE THIS TO PRIMARY SOMEHOW
+
+      // secondary controls
+      // intake 
+      
+     // Buttons.secondaryDPadN.whenPressed(new RaiseIntakeArmCommand(intakeSubsystem));
+      //Buttons.secondaryDPadS.whenPressed(new LowerIntakeArmCommand(intakeSubsystem));    
+      // Buttons.secondaryYButton.whenHeld(new IndexToBlasterCommand(intakeSubsystem));  
+     // Buttons.secondaryBButton.whenHeld(new ReverseIndexToBlasterCommand(intakeSubsystem));
+     // Buttons.secondaryRB.whenHeld(new IndexToBlasterCommand(intakeSubsystem));  
+      
+      // Buttons.secondaryYButton.whenHeld(new IndexToBlasterCommand(intakeSubsystem));  
+      
+      // turret 
+     
+     // Buttons.secondaryDPadN.whenPressed(new RaiseIntakeArmCommand(intakeSubsystem));
+     // Buttons.secondaryDPadS.whenPressed(new LowerIntakeArmCommand(intakeSubsystem));    
+      // Buttons.secondaryXButton.whileHeld(new TurnToTargetCommand(turretSubsystem, RobotMap.LidarSensor), false);
+      // turretSubsystem.setDefaultCommand(new TurretManualCommand(turretSubsystem, ()->Buttons.secondaryJoystick.getLeftTriggerAxis(), ()->Buttons.secondaryJoystick.getRightTriggerAxis()));
+      
+      // lidar susbsystem
+        // Buttons.primaryXButton.whenPressed(new MeasureDistanceCommand(RobotMap.LidarSensor));
+      
+      // blaster  
+      // Buttons.secondaryLB.toggleWhenPressed(new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor));
+      // Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
+      // Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
+      // blasterSubsystem.setDefaultCommand(new BlasterPercentOutput(blasterSubsystem, () -> Buttons.primaryJoystick.getRightTriggerAxis()));
+      // hang 
+      
+      // Buttons.secondaryAButton.whenHeld(new WinchCommand(hangSubsystem), false);
+      //raiseElevatorCommand = new RaiseElevatorCommand(hangSubsystem, () -> Buttons.secondaryJoystick.getLeftY());    
+      //gondolaCommand = new GondolaCommand(hangSubsystem, ()->Buttons.secondaryJoystick.getLeftX());
+      
+    // dashboard control buttons  
+      // SmartDashboard.putData("10 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY));
+      // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, shooterVelocity));
+      // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.TRENCH_SHOOTER_VELOCITY));
+     // SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
+
+    // mode switching 
+      // startIntakeCommand.addRequirements(elevatorSubsystem, conveyorSubsystem, alignmentBeltSubsystem);
+      //secondaryBackButton.whenPressed(startIntakeCommand);
+      // secondaryStartButton.whenPressed(new StopIntakeOuttakeCommand(intakeSubsystem));
+
+    // test stuff 
+      // Buttons.primaryYButton.whenPressed(new StartOuttakeCommand(intakeSubsystem));
+      // Buttons.primaryAButton.whenReleased(new StopIntakeOuttakeCommand(intakeSubsystem));
+      // //Buttons.primaryAButton.whileHeld(new TestCo  mmand());
+      // Buttons.primaryYButton.whenReleased(new StopIntakeOuttakeCommand(intakeSubsystem));
+
+      // Turret subsystem
+      //TurretManualCommand turretManualCommand = new TurretManualCommand(turretSubsystem,
+      //    () -> Buttons.secondaryJoystick.getLeftTriggerAxis(), () -> Buttons.secondaryJoystick.getRightTriggerAxis());
+      //Buttons.secondaryLB.whenHeld(new TurnToTargetCommand(turretSubsystem));
+
   }
 
   private void dash(){

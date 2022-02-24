@@ -31,23 +31,21 @@ public final class Constants {
     public static final int BL_TALON = 11;
     public static final int FR_TALON = 12;
     public static final int BR_TALON = 13;
+    public static final int BLASTER_MOTOR_PORT = 14;
+    public static final int CHOO_CHOO_MOTOR_PORT = 14;
+    public static final int BAND_MOTOR_PORT = 12;
 
     public static final int CLIMBING_1_MOTOR_PORT = 15;
     public static final int CLIMBING_2_MOTOR_PORT = 16;
     // public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
 
     public static final int INTAKE_MOTOR_PORT = 18;
-    // public static final int INFEED_CONVEYOR_MOTOR_PORT = 19;
-    // public static final int INFEED_CONVEYOR_INDEXER_MOTOR_PORT = 20;
+    public static final int INFEED_CONVEYOR_MOTOR_PORT = 19;
+    public static final int INFEED_CONVEYOR_INDEXER_MOTOR_PORT = 20;
     public static final int FEED_TO_BLASTER_MOTOR_PORT = 21;
 
     // solenoid IDs
     public static final int HIGH_GEAR_SOL_PORT = 7;
-
-    // public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
-    // public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
-
-    // public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
 	public static final int RING_LIGHT_PORT = 5;
 
@@ -55,6 +53,13 @@ public final class Constants {
 
     // sensor IDs
     public static final int LIDAR_DIO = 5;
+
+    public static final int TURRET_LEFT_DIO = 4;
+    public static final int TURRET_RIGHT_DIO = 3;
+
+    public static final int CHOO_CHOO_DIO = 9;
+    public static final int BAND_DIO = 6;
+    
 	public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
 	public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
 
