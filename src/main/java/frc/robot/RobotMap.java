@@ -28,6 +28,7 @@ import frc.robot.sensors.PhotoEye;
  * Add your docs here.
  */
 public class RobotMap {
+    public static final Solenoid CatapultStop = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_CATAPULT_STOP_SOL_PORT);
 
     public static final BaseMotorController ChooChooMotor = new WPI_VictorSPX(Constants.CHOO_CHOO_MOTOR_PORT);
 	public static final BaseMotorController BandMotor = new WPI_VictorSPX(Constants.BAND_MOTOR_PORT);

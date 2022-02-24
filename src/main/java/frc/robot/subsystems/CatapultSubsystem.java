@@ -11,6 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Log;
 
@@ -27,14 +30,16 @@ public class CatapultSubsystem extends SubsystemBase {
   private Boolean prevBandLimitSwitchState = false;
   private Double bandTarget = 0D;
   private Boolean enableBand = false;
+  private Solenoid catapultStop;
 
-  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, BaseMotorController bandMotor, DigitalInput bandLimitSwitch) {
+  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, BaseMotorController bandMotor, DigitalInput bandLimitSwitch, Solenoid catapultStop) {
     super();
 
     this.catapultMotor = catapultMotor;
     this.bandMotor = bandMotor;
     this.chooChooLimitSwitch = chooChooLimitSwitch;
     this.bandLimitSwitch = bandLimitSwitch;
+    this.catapultStop = catapultStop;
     Log.info("Initializing Catapult");
 
     initialize();
@@ -54,6 +59,14 @@ public class CatapultSubsystem extends SubsystemBase {
     error = Math.max(error, -0.3);
 
     bandMotor.set(ControlMode.PercentOutput, error);
+  }
+
+  public void RaiseStop() {
+    catapultStop.set(true);
+  }
+
+  public void LowerStop(){
+    catapultStop.set(false);
   }
 
   public void initialize() {

@@ -57,6 +57,8 @@ public final class Constants {
     public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
     public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
 
+    public static final int RAISE_CATAPULT_STOP_SOL_PORT = 5;
+
     public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
 	public static final int RING_LIGHT_PORT = 5;
