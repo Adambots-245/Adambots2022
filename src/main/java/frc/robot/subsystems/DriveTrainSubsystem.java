@@ -57,9 +57,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     this.backRightMotor.follow(frontRightMotor);
 
     this.backLeftMotor.setInverted(false);
-    frontLeftMotor.setInverted(true);
+    frontLeftMotor.setInverted(false);
     backRightMotor.setInverted(false);
-    frontRightMotor.setInverted(true);
+    frontRightMotor.setInverted(false);
 
     frontLeftMotor.configOpenloopRamp(Constants.SEC_NEUTRAL_TO_FULL);
     frontRightMotor.configOpenloopRamp(Constants.SEC_NEUTRAL_TO_FULL);
