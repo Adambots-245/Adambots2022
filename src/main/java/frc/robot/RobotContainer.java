@@ -22,6 +22,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.BarrelPathAuton;
 import frc.robot.commands.autonCommands.autonCommandGroups.CrossBaseline;
+import frc.robot.commands.autonCommands.autonCommandGroups.GyroTwoPracticeTest;
 import frc.robot.commands.autonCommands.autonCommandGroups.NerdsAuton;
 import frc.robot.commands.autonCommands.autonCommandGroups.NoTurnAuton;
 import frc.robot.commands.autonCommands.autonCommandGroups.Nom2Turn45Yeet5;
@@ -177,6 +178,7 @@ public class RobotContainer {
   }
 
   private void dash(){
+    autoChooser.addOption("gyro2Test", new GyroTwoPracticeTest(driveTrainSubsystem));
     // autoChooser.setDefaultOption("None", null);
     // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
@@ -186,9 +188,9 @@ public class RobotContainer {
     // autoChooser.setDefaultOption("yeet3", new Yeet3(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("noturn", new NoTurnAuton(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("NERDSAUTO", new NerdsAuton(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem));
-    autoChooser.addOption("CrossBaseline", new CrossBaseline(driveTrainSubsystem));
+    // autoChooser.addOption("CrossBaseline", new CrossBaseline(driveTrainSubsystem));
     // autoChooser.addOption("Yeet3FinalsAuton", new Yeet3FinalsAuton(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
-     autoChooser.addOption("90Degrees", autonTurn90DegreeCommand);
+    //  autoChooser.addOption("90Degrees", autonTurn90DegreeCommand);
     // autoChooser.addOption("yeet3New", new Yeet3New(turretSubsystem, driveTrainSubsystem, conveyorSubsystem, intakeSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.addOption("0 to 45 to 0", new );
     // autoChooser.addOption("Nom2Yeet5", new Nom2Yeet5(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
@@ -253,8 +255,9 @@ public class RobotContainer {
     // return new  DriveForwardGyroDistanceCommand(driveTrainSubsystem, 0, 0, 0, true).andThen(new DriveForwardGyroDistanceCommand(driveTrainSubsystem, 3500*48, -.75, 0, true)).andThen(new DriveForwardGyroDistanceCommand(driveTrainSubsystem, 3500*84, -.5, 90, false));
   //   return autonTurn90DegreeCommand.andThen(new WaitCommand(3)).andThen(new TurnToAngleCommand(driveTrainSubsystem, 0.5, -45, false));
    // System.out.println(autoChooser.getSelected());
+   return new GyroTwoPracticeTest(driveTrainSubsystem);
     // return autoChooser.getSelected();
-    return autonTurn90DegreeCommand;
+    // return autonTurn90DegreeCommand;
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))
