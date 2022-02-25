@@ -20,6 +20,7 @@ import frc.robot.Gamepad.GamepadConstants;
 
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
+import frc.robot.commands.autonCommands.autonCommandGroups.Color2;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Log;
 
@@ -149,6 +150,7 @@ public class RobotContainer {
 
   private void dash(){
     // autoChooser.setDefaultOption("None", null);
+    // autoChooser.addOption("Color2", new Color2(driveTrainSubsystem, intakeSubsystem));
    // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    
@@ -189,7 +191,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     System.out.println(autoChooser.getSelected());
-    return autoChooser.getSelected();
+    return new Color2(driveTrainSubsystem, intakeSubsystem);
+    // return autoChooser.getSelected();
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))

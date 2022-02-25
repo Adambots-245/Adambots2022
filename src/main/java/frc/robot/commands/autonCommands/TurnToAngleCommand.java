@@ -43,7 +43,7 @@ public class TurnToAngleCommand extends CommandBase {
 
   }
 
-  TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
+  public TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
       double targetAngle) {
     this(inpuDriveTrain, inputSpeed, targetAngle, true);
   }

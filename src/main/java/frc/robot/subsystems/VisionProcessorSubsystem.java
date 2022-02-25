@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -12,7 +13,9 @@ import edu.wpi.first.cscore.*;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.opencv.core.*;
@@ -150,13 +153,25 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             redContours = redGrip.filterContoursOutput();
             blueContours = blueGrip.filterContoursOutput();
 
-            RotatedRect[] rects = findBoundingBoxes(blueContours);
+            SmartDashboard.putString("Team", DriverStation.getAlliance().toString());
+
+            RotatedRect[] rects;
+            Mat properMat;
+            if (DriverStation.getAlliance() == Alliance.Red) {
+                 rects = findBoundingBoxes(redContours);
+                 properMat = redMat;
+            }
+            else {
+                 rects = findBoundingBoxes(blueContours);
+                 properMat = blueMat;
+            }
+            
             //SmartDashboard.putNumber("rectslength", rects.length);
             //SmartDashboard.putNumber("redContourslength", blueContours.size());
             if (rects.length != 0) {
                 //RotatedRect rect = findLargestRect(rects);
                 RotatedRect rect = rects[0];
-                draw(rect, blueMat);
+                draw(rect, properMat);
                 //findCrosshair(ballPts, ballCrosshair);
                 //drawCrosshair(ballCrosshair, blueMat);
             }

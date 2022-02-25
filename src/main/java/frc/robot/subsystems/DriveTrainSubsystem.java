@@ -57,9 +57,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     this.backRightMotor.follow(frontRightMotor);
 
     this.backLeftMotor.setInverted(false);
-    frontLeftMotor.setInverted(true);
+    frontLeftMotor.setInverted(false);
     backRightMotor.setInverted(false);
-    frontRightMotor.setInverted(true);
+    frontRightMotor.setInverted(false);
 
     frontLeftMotor.configOpenloopRamp(Constants.SEC_NEUTRAL_TO_FULL);
     frontRightMotor.configOpenloopRamp(Constants.SEC_NEUTRAL_TO_FULL);
@@ -121,7 +121,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Yaw", gyro.getYaw());
 
     //Log.infoF("Arcade Drive - Straight Speed = %f - Turn Speed = %f - Gyro Angle = %f", straightSpeed, turnSpeed * speedModifier, gyro.getAngle());
-    drive.arcadeDrive(straightSpeed, turnSpeed * speedModifier);
+    // drive.arcadeDrive(straightSpeed, turnSpeed * speedModifier);
+    //Temporary Switch for old Robot
+    drive.arcadeDrive(turnSpeed, straightSpeed * speedModifier);
   }
 
   public void shiftHighGear() {
