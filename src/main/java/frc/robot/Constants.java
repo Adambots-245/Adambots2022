@@ -27,13 +27,13 @@ import com.revrobotics.ColorMatch;
 
 public final class Constants {
     // motor IDs
-    public static final int FL_TALON = 10;
-    public static final int BL_TALON = 11;
-    public static final int FR_TALON = 12;
-    public static final int BR_TALON = 13;
+    public static final int FL_TALON = 12;
+    public static final int BL_TALON = 13;
+    public static final int FR_TALON = 10;
+    public static final int BR_TALON = 11;
     public static final int BLASTER_MOTOR_PORT = 14;
-    public static final int CHOO_CHOO_MOTOR_PORT = 14;
-    public static final int BAND_MOTOR_PORT = 12;
+    public static final int CHOO_CHOO_MOTOR_PORT = 24;
+    public static final int BAND_MOTOR_PORT = 14;
 
     public static final int CLIMBING_1_MOTOR_PORT = 15;
     public static final int CLIMBING_2_MOTOR_PORT = 16;
@@ -54,7 +54,7 @@ public final class Constants {
 
     public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
-	public static final int RING_LIGHT_PORT = 5;
+	public static final int RING_LIGHT_PORT = 4;
 
     public static final int YELLOW_LEDS_SOL_PORT = 6;
 
