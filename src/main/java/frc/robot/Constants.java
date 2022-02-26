@@ -47,6 +47,13 @@ public final class Constants {
     // solenoid IDs
     public static final int HIGH_GEAR_SOL_PORT = 7;
 
+    public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
+    public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
+
+    public static final int RAISE_CATAPULT_STOP_SOL_PORT = 5;
+
+    public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
+
 	public static final int RING_LIGHT_PORT = 5;
 
     public static final int YELLOW_LEDS_SOL_PORT = 6;
@@ -74,6 +81,7 @@ public final class Constants {
     // public static final double CONVEYOR_SPEED = 0.5; // test speeds
     // public static final double CONVEYOR_INDEXER_SPEED = 0.5;
     public static final double FEED_TO_BLASTER_SPEED = 0.5;
+    public static final double MAX_BAND_MOVE_SPEED = 0.5; //test speeds
 
     public final static I2C.Port I2C_PORT = I2C.Port.kOnboard;
 
@@ -122,6 +130,9 @@ public final class Constants {
     public static final Scalar BLACK = new Scalar(0, 0, 0);
 
 	public static final double CAMERA_OFFSET = 4;
+
+    //Catapult Constants
+    public static final double ACCEPTABLE_BAND_ERROR = 0.05;
 
     // blaster PID constants
     public static final double BLASTER_KF = .054;

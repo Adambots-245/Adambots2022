@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.utils.Log;
 
 public class CatapultSubsystem extends SubsystemBase {
@@ -27,14 +29,18 @@ public class CatapultSubsystem extends SubsystemBase {
   private Boolean prevBandLimitSwitchState = false;
   private Double bandTarget = 0D;
   private Boolean enableBand = false;
+  private Solenoid catapultStop;
 
-  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, BaseMotorController bandMotor, DigitalInput bandLimitSwitch) {
+  public double error = 0;
+
+  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, BaseMotorController bandMotor, DigitalInput bandLimitSwitch, Solenoid catapultStop) {
     super();
 
     this.catapultMotor = catapultMotor;
     this.bandMotor = bandMotor;
     this.chooChooLimitSwitch = chooChooLimitSwitch;
     this.bandLimitSwitch = bandLimitSwitch;
+    this.catapultStop = catapultStop;
     Log.info("Initializing Catapult");
 
     initialize();
@@ -49,11 +55,19 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void bandMotor() {
-    double error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000;
-    error = Math.min(error, 0.3);
-    error = Math.max(error, -0.3);
+    error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjust when we have robot
+    error = Math.min(error, Constants.MAX_BAND_MOVE_SPEED);
+    error = Math.max(error, -Constants.MAX_BAND_MOVE_SPEED);
 
     bandMotor.set(ControlMode.PercentOutput, error);
+  }
+
+  public void RaiseStop() {
+    catapultStop.set(true);
+  }
+
+  public void LowerStop(){
+    catapultStop.set(false);
   }
 
   public void initialize() {
