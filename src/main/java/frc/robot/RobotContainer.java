@@ -86,6 +86,8 @@ public class RobotContainer {
       Buttons.primaryDPadN.whenPressed(new BandMoveCommand(catapultSubsystem, 3000D));
       Buttons.primaryDPadS.whenPressed(new BandMoveCommand(catapultSubsystem, 1000D));
 
+     // Buttons.secondaryBButton.whenPressed(new StartIntakeCommand(intakeSubsystem, () -> -1));
+
       //control panel
       // Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
       // Buttons.primaryBButton.whenPressed(new AlignColorCommand(panelSubsystem));
