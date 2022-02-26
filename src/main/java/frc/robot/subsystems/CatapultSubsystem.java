@@ -57,7 +57,7 @@ public class CatapultSubsystem extends SubsystemBase {
 
   public void bandMotor() {
     error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjust when we have robot
-    if (Math.abs(error) < Constants.ACCEPTABLE_BAND_ERROR) {
+    if (Math.abs(error) < Constants.ACCEPTABLE_BAND_ERROR || bandLimitSwitch.get()) {
       error = 0;
       bandTarget = bandMotor.getSelectedSensorPosition();
     }
@@ -85,11 +85,11 @@ public class CatapultSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (chooChooLimitSwitch.get() == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
+    if (chooChooLimitSwitch.get() && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    if (bandLimitSwitch.get() == true && prevBandLimitSwitchState == false) { //Testing if Band limit switch goes from low -> high and stopping the motor + zeroing encoder
+    if (bandLimitSwitch.get() && prevBandLimitSwitchState == false) { //Testing if Band limit switch goes from low -> high and stopping the motor + zeroing encoder
       bandMotor.set(ControlMode.PercentOutput, 0);
       bandMotor.setSelectedSensorPosition(0);
       enableBand = true;
