@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.utils.Log;
 
 public class CatapultSubsystem extends SubsystemBase {
@@ -56,8 +57,12 @@ public class CatapultSubsystem extends SubsystemBase {
 
   public void bandMotor() {
     error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjust when we have robot
-    error = Math.min(error, Constants.MAX_BAND_MOVE_SPEED);
-    error = Math.max(error, -Constants.MAX_BAND_MOVE_SPEED);
+    if (Math.abs(error) < Constants.ACCEPTABLE_BAND_ERROR) {
+      error = 0;
+      bandTarget = bandMotor.getSelectedSensorPosition();
+    }
+    else if (error > 0) {error = RobotContainer.clamp(error, Constants.MIN_BAND_MOVE_SPEED, Constants.MAX_BAND_MOVE_SPEED);}
+    else if (error < 0) {error = RobotContainer.clamp(error, -Constants.MAX_BAND_MOVE_SPEED, -Constants.MIN_BAND_MOVE_SPEED);}
 
     bandMotor.set(ControlMode.PercentOutput, error);
   }

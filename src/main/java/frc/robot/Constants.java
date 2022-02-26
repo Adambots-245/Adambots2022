@@ -92,6 +92,7 @@ public final class Constants {
     public static final double CONVEYOR_INDEXER_SPEED = 0.5;
     public static final double FEED_TO_BLASTER_SPEED = 0.5;
     public static final double MAX_BAND_MOVE_SPEED = 0.5; //test speeds
+    public static final double MIN_BAND_MOVE_SPEED = 0.15; //test speeds
 
     // control panel constants - count 2 times for each rotation
     public final static int MIN_ROTATIONS = 7-1; // = 4 rotations //7-1 means compensating for overshooting

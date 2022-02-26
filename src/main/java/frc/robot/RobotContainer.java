@@ -220,6 +220,11 @@ public class RobotContainer {
     return Math.abs(rawInput) < GamepadConstants.DEADZONE ? 0 : rawInput;
   }
 
+  public static double clamp(double input, double min, double max) {
+    input = Math.min(input, max);
+    input = Math.max(input, min);
+    return input;
+  }
   /**
    * Use this to pass the autonomo
    * us command to the main {@link Robot} class.
