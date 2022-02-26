@@ -35,7 +35,8 @@ public class Color2 extends SequentialCommandGroup {
 
     
     super(
-        new TurnToAngleCommand(driveTrainSubsystem, 3, 0.5)
+        new TurnToBallCommand(driveTrainSubsystem)
+        //new TurnToAngleCommand(driveTrainSubsystem, 0.5, 10)
         
         
         );
@@ -87,13 +88,5 @@ public class Color2 extends SequentialCommandGroup {
       */
     //);
   }
-
-private void calculateAngle() {
-    NetworkTableInstance instance = NetworkTableInstance.getDefault();
-    NetworkTable table = instance.getTable("Vision");
-    NetworkTableEntry ballAngleEntry = table.getEntry("ballAngle");
-    double angle = ballAngleEntry.getDouble(600);
-    SmartDashboard.putNumber("ballAutonAngle", angle);
-}
 
 }

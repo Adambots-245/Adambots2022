@@ -5,77 +5,100 @@
 package frc.robot.commands.autonCommands;
 
 import frc.robot.sensors.Gyro;
+
+import java.security.KeyStore.TrustedCertificateEntry;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.GyroPIDSubsystem;
 
 /** Add your docs here. */
 public class TurnToBallCommand extends CommandBase {
-  private final DriveTrainSubsystem drive;
+  double counter;
+  DriveTrainSubsystem driveTrain;
+  double targetAngle;
   private GyroPIDSubsystem gyroPIDSubsystem;
-  private final double degrees;
   private Gyro gyro;
+  boolean angleBool;
+  NetworkTable table;
+  NetworkTableEntry ballAngleEntry;
+  double turnAngle;
 
-  private final double speed;
-  private boolean resetGyro = true;
-
-  /**
-   * Creates a new TurnDegrees. This command will turn your robot for a desired rotation (in
-   * degrees) and rotational speed.
-   *
-   * @param speed The speed which the robot will drive. Negative is in reverse.
-   * @param degrees Degrees to turn. Leverages encoders to compare distance.
-   * @param drive The drive subsystem on which this command will run
-   */
-  public TurnToBallCommand(DriveTrainSubsystem drive, boolean resetGyro) {
-    //this.degrees = degrees;
-    this.speed = 0.5;
-    this.drive = drive;
+  public TurnToBallCommand(DriveTrainSubsystem inpuDriveTrain) {
+    driveTrain = inpuDriveTrain;
 
     gyroPIDSubsystem = new GyroPIDSubsystem();
     gyro = Gyro.getInstance();
 
     gyroPIDSubsystem.getController().enableContinuousInput(-180, 180);
 
-    addRequirements(drive);
+    addRequirements(driveTrain);
+
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Set motors to stop, read encoder values for starting point
-    drive.arcadeDrive(0, 0);
-    drive.resetEncoders();
+    turnAngle = 1;
+    angleBool = false;
+    gyro.reset();
+    driveTrain.resetEncoders();
+    //Gets the nework table
+    counter = 0;
+    targetAngle = 0;
+    NetworkTableInstance instance = NetworkTableInstance.getDefault();
+    table = instance.getTable("Vision");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drive.arcadeDrive(0, speed);
-  }
+    //gyro.reset();
+      
+        //SmartDashboard.putBoolean("angleBool", angleBool);
+
+        
+
+        //new TurnToAngleCommand(driveTrain, 0.5, 10);
+
+          ballAngleEntry = table.getEntry("ballAngle");
+          targetAngle = ballAngleEntry.getDouble(600);
+          SmartDashboard.putNumber("ballAutonAngle", targetAngle);
+          
+          double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), turnAngle);
+          turnAngle = turnAngle + 1;
+          SmartDashboard.putNumber("turnAngle", turnAngle);
+          
+          driveTrain.arcadeDrive(0.05, turnSpeed);
+          SmartDashboard.putNumber("gyroValue", gyroPIDSubsystem.getMeasurement());
+          counter++;
+          SmartDashboard.putNumber("counter", counter);
+          if (targetAngle != 600) {
+            angleBool = true;
+            }
+
+        
+      }
+      
+  
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.arcadeDrive(0, 0);
+    gyro.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    /* Need to convert distance travelled to degrees. 
 
-       Wheel turn diameter is 47 inches measured from wheel to wheel.
-       Adjust for the specific robot.
-    */
-    double inchPerDegree = Math.PI * 47 / 360;
-    // Compare distance travelled from start to distance based on degree turn
-    return getAverageTurningDistance() >= (inchPerDegree * degrees);
-  }
+    
 
-  private double getAverageTurningDistance() {
-    double leftDistance = Math.abs(drive.getLeftDistanceInch());
-    double rightDistance = Math.abs(drive.getRightDistanceInch());
-    return (leftDistance + rightDistance) / 2.0;
+    return angleBool;
   }
 }
