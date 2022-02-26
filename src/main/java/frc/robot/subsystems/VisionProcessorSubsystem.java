@@ -184,14 +184,22 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
             if(hubCrosshair != null) {
                 synchronized (lock) {
-                    hubAngle = calculateAngle(hubCrosshair, hubAngleEntry);
+                    hubAngle = calculateAngle(hubCrosshair);
+                    hubAngleEntry.setDouble(hubAngle); 
                 }
+            }else{
+                hubAngleEntry.setDouble(Constants.ANGLE_NOT_DETECTED);
             }
+            
             if(ballCrosshair != null) {
                 synchronized (lock) {
-                    ballAngle = calculateAngle(ballCrosshair, ballAngleEntry);
+                    ballAngle = calculateAngle(ballCrosshair);
+                    ballAngleEntry.setDouble(ballAngle);
                 }
+            }else{
+                ballAngleEntry.setDouble(Constants.ANGLE_NOT_DETECTED);
             }
+
             SmartDashboard.putNumber("hubAngle", hubAngle);
             SmartDashboard.putNumber("ballAngle", ballAngle);
             
@@ -359,10 +367,9 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     }
 
     // Calculate horizontal turret angle
-    public double calculateAngle(Point crosshair, NetworkTableEntry angleEntry) {
+    public double calculateAngle(Point crosshair) {
         pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
         double angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
-        angleEntry.setDouble(angle);
         return angle;
     }
 

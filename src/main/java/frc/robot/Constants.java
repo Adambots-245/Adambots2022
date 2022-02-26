@@ -104,6 +104,7 @@ public final class Constants {
     public static final double SEC_NEUTRAL_TO_FULL = 0.4;
 
     // Vision Constants
+    public static final int ANGLE_NOT_DETECTED = 600;
     public static final int BALL_CAM_NUMBER = 0;
     public static final int HUB_CAM_NUMBER = 1;
     public static final int CAM_EXPOSURE = 5;

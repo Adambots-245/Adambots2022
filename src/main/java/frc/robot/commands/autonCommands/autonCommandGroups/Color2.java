@@ -35,7 +35,7 @@ public class Color2 extends SequentialCommandGroup {
 
     
     super(
-        new TurnToBallCommand(driveTrainSubsystem)
+        new TurnToHubCommand(driveTrainSubsystem)
         //new TurnToAngleCommand(driveTrainSubsystem, 0.5, 10)
         
         
