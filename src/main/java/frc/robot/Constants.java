@@ -32,6 +32,8 @@ public final class Constants {
     public static final int FR_TALON = 12;
     public static final int BR_TALON = 13;
     public static final int BLASTER_MOTOR_PORT = 14;
+    public static final int CHOO_CHOO_MOTOR_PORT = 14;
+    public static final int BAND_MOTOR_PORT = 12;
 
     public static final int CLIMBING_1_MOTOR_PORT = 15;
     public static final int CLIMBING_2_MOTOR_PORT = 16;
@@ -57,6 +59,8 @@ public final class Constants {
 
     public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
+    public static final int RAISE_CATAPULT_STOP_SOL_PORT = 5;
+
 	public static final int RING_LIGHT_PORT = 5;
 
     public static final int YELLOW_LEDS_SOL_PORT = 6;
@@ -68,6 +72,9 @@ public final class Constants {
 
     public static final int TURRET_LEFT_DIO = 4;
     public static final int TURRET_RIGHT_DIO = 3;
+
+    public static final int CHOO_CHOO_DIO = 9;
+    public static final int BAND_DIO = 6;
     
 	public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
 	public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
@@ -84,6 +91,7 @@ public final class Constants {
     public static final double CONVEYOR_SPEED = 0.5; // test speeds
     public static final double CONVEYOR_INDEXER_SPEED = 0.5;
     public static final double FEED_TO_BLASTER_SPEED = 0.5;
+    public static final double MAX_BAND_MOVE_SPEED = 0.5; //test speeds
 
     // control panel constants - count 2 times for each rotation
     public final static int MIN_ROTATIONS = 7-1; // = 4 rotations //7-1 means compensating for overshooting
@@ -156,6 +164,9 @@ public final class Constants {
     public static final double TURRET_TARGET_ANGLE = 0;
     public static final double TURRET_SPEED = 0.5;
 	public static final double CAMERA_OFFSET = 4;
+
+    //Catapult Constants
+    public static final double ACCEPTABLE_BAND_ERROR = 0.05;
 
     // blaster PID constants
     public static final double BLASTER_KF = .054;
