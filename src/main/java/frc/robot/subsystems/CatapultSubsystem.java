@@ -70,6 +70,10 @@ public class CatapultSubsystem extends SubsystemBase {
     catapultStop.set(false);
   }
 
+  public void runBandMotor(double speed){
+    bandMotor.set(ControlMode.PercentOutput, speed);
+  }
+
   public void initialize() {
     bandMotor.setNeutralMode(NeutralMode.Brake);
     catapultMotor.setNeutralMode(NeutralMode.Brake);
@@ -81,6 +85,8 @@ public class CatapultSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    System.out.println("Band Motor Pos: " + bandMotor.getSelectedSensorPosition() + " - Band Limit Switch: " + bandLimitSwitch.get());
 
     // System.out.println("Choo Choo: " + chooChooLimitSwitch.get());
     if (chooChooLimitSwitch.get() == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor

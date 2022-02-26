@@ -83,6 +83,7 @@ public class RobotContainer {
       // Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
 
       Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
+      // Buttons.secondaryAButton.whenPressed(new BandMoveCommand(catapultSubsystem, pos))
 
      // Buttons.secondaryBButton.whenPressed(new StartIntakeCommand(intakeSubsystem, () -> -1));
 
@@ -168,6 +169,11 @@ public class RobotContainer {
         new StartIntakeCommand(intakeSubsystem, 
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
+    
+    catapultSubsystem.setDefaultCommand(
+      new RunBandCommand(catapultSubsystem,  
+      () -> deaden(Buttons.secondaryJoystick.getLeftY()))
+    );
         
     // hangSubsystem.setDefaultCommand(
     //     new RaiseElevatorCommand(hangSubsystem, 
