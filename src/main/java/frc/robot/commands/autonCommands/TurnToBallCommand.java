@@ -67,7 +67,7 @@ public class TurnToBallCommand extends CommandBase {
         //new TurnToAngleCommand(driveTrain, 0.5, 10);
 
           ballAngleEntry = table.getEntry("ballAngle");
-          targetAngle = ballAngleEntry.getDouble(600);
+          targetAngle = ballAngleEntry.getDouble(600);  
           SmartDashboard.putNumber("ballAutonAngle", targetAngle);
           
           double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), turnAngle);
