@@ -24,7 +24,7 @@ public class TurnToHubCommand extends CommandBase {
   double targetAngle;
   private GyroPIDSubsystem gyroPIDSubsystem;
   private Gyro gyro;
-  boolean angleBool;
+  boolean angleBool = false;
   NetworkTable table;
   NetworkTableEntry hubAngleEntry;
   double turnAngle;
@@ -38,8 +38,6 @@ public class TurnToHubCommand extends CommandBase {
     gyroPIDSubsystem.getController().enableContinuousInput(-180, 180);
 
     addRequirements(driveTrain);
-
-
   }
 
   // Called when the command is initially scheduled.
@@ -59,13 +57,6 @@ public class TurnToHubCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //gyro.reset();
-      
-        
-
-        
-
-        //new TurnToAngleCommand(driveTrain, 0.5, 10);
 
           hubAngleEntry = table.getEntry("hubAngle");
           targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);  
@@ -77,18 +68,17 @@ public class TurnToHubCommand extends CommandBase {
           
           driveTrain.arcadeDrive(0.05, turnSpeed);
           SmartDashboard.putNumber("gyroValue", gyroPIDSubsystem.getMeasurement());
+          
           counter++;
           SmartDashboard.putNumber("counter", counter);
+
           if (targetAngle != Constants.ANGLE_NOT_DETECTED) {
             angleBool = true;
             SmartDashboard.putBoolean("angleBool", angleBool);
             }
-
         
       }
       
-  
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
@@ -98,8 +88,6 @@ public class TurnToHubCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-    
 
     return angleBool;
   }
