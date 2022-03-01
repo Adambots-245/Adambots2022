@@ -50,7 +50,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // subsystems
-<<<<<<< HEAD
   //private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
   //private final ControlPanelSubsystem panelSubsystem = new ControlPanelSubsystem(RobotMap.PanelMotor, RobotMap.ColorSensor);
   //private final ConveyorSubsystem conveyorSubsystem = new ConveyorSubsystem(RobotMap.ConveyorMotor, RobotMap.AlignmentBeltMotor, RobotMap.IntakePhotoEye, RobotMap.SpacingPhotoEye, RobotMap.ExitPhotoEye);
@@ -59,16 +58,6 @@ public class RobotContainer {
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.winchMotor1, RobotMap.winchMotor2, RobotMap.HangAngleMotor1, RobotMap.HangAngleMotor2, RobotMap.leftRungSwitch, RobotMap.rightRungSwitch, RobotMap.rungArmRetractedSwitch, RobotMap.rungArmMidSwitch, RobotMap.rungArmAdvancedSwitch);
   //private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.ArmMover, RobotMap.IntakeMotor, RobotMap.FeedToBlasterMotor);
   //private TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
-=======
-  private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
-  private final ControlPanelSubsystem panelSubsystem = new ControlPanelSubsystem(RobotMap.PanelMotor, RobotMap.ColorSensor);
-  private final ConveyorSubsystem conveyorSubsystem = new ConveyorSubsystem(RobotMap.ConveyorMotor, RobotMap.AlignmentBeltMotor, RobotMap.IntakePhotoEye, RobotMap.SpacingPhotoEye, RobotMap.ExitPhotoEye);
-  private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
-  private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
-  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2, RobotMap.RungClamp);
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.ArmMover, RobotMap.IntakeMotor, RobotMap.FeedToBlasterMotor);
-  private TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
->>>>>>> 42f9b19b705b02308017362c205273bbeac86c01
   
   // commands
   private BackboardToggleCommand backboardToggleCommand;

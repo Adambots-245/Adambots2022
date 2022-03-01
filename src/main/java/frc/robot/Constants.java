@@ -54,7 +54,6 @@ public final class Constants {
     // solenoid IDs
     public static final int HIGH_GEAR_SOL_PORT = 7;
 
-<<<<<<< HEAD
     //public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
     //public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
 
@@ -63,13 +62,6 @@ public final class Constants {
 
     public static final int HANG_ARM_OUT_SOL_PORT = 2;
     public static final int HANG_ARM_IN_SOL_PORT = 3;
-=======
-    public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
-    public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
-    
-    public static final int RAISE_RUNG_CLAMP_SOL_PORT = 0;
-    public static final int LOWER_RUNG_CLAMP_SOL_PORT = 1;
->>>>>>> 42f9b19b705b02308017362c205273bbeac86c01
 
     public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
