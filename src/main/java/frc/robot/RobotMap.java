@@ -49,19 +49,27 @@ public class RobotMap {
     public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
 
     public static final WPI_VictorSPX HangMotor = new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
-    public static final WPI_VictorSPX WinchMotor1 = new WPI_VictorSPX(Constants.CLIMBING_1_MOTOR_PORT);
-    public static final WPI_VictorSPX WinchMotor2 = new WPI_VictorSPX(Constants.CLIMBING_2_MOTOR_PORT);
+    public static final WPI_VictorSPX HangAngleMotor1 = new WPI_VictorSPX(Constants.HANG_ANGLE_1_MOTOR_PORT);
+    public static final WPI_VictorSPX HangAngleMotor2 = new WPI_VictorSPX(Constants.HANG_ANGLE_2_MOTOR_PORT);
+    public static final BaseMotorController winchMotor1 = new WPI_VictorSPX(Constants.HANG_WINCH_1_MOTOR_PORT);
+    public static final BaseMotorController winchMotor2 = new WPI_VictorSPX(Constants.HANG_WINCH_2_MOTOR_PORT);
+    //public static final DoubleSolenoid hangClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
+    //public static final DoubleSolenoid hangAngle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.HANG_ARM_OUT_SOL_PORT, Constants.HANG_ARM_IN_SOL_PORT);
 
-    public static final DigitalInput LimitSwitch1 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_1_PORT);
-    public static final DigitalInput LimitSwitch2 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_2_PORT);
+    public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rungArmAdvancedSwitch = new DigitalInput(Constants.RUNG_ARM_ADVANCED_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rungArmRetractedSwitch = new DigitalInput(Constants.RUNG_ARM_RETRACTED_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rungArmMidSwitch = new DigitalInput(Constants.RUNG_ARM_MID_LIMIT_SWITCH_PORT);
+    
 
-    public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
+    //public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
     public static final WPI_VictorSPX IntakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR_PORT);
     public static final WPI_VictorSPX FeedToBlasterMotor = new WPI_VictorSPX(Constants.FEED_TO_BLASTER_MOTOR_PORT);
     
     public static final VictorSPX TurretMotor = new VictorSPX(Constants.TURRET_MOTOR_PORT);
-	public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
-	public static final DigitalInput RightLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
+	//public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
+	//public static final DigitalInput RightLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
 

@@ -27,14 +27,16 @@ import com.revrobotics.ColorMatch;
 
 public final class Constants {
     // motor IDs
-    public static final int FL_TALON = 10;
-    public static final int BL_TALON = 11;
-    public static final int FR_TALON = 12;
-    public static final int BR_TALON = 13;
+    public static final int FL_TALON = 0;
+    public static final int BL_TALON = 1;
+    public static final int FR_TALON = 2;
+    public static final int BR_TALON = 3;
     public static final int BLASTER_MOTOR_PORT = 14;
 
-    public static final int CLIMBING_1_MOTOR_PORT = 15;
-    public static final int CLIMBING_2_MOTOR_PORT = 16;
+    public static final int HANG_ANGLE_1_MOTOR_PORT = 33;
+    public static final int HANG_ANGLE_2_MOTOR_PORT = 32;
+    public static final int HANG_WINCH_1_MOTOR_PORT = 15;
+    public static final int HANG_WINCH_2_MOTOR_PORT = 16;
     public static final int CLIMBING_RAISE_ELEVATOR_MOTOR_PORT = 23;
     public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
 
@@ -52,8 +54,14 @@ public final class Constants {
     // solenoid IDs
     public static final int HIGH_GEAR_SOL_PORT = 7;
 
-    public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
-    public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
+    //public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
+    //public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
+
+    public static final int LOWER_HANG_CLAMP_SOL_PORT = 0;
+    public static final int RAISE_HANG_CLAMP_SOL_PORT = 1;
+
+    public static final int HANG_ARM_OUT_SOL_PORT = 2;
+    public static final int HANG_ARM_IN_SOL_PORT = 3;
 
     public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
@@ -68,9 +76,12 @@ public final class Constants {
 
     public static final int TURRET_LEFT_DIO = 4;
     public static final int TURRET_RIGHT_DIO = 3;
-    
-	public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
-	public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
+
+    public static final int RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 5;
+    public static final int LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 4;
+    public static final int RUNG_ARM_ADVANCED_LIMIT_SWITCH_PORT = 2;
+    public static final int RUNG_ARM_RETRACTED_LIMIT_SWITCH_PORT = 3;
+    public static final int RUNG_ARM_MID_LIMIT_SWITCH_PORT = 8;
 
 
     // speed values
