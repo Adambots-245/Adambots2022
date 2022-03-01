@@ -34,13 +34,13 @@ public class RobotMap {
     // public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
     public static final BaseMotorController ChooChooMotor = new WPI_VictorSPX(Constants.CHOO_CHOO_MOTOR_PORT);
 	public static final BaseMotorController BandMotor = new WPI_TalonSRX(Constants.BAND_MOTOR_PORT);
-    public static final DoubleSolenoid RungClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
+    // public static final DoubleSolenoid RungClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
 
     public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
     // public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
     
     public static final Gyro GyroSensor = Gyro.getInstance();
-    public static final Lidar LidarSensor = Lidar.getInstance();
+    // public static final Lidar LidarSensor = Lidar.getInstance();
 
     public static final Solenoid GearShifter = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.HIGH_GEAR_SOL_PORT);
 	public static final WPI_TalonFX FrontRightMotor = new WPI_TalonFX(Constants.FR_TALON);
@@ -58,8 +58,8 @@ public class RobotMap {
     public static final WPI_VictorSPX HangMotor = new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
     public static final BaseMotorController winchMotor1 = new WPI_VictorSPX(Constants.HANG_WINCH_1_MOTOR_PORT);
     public static final BaseMotorController winchMotor2 = new WPI_VictorSPX(Constants.HANG_WINCH_2_MOTOR_PORT);
-    //public static final DoubleSolenoid hangClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
-    //public static final DoubleSolenoid hangAngle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.HANG_ARM_OUT_SOL_PORT, Constants.HANG_ARM_IN_SOL_PORT);
+    public static final DoubleSolenoid hangClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
+    public static final DoubleSolenoid hangAngle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.HANG_ARM_OUT_SOL_PORT, Constants.HANG_ARM_IN_SOL_PORT);
 
     public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
     public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);

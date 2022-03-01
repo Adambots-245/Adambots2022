@@ -26,7 +26,7 @@ public class HangSubsystem extends SubsystemBase {
     public WPI_VictorSPX hangMotor;
     public BaseMotorController winchMotor1;
     public BaseMotorController winchMotor2;
-    public WPI_VictorSPX angleClimbMotor;
+    // public WPI_VictorSPX angleClimbMotor;
     //private DigitalInput limitSwitch1;
     //private DigitalInput limitSwitch2;
     private DigitalInput leftRungSwitch;
@@ -35,15 +35,25 @@ public class HangSubsystem extends SubsystemBase {
     private DigitalInput rungArmRetractedSwitch;
     private DigitalInput rungArmMidSwitch;
 
-    public HangSubsystem(WPI_VictorSPX hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, DigitalInput rungArmRetractedSwitch, DigitalInput rungArmMidSwitch, DigitalInput rungArmAdvancedSwitch) {
+    public HangSubsystem(WPI_VictorSPX hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, DigitalInput rungArmRetractedSwitch, DigitalInput rungArmMidSwitch, DigitalInput rungArmAdvancedSwitch, DoubleSolenoid hangAngle, DoubleSolenoid hangClamp) {
+
         super();
 
         this.hangMotor = hangMotor; // new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
         this.winchMotor1 = winchMotor1; //  new WPI_VictorSPX(Constants.CLIMBING_1_MOTOR_PORT);
         this.winchMotor2 = winchMotor2; // new WPI_VictorSPX(Constants.CLIMBING_2_MOTOR_PORT);
+
+        this.hangAngle = hangAngle;
+        this.hangClamp = hangClamp;
         //this.angleClimbMotor = angleClimbMotor;
 
-        this.winchMotor2.setInverted(true);
+        this.leftRungSwitch = leftRungSwitch;
+        this.rightRungSwitch = rightRungSwitch;
+        this.rungArmAdvancedSwitch = rungArmAdvancedSwitch;
+        this.rungArmRetractedSwitch = rungArmRetractedSwitch;
+        this.rungArmMidSwitch = rungArmMidSwitch;
+
+        //this.winchMotor2.setInverted(true);
         //this.limitSwitch1 = limitSwitch1; // new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_1_PORT);
         //this.limitSwitch2 = limitSwitch2; // new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_2_PORT);
 
@@ -94,10 +104,10 @@ public class HangSubsystem extends SubsystemBase {
     // }
 
     public void GrabRung(){
-        if(leftRungSwitch.get() && rightRungSwitch.get()){
+        // if(leftRungSwitch.get() && rightRungSwitch.get()){
             hangClamp.set(Value.kReverse);
             System.out.println("Grabbed");
-        }
+        // }
     }
 
     public void UngrabRung(){
