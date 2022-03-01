@@ -344,7 +344,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     public void drawCrosshair(Point crosshair, Mat mat) {
         Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLACK, 3);
         Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLACK, 3);
-
     }
 
     // Calculate horizontal turret angle
@@ -354,11 +353,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         angleEntry.setDouble(angle);
         return angle;
     }
-
-    // Getter for angle
-    //public double getAngle() { 
-        //return angle;
-    //}
 
     public Thread getVisionThread() {
         return visionThread;

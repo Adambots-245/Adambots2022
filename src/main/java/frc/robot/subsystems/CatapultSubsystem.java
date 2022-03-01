@@ -13,7 +13,6 @@ import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.utils.Log;
 
 public class CatapultSubsystem extends SubsystemBase {
@@ -102,7 +101,7 @@ public class CatapultSubsystem extends SubsystemBase {
       limitSwitch = false;
     }
 
-    // System.out.println("Band Motor Pos: " + bandMotor.getSelectedSensorPosition() + " - Band Limit Switch: " + bandLimitSwitch.get());
+    // Log.infoF("Band Motor Pos: %f - Band Limit Switch: %f", bandMotor.getSelectedSensorPosition(), bandLimitSwitch.get());
 
     System.out.println("Choo Choo: " + limitSwitch + " Accumulate: " + accumulate);
     if (limitSwitch == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor

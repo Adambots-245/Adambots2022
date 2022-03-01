@@ -22,6 +22,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
+import frc.robot.utils.Log;
 
 
 /**
@@ -35,27 +36,34 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // subsystems
-  // private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
-  private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
-  // private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
-  // private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
+  private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, 
+                                                                                  RobotMap.GearShifter, 
+                                                                                  RobotMap.FrontRightMotor, 
+                                                                                  RobotMap.FrontLeftMotor, 
+                                                                                  RobotMap.BackLeftMotor, 
+                                                                                  RobotMap.BackRightMotor);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
-  private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch, RobotMap.BandMotor, RobotMap.BandLimitSwitch, RobotMap.CatapultStop);
-  //private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
-  //private final ControlPanelSubsystem panelSubsystem = new ControlPanelSubsystem(RobotMap.PanelMotor, RobotMap.ColorSensor);
-  //private final ConveyorSubsystem conveyorSubsystem = new ConveyorSubsystem(RobotMap.ConveyorMotor, RobotMap.AlignmentBeltMotor, RobotMap.IntakePhotoEye, RobotMap.SpacingPhotoEye, RobotMap.ExitPhotoEye);
-  //private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
-  //private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
-  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.winchMotor1, RobotMap.winchMotor2, RobotMap.leftRungSwitch, RobotMap.rightRungSwitch, RobotMap.rungArmRetractedSwitch, RobotMap.rungArmMidSwitch, RobotMap.rungArmAdvancedSwitch, RobotMap.hangAngle, RobotMap.hangClamp);
-  //private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.ArmMover, RobotMap.IntakeMotor, RobotMap.FeedToBlasterMotor);
-  //private TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
+  private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
+                                                                            RobotMap.ChooChooLimitSwitch, 
+                                                                            RobotMap.BandMotor, 
+                                                                            RobotMap.BandLimitSwitch, 
+                                                                            RobotMap.CatapultStop);
+  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, 
+                                                                RobotMap.winchMotor1, 
+                                                                RobotMap.winchMotor2, 
+                                                                RobotMap.leftRungSwitch, 
+                                                                RobotMap.rightRungSwitch, 
+                                                                RobotMap.rungArmRetractedSwitch, 
+                                                                RobotMap.rungArmMidSwitch, 
+                                                                RobotMap.rungArmAdvancedSwitch, 
+                                                                RobotMap.hangAngle, 
+                                                                RobotMap.hangClamp);
   
   // commands
   private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
   private TurnToAngleCommand autonTurn90DegreeCommand;
   private GyroDriveForDistCommand autonGyroDriveForwardDistanceCommand;
   // private SequentialCommandGroup autonDriveForwardGyroDistanceCommand;
-  // private WinchCommand winchCommand;
   
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -84,100 +92,28 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
       // primary controls
-      // Buttons.primaryAButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
-      // Buttons.primaryYButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
+      
       Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
 
-      // Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
-
       Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
-      // Buttons.secondaryAButton.whenPressed(new BandMoveCommand(catapultSubsystem, pos))
 
-     // Buttons.secondaryBButton.whenPressed(new StartIntakeCommand(intakeSubsystem, () -> -1));
-
-      //control panel
-      // Buttons.primaryXButton.whenPressed(new RotatePanelCommand(panelSubsystem));
-      // Buttons.primaryBButton.whenPressed(new AlignColorCommand(panelSubsystem));
-      // Buttons.secondaryXButton.whenHeld(new PanelMotor(panelSubsystem)); //CHANGE THIS TO PRIMARY SOMEHOW
-
-      // secondary controls
-      // intake 
-      
-     // Buttons.secondaryDPadN.whenPressed(new RaiseIntakeArmCommand(intakeSubsystem));
-      //Buttons.secondaryDPadS.whenPressed(new LowerIntakeArmCommand(intakeSubsystem));    
-      // Buttons.secondaryYButton.whenHeld(new IndexToBlasterCommand(intakeSubsystem));  
-     // Buttons.secondaryBButton.whenHeld(new ReverseIndexToBlasterCommand(intakeSubsystem));
-     // Buttons.secondaryRB.whenHeld(new IndexToBlasterCommand(intakeSubsystem));  
-      
-      // Buttons.secondaryYButton.whenHeld(new IndexToBlasterCommand(intakeSubsystem));  
-      
-      // turret 
-     
-     // Buttons.secondaryDPadN.whenPressed(new RaiseIntakeArmCommand(intakeSubsystem));
-     // Buttons.secondaryDPadS.whenPressed(new LowerIntakeArmCommand(intakeSubsystem));    
-      // Buttons.secondaryXButton.whileHeld(new TurnToTargetCommand(turretSubsystem, RobotMap.LidarSensor), false);
-      // turretSubsystem.setDefaultCommand(new TurretManualCommand(turretSubsystem, ()->Buttons.secondaryJoystick.getLeftTriggerAxis(), ()->Buttons.secondaryJoystick.getRightTriggerAxis()));
-      
-      // lidar susbsystem
-        // Buttons.primaryXButton.whenPressed(new MeasureDistanceCommand(RobotMap.LidarSensor));
-      
-      // blaster  
-      // Buttons.secondaryLB.toggleWhenPressed(new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor));
-      // Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
-      // Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
-      // blasterSubsystem.setDefaultCommand(new BlasterPercentOutput(blasterSubsystem, () -> Buttons.primaryJoystick.getRightTriggerAxis()));
-      // hang 
-      
-      // Buttons.secondaryAButton.whenHeld(new WinchCommand(hangSubsystem), false);
-      //Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
-      //Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
-      // blasterSubsystem.setDefaultCommand(new BlasterPercentOutput(blasterSubsystem, () -> Buttons.primaryJoystick.getRightTriggerAxis()));
-      // hang 
-      
       Buttons.secondaryRB.whenHeld(new WinchCommand(hangSubsystem));
       Buttons.secondaryLB.whenHeld(new UnwinchCommand(hangSubsystem));
       Buttons.secondaryDPadN.whenPressed(new ClampRungCommand(hangSubsystem), false);
       Buttons.secondaryDPadS.whenPressed(new UnclampRungCommand(hangSubsystem), false);
       Buttons.secondaryDPadW.whenPressed(new MoveHangOutCommand(hangSubsystem), false);
       Buttons.secondaryDPadE.whenPressed(new MoveHangInCommand(hangSubsystem), false);
-      //raiseElevatorCommand = new RaiseElevatorCommand(hangSubsystem, () -> Buttons.secondaryJoystick.getLeftY());    
-      //gondolaCommand = new GondolaCommand(hangSubsystem, ()->Buttons.secondaryJoystick.getLeftX());
-      
-    // dashboard control buttons  
-      // SmartDashboard.putData("10 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY));
-      // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, shooterVelocity));
-      // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.TRENCH_SHOOTER_VELOCITY));
-     // SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
-      //SmartDashboard.putData("10 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY));
-      // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, shooterVelocity));
-      //SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.TRENCH_SHOOTER_VELOCITY));
-      //SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
 
-    // mode switching 
-      // startIntakeCommand.addRequirements(elevatorSubsystem, conveyorSubsystem, alignmentBeltSubsystem);
-      //secondaryBackButton.whenPressed(startIntakeCommand);
-      // secondaryStartButton.whenPressed(new StopIntakeOuttakeCommand(intakeSubsystem));
+      // Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
 
-    // test stuff 
-      // Buttons.primaryYButton.whenPressed(new StartOuttakeCommand(intakeSubsystem));
-      // Buttons.primaryAButton.whenReleased(new StopIntakeOuttakeCommand(intakeSubsystem));
-      // //Buttons.primaryAButton.whileHeld(new TestCo  mmand());
-      // Buttons.primaryYButton.whenReleased(new StopIntakeOuttakeCommand(intakeSubsystem));
-
-      // Turret subsystem
-      //TurretManualCommand turretManualCommand = new TurretManualCommand(turretSubsystem,
-      //    () -> Buttons.secondaryJoystick.getLeftTriggerAxis(), () -> Buttons.secondaryJoystick.getRightTriggerAxis());
-      //Buttons.secondaryLB.whenHeld(new TurnToTargetCommand(turretSubsystem));
-
+      // Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
   }
 
   private void dash(){
     autoChooser.setDefaultOption("None", null);
-   // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
+    // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    
-  //`  SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
-
     SmartDashboard.putData("Auton Mode", autoChooser);
   }
 
@@ -197,12 +133,6 @@ public class RobotContainer {
       new RunBandCommand(catapultSubsystem,  
       () -> deaden(Buttons.secondaryJoystick.getLeftY()))
     );
-        
-    // hangSubsystem.setDefaultCommand(
-    //     new RaiseElevatorCommand(hangSubsystem, 
-    //     () -> deaden(Buttons.secondaryJoystick.getLeftY()), Buttons.secondaryStartButton.get())
-    //     );
-        
   }
 
   // deadzoning
@@ -217,7 +147,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    System.out.println(autoChooser.getSelected());
+    if (autoChooser.getSelected() != null)
+      Log.info("Chosen Auton Command: ", autoChooser.getSelected().toString());
+    else
+      Log.info("Chosen Auton Command: None");
+      
     return autoChooser.getSelected();
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))

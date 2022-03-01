@@ -45,17 +45,18 @@ public class Robot extends TimedRobot {
     if (Robot.isReal()) {
       // Starts vision thread only if not running in simulation mode
       // Vision System calculates the angle to the target and posts it to the NetworkTable
-      vision = new VisionProcessorSubsystem(RobotMap.RingLight, new RedGripPipeline(), new HubGripPipeline(), new BlueGripPipeline());
+      vision = new VisionProcessorSubsystem(RobotMap.RingLight, 
+                                            new RedGripPipeline(), 
+                                            new HubGripPipeline(), 
+                                            new BlueGripPipeline());
       visionThread = vision.getVisionThread();
       visionThread.setDaemon(true);
       visionThread.start();
     }
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our
-    // autonomous chooser on the dashboard.
+    // and put our autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
   }
 
   /**
@@ -70,9 +71,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     
-    if (Robot.isReal()) {
-      //SmartDashboard.putNumber("ANGLE", vision.getAngle());
-    }
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
     // interrupted commands,
@@ -103,27 +101,26 @@ public class Robot extends TimedRobot {
    * {@link RobotContainer} class.
    */
   @Override
-  // public void autonomousInit() {
-  //   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-  //   SmartDashboard.putString("auton selected", m_autonomousCommand.toString());
+  public void autonomousInit() {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    SmartDashboard.putString("auton selected", m_autonomousCommand.toString());
 
-    
-  //   System.out.println("Init Auton.........");
-  //   Gyro.getInstance().reset();
-  //   Gyro.getInstance().calibrationCheck(); // may take up to two seconds to complete
-  //   System.out.println("Gyro Yaw at Startup: " + Gyro.getInstance().getYaw());
-  //   // CommandScheduler.getInstance().cancelAll(); // cancel all teleop commands
+    System.out.println("Init Auton.........");
+    Gyro.getInstance().reset();
+    Gyro.getInstance().calibrationCheck(); // may take up to two seconds to complete
+    System.out.println("Gyro Yaw at Startup: " + Gyro.getInstance().getYaw());
+    CommandScheduler.getInstance().cancelAll(); // cancel all teleop commands
 
-  //   // schedule the autonomous command (example)
-  //   if (m_autonomousCommand != null) {
-  //     m_autonomousCommand.schedule();
-  //   }
+    // schedule the autonomous command
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
     
-  //   RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
-  //   RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
-  //   RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
-  //   RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
-  // }
+    RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
+    RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
+    RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
+  }
 
   /**
    * This function is called periodically during autonomous.
@@ -158,26 +155,26 @@ public class Robot extends TimedRobot {
 
   }
 
-  // @Override
-  // public void testInit() {
-  //   // Cancels all running commands at the start of test mode.
-  //   // CommandScheduler.getInstance().cancelAll();
-  //   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+  @Override
+  public void testInit() {
+    // Cancels all running commands at the start of test mode.
+    // CommandScheduler.getInstance().cancelAll();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-  //   Gyro.getInstance().reset();
+    Gyro.getInstance().reset();
 
-  //   // schedule the autonomous command (example)
-  //   if (m_autonomousCommand != null) {
-  //     System.out.println("Scheduling test command");
-  //     m_autonomousCommand.schedule();
-  //   }
+    // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      System.out.println("Scheduling test command");
+      m_autonomousCommand.schedule();
+    }
     
     
-  //   RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
-  //   RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
-  //   RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
-  //   RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
-  // }
+    RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
+    RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
+    RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
+  }
 
   /**
    * This function is called periodically during test mode.
@@ -185,11 +182,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     
-    // System.out.println("Running test periodic");
-    // SmartDashboard.putNumber("pitch",gyroSubsystem.getPitch());
-    // SmartDashboard.putNumber("roll",gyroSubsystem.getRoll());
-    // SmartDashboard.putNumber("yaw",gyroSubsystem.getYaw());
     CommandScheduler.getInstance().run();
-
   }
 }

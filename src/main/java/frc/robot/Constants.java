@@ -31,21 +31,21 @@ public final class Constants {
     public static final int BL_TALON = 13;
     public static final int FR_TALON = 10;
     public static final int BR_TALON = 11;
-    public static final int BLASTER_MOTOR_PORT = 14;
+    // public static final int BLASTER_MOTOR_PORT = 14;
     public static final int CHOO_CHOO_MOTOR_PORT = 24;
     public static final int BAND_MOTOR_PORT = 14;
 
-    public static final int HANG_ANGLE_1_MOTOR_PORT = 33;
-    public static final int HANG_ANGLE_2_MOTOR_PORT = 32;
+    // public static final int HANG_ANGLE_1_MOTOR_PORT = 33;
+    // public static final int HANG_ANGLE_2_MOTOR_PORT = 32;
     public static final int HANG_WINCH_1_MOTOR_PORT = 15;
     public static final int HANG_WINCH_2_MOTOR_PORT = 16;
     public static final int CLIMBING_RAISE_ELEVATOR_MOTOR_PORT = 23;
     public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
 
     public static final int INTAKE_MOTOR_PORT = 18;
-    public static final int INFEED_CONVEYOR_MOTOR_PORT = 19;
-    public static final int INFEED_CONVEYOR_INDEXER_MOTOR_PORT = 20;
-    public static final int FEED_TO_BLASTER_MOTOR_PORT = 21;
+    // public static final int INFEED_CONVEYOR_MOTOR_PORT = 19;
+    // public static final int INFEED_CONVEYOR_INDEXER_MOTOR_PORT = 20;
+    // public static final int FEED_TO_BLASTER_MOTOR_PORT = 21;
 
     // solenoid IDs
     public static final int HIGH_GEAR_SOL_PORT = 7;
@@ -55,23 +55,20 @@ public final class Constants {
 
     public static final int LOWER_HANG_CLAMP_SOL_PORT = 0;
     public static final int RAISE_HANG_CLAMP_SOL_PORT = 1;
-
     public static final int HANG_ARM_OUT_SOL_PORT = 2;
     public static final int HANG_ARM_IN_SOL_PORT = 3;
 
     public static final int RAISE_CATAPULT_STOP_SOL_PORT = 5;
-
-    public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
+    // public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
 	public static final int RING_LIGHT_PORT = 4;
-
     public static final int YELLOW_LEDS_SOL_PORT = 6;
 
     // sensor IDs
-    public static final int LIDAR_DIO = 5;
+    public static final int LIDAR_DIO = 5; //Not used
 
-    public static final int TURRET_LEFT_DIO = 4;
-    public static final int TURRET_RIGHT_DIO = 3;
+    // public static final int TURRET_LEFT_DIO = 4;
+    // public static final int TURRET_RIGHT_DIO = 3;
 
     public static final int CHOO_CHOO_DIO = 9;
     public static final int BAND_DIO = 6;
@@ -94,7 +91,7 @@ public final class Constants {
     public static final double WINCH_SPEED = -.75;
     // public static final double CONVEYOR_SPEED = 0.5; // test speeds
     // public static final double CONVEYOR_INDEXER_SPEED = 0.5;
-    public static final double FEED_TO_BLASTER_SPEED = 0.5;
+    // public static final double FEED_TO_BLASTER_SPEED = 0.5;
     public static final double MAX_BAND_MOVE_SPEED = 0.5; //test speeds
 
     public final static I2C.Port I2C_PORT = I2C.Port.kOnboard;
@@ -108,16 +105,16 @@ public final class Constants {
 
     // Note: The direction that the color wheel itself turns will be the opposite of
     // the below direction
-    public enum DIRECTIONS {
-        CLOCKWISE,
-        COUNTERCLOCKWISE
-    }
+    // public enum DIRECTIONS {
+        // CLOCKWISE,
+        // COUNTERCLOCKWISE
+    // }
 
-    public final static DIRECTIONS SPIN_DIRECTION = DIRECTIONS.COUNTERCLOCKWISE;
+    // public final static DIRECTIONS SPIN_DIRECTION = DIRECTIONS.COUNTERCLOCKWISE;
 
     // The distance between our color sensor and the game's color sensor in number
     // of color slices away
-    public final static int DIFFERENTIAL = 2;
+    // public final static int DIFFERENTIAL = 2;
 
     // PID slots
     public static final int DRIVE_PID_SLOT = 0;
@@ -135,7 +132,7 @@ public final class Constants {
     public static final double HOR_DEGREES_PER_PIXEL = (double) HOR_FOV_DEGREES / IMG_WIDTH;
     public static final int IMG_HOR_MID = IMG_WIDTH / 2;
     public static final int DRIVER_STATION_FPS = 6;
-    public static final int PROCESSING_FPS = 30;
+    public static final int PROCESSING_FPS = 30; // DON'T CHANGE
 
     // Colors are (B, G, R) (Don't ask me)
     public static final Scalar RED = new Scalar(0, 0, 255);
