@@ -55,7 +55,7 @@ public class RobotContainer {
   //private final ConveyorSubsystem conveyorSubsystem = new ConveyorSubsystem(RobotMap.ConveyorMotor, RobotMap.AlignmentBeltMotor, RobotMap.IntakePhotoEye, RobotMap.SpacingPhotoEye, RobotMap.ExitPhotoEye);
   //private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
   //private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
-  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.winchMotor1, RobotMap.winchMotor2, RobotMap.HangAngleMotor1, RobotMap.HangAngleMotor2, RobotMap.leftRungSwitch, RobotMap.rightRungSwitch, RobotMap.rungArmRetractedSwitch, RobotMap.rungArmMidSwitch, RobotMap.rungArmAdvancedSwitch);
+  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.winchMotor1, RobotMap.winchMotor2, RobotMap.leftRungSwitch, RobotMap.rightRungSwitch, RobotMap.rungArmRetractedSwitch, RobotMap.rungArmMidSwitch, RobotMap.rungArmAdvancedSwitch);
   //private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.ArmMover, RobotMap.IntakeMotor, RobotMap.FeedToBlasterMotor);
   //private TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
   

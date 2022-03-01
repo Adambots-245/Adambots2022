@@ -27,8 +27,6 @@ public class HangSubsystem extends SubsystemBase {
     public BaseMotorController winchMotor1;
     public BaseMotorController winchMotor2;
     public WPI_VictorSPX angleClimbMotor;
-    public WPI_VictorSPX HangAngleMotor1;
-    public WPI_VictorSPX HangAngleMotor2;
     //private DigitalInput limitSwitch1;
     //private DigitalInput limitSwitch2;
     private DigitalInput leftRungSwitch;
@@ -37,7 +35,7 @@ public class HangSubsystem extends SubsystemBase {
     private DigitalInput rungArmRetractedSwitch;
     private DigitalInput rungArmMidSwitch;
 
-    public HangSubsystem(WPI_VictorSPX hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, WPI_VictorSPX hangAngleMotor1, WPI_VictorSPX hangAngleMotor2, DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, DigitalInput rungArmRetractedSwitch, DigitalInput rungArmMidSwitch, DigitalInput rungArmAdvancedSwitch) {
+    public HangSubsystem(WPI_VictorSPX hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, DigitalInput rungArmRetractedSwitch, DigitalInput rungArmMidSwitch, DigitalInput rungArmAdvancedSwitch) {
         super();
 
         this.hangMotor = hangMotor; // new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
@@ -75,8 +73,7 @@ public class HangSubsystem extends SubsystemBase {
     public void winchDown() {
         goingDown = true;
         winchMotor2.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
-            winchMotor1.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
-        
+        winchMotor1.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
     }
 
     public void winchUp() {
@@ -91,10 +88,10 @@ public class HangSubsystem extends SubsystemBase {
         winchMotor1.set(ControlMode.PercentOutput, 0);
     }
 
-    public void ChangeHangAngle(DoubleSupplier speedInput) {
-        HangAngleMotor1.set(ControlMode.PercentOutput, speedInput.getAsDouble());
-        HangAngleMotor2.set(ControlMode.PercentOutput, speedInput.getAsDouble());
-    }
+    // public void ChangeHangAngle(DoubleSupplier speedInput) {
+    //     HangAngleMotor1.set(ControlMode.PercentOutput, speedInput.getAsDouble());
+    //     HangAngleMotor2.set(ControlMode.PercentOutput, speedInput.getAsDouble());
+    // }
 
     public void GrabRung(){
         if(leftRungSwitch.get() && rightRungSwitch.get()){
