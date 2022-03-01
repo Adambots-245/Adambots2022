@@ -28,6 +28,7 @@ import frc.robot.sensors.PhotoEye;
  * Add your docs here.
  */
 public class RobotMap {
+    public static final DoubleSolenoid RungClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_RUNG_CLAMP_SOL_PORT, Constants.LOWER_RUNG_CLAMP_SOL_PORT);
 
     public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
     public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
