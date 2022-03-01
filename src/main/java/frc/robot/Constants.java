@@ -88,6 +88,7 @@ public final class Constants {
     public static final int INTAKE_SPEED = 1;
     public static final int OUTTAKE_SPEED = -1;
     public static final double STOP_MOTOR_SPEED = 0;
+    public static final double NORMAL_SPEED_MODIFIER = 1;
     public static final double LOW_SPEED_MODIFIER = 0.5;
     public static final double MAX_MOTOR_SPEED = 1;
     public static final double WINCH_SPEED = -.75;
