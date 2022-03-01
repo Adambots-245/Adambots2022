@@ -57,6 +57,7 @@ public class TurnToHubCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
 
           hubAngleEntry = table.getEntry("hubAngle");
           targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);  
@@ -66,7 +67,7 @@ public class TurnToHubCommand extends CommandBase {
           turnAngle = turnAngle + 1;
           SmartDashboard.putNumber("turnAngle", turnAngle);
           
-          driveTrain.arcadeDrive(0.05, turnSpeed);
+          driveTrain.arcadeDrive(0.05, 1);
           SmartDashboard.putNumber("gyroValue", gyroPIDSubsystem.getMeasurement());
           
           counter++;
