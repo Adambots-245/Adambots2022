@@ -158,7 +158,9 @@ public class RobotContainer {
 
   private void dash(){
     // autoChooser.setDefaultOption("None", null);
-   // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
+  autoChooser.addOption("Blind1", new Blind1(catapultSubsystem, driveTrainSubsystem));
+  autoChooser.addOption("Blind2", new Blind2(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
     // autoChooser.addOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
    // autoChooser.addOption("Yeet3Nom3Yeet3", new Yeet3Nom3Yeet3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem, Buttons.secondaryJoystick));
