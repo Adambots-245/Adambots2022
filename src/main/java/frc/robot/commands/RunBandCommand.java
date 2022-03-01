@@ -11,14 +11,14 @@ import frc.robot.subsystems.CatapultSubsystem;
 
 public class RunBandCommand extends CommandBase {
   private CatapultSubsystem catapultSubsystem;
-  private Double speed;
+  private DoubleSupplier speed;
 
   /** Creates a new RunBandCommand. */
   public RunBandCommand(CatapultSubsystem catapultSubsystem, DoubleSupplier speed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     this.catapultSubsystem = catapultSubsystem;
-    this.speed = speed.getAsDouble();
+    this.speed = speed;
     addRequirements(catapultSubsystem);
   }
 
@@ -29,7 +29,8 @@ public class RunBandCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    catapultSubsystem.runBandMotor(speed);
+    //System.out.println("Band Motor Command ..." + speed.getAsDouble());
+    catapultSubsystem.runBandMotor(speed.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

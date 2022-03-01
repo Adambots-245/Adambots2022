@@ -30,6 +30,8 @@ public class CatapultSubsystem extends SubsystemBase {
   private Double bandTarget = 0D;
   private Boolean enableBand = false;
   private Solenoid catapultStop;
+  private int accumulate = 0;
+  private boolean limitSwitch = false;
 
   public double error = 0;
 
@@ -55,11 +57,11 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void bandMotor() {
-    error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjust when we have robot
-    error = Math.min(error, Constants.MAX_BAND_MOVE_SPEED);
-    error = Math.max(error, -Constants.MAX_BAND_MOVE_SPEED);
+    // error = (bandTarget - bandMotor.getSelectedSensorPosition())/3000; //Arbitrary sensitivity value, adjust when we have robot
+    // error = Math.min(error, Constants.MAX_BAND_MOVE_SPEED);
+    // error = Math.max(error, -Constants.MAX_BAND_MOVE_SPEED);
 
-    bandMotor.set(ControlMode.PercentOutput, error);
+    // bandMotor.set(ControlMode.PercentOutput, error);
   }
 
   public void RaiseStop() {
@@ -71,6 +73,7 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void runBandMotor(double speed){
+    //System.out.println("Band Motor: " + speed);
     bandMotor.set(ControlMode.PercentOutput, speed);
   }
 
@@ -79,29 +82,44 @@ public class CatapultSubsystem extends SubsystemBase {
     catapultMotor.setNeutralMode(NeutralMode.Brake);
     catapultMotor.setInverted(true);
 
-    bandMotor.set(ControlMode.PercentOutput, -0.5);
+    accumulate = 0;
+    //bandMotor.set(ControlMode.PercentOutput, -0.5);
     enableBand = false;
   }
 
   @Override
   public void periodic() {
+    if (chooChooLimitSwitch.get()) {
+      accumulate = Math.min(accumulate+1, 5);
+    }
+    else {
+      accumulate = Math.max(accumulate-1, -5);
+    }
+    if (accumulate >= 5) {
+      limitSwitch = true;
+    }
+    else {
+      limitSwitch = false;
+    }
 
-    System.out.println("Band Motor Pos: " + bandMotor.getSelectedSensorPosition() + " - Band Limit Switch: " + bandLimitSwitch.get());
+    // System.out.println("Band Motor Pos: " + bandMotor.getSelectedSensorPosition() + " - Band Limit Switch: " + bandLimitSwitch.get());
 
-    // System.out.println("Choo Choo: " + chooChooLimitSwitch.get());
-    if (chooChooLimitSwitch.get() == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
+    System.out.println("Choo Choo: " + limitSwitch + " Accumulate: " + accumulate);
+    if (limitSwitch == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
 
+    /** Temporarily commenting it since band limit switch is always true
     if (bandLimitSwitch.get() == true && prevBandLimitSwitchState == false) { //Testing if Band limit switch goes from low -> high and stopping the motor + zeroing encoder
       bandMotor.set(ControlMode.PercentOutput, 0);
       bandMotor.setSelectedSensorPosition(0);
       enableBand = true;
     }
+    **/
 
-    if (enableBand == true) {bandMotor();}
+    //if (enableBand == true) {bandMotor();}
 
-    prevChooChooLimitSwitchState = chooChooLimitSwitch.get();
+    prevChooChooLimitSwitchState = limitSwitch;
     prevBandLimitSwitchState = bandLimitSwitch.get();
   }
 }
