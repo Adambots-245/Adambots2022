@@ -50,8 +50,6 @@ public class RobotMap {
     public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
 
     public static final WPI_VictorSPX HangMotor = new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
-    public static final WPI_VictorSPX HangAngleMotor1 = new WPI_VictorSPX(Constants.HANG_ANGLE_1_MOTOR_PORT);
-    public static final WPI_VictorSPX HangAngleMotor2 = new WPI_VictorSPX(Constants.HANG_ANGLE_2_MOTOR_PORT);
     public static final BaseMotorController winchMotor1 = new WPI_VictorSPX(Constants.HANG_WINCH_1_MOTOR_PORT);
     public static final BaseMotorController winchMotor2 = new WPI_VictorSPX(Constants.HANG_WINCH_2_MOTOR_PORT);
     //public static final DoubleSolenoid hangClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
