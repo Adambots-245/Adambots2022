@@ -68,9 +68,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     
-    if (Robot.isReal()) {
-      SmartDashboard.putNumber("ANGLE", vision.getAngle());
-    }
+   // if (Robot.isReal()) {
+   //   SmartDashboard.putNumber("ANGLE", vision.getAngle());
+  //  }
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
     // interrupted commands,
@@ -101,32 +101,32 @@ public class Robot extends TimedRobot {
    * {@link RobotContainer} class.
    */
   @Override
-  public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    SmartDashboard.putString("auton selected", m_autonomousCommand.toString());
+  // public void autonomousInit() {
+  //   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+  //   SmartDashboard.putString("auton selected", m_autonomousCommand.toString());
 
     
-    System.out.println("Init Auton.........");
-    Gyro.getInstance().reset();
-    Gyro.getInstance().calibrationCheck(); // may take up to two seconds to complete
-    System.out.println("Gyro Yaw at Startup: " + Gyro.getInstance().getYaw());
-    // CommandScheduler.getInstance().cancelAll(); // cancel all teleop commands
+  //   System.out.println("Init Auton.........");
+  //   Gyro.getInstance().reset();
+  //   Gyro.getInstance().calibrationCheck(); // may take up to two seconds to complete
+  //   System.out.println("Gyro Yaw at Startup: " + Gyro.getInstance().getYaw());
+  //   // CommandScheduler.getInstance().cancelAll(); // cancel all teleop commands
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+  //   // schedule the autonomous command (example)
+  //   if (m_autonomousCommand != null) {
+  //     m_autonomousCommand.schedule();
+  //   }
     
-    RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
-  }
+  //   RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
+  //   RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
+  //   RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
+  //   RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
+  // }
 
   /**
    * This function is called periodically during autonomous.
    */
-  @Override
+  //@Override
   public void autonomousPeriodic() {
     // SmartDashboard.putNumber("yaw",gyroSubsystem.getYaw());
 
@@ -156,26 +156,26 @@ public class Robot extends TimedRobot {
 
   }
 
-  @Override
-  public void testInit() {
-    // Cancels all running commands at the start of test mode.
-    // CommandScheduler.getInstance().cancelAll();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+  // @Override
+  // public void testInit() {
+  //   // Cancels all running commands at the start of test mode.
+  //   // CommandScheduler.getInstance().cancelAll();
+  //   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    Gyro.getInstance().reset();
+  //   Gyro.getInstance().reset();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      System.out.println("Scheduling test command");
-      m_autonomousCommand.schedule();
-    }
+  //   // schedule the autonomous command (example)
+  //   if (m_autonomousCommand != null) {
+  //     System.out.println("Scheduling test command");
+  //     m_autonomousCommand.schedule();
+  //   }
     
     
-    RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
-  }
+  //   RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
+  //   RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
+  //   RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
+  //   RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
+  // }
 
   /**
    * This function is called periodically during test mode.
