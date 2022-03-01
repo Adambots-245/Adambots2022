@@ -8,6 +8,7 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HangSubsystem;
+import frc.robot.utils.Log;
 
 public class UnclampRungCommand extends CommandBase {
   /**
@@ -30,8 +31,8 @@ public class UnclampRungCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("raise intake");
-    hangSubsystem.UngrabRung();
+    Log.info("Unclamp Rung");
+    hangSubsystem.ungrabRung();
   }
 
   // Called once the command ends or is interrupted.

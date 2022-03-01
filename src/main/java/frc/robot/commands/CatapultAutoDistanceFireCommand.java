@@ -58,6 +58,6 @@ public class CatapultAutoDistanceFireCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     //Terminate once we have reached the band target or if there is no distance entry
-    return Math.abs(catapultSubsystem.error) < Constants.ACCEPTABLE_BAND_ERROR || !distanceEntry.exists(); 
+    return Math.abs(catapultSubsystem.getError()) < Constants.ACCEPTABLE_BAND_ERROR || !distanceEntry.exists(); 
   }
 }

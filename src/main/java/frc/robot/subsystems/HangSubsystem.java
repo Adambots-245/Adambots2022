@@ -14,7 +14,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class HangSubsystem extends SubsystemBase {
 
-    public boolean hangIsOut = false;
+    private boolean hangIsOut = false;
     private boolean goingDown = false;
     private DoubleSolenoid hangClamp;
     private DoubleSolenoid hangAngle;
@@ -92,7 +92,7 @@ public class HangSubsystem extends SubsystemBase {
         winchMotor1.set(ControlMode.PercentOutput, 0);
     }
 
-    public void GrabRung(){
+    public void grabRung(){
         // if(leftRungSwitch.get() && rightRungSwitch.get()){
 
             Log.info("Rung Grabbed");
@@ -101,14 +101,14 @@ public class HangSubsystem extends SubsystemBase {
         // }
     }
 
-    public void UngrabRung(){
+    public void ungrabRung(){
 
         Log.info("Ungrab Rung");
         hangClamp.set(Value.kForward);
         // System.out.println("Ungrabbed");
     }
 
-    public void HangOut(){
+    public void hangOut(){
 
         Log.info("Hang out initiated");
 
@@ -116,7 +116,7 @@ public class HangSubsystem extends SubsystemBase {
         // System.out.println("Hang Out");
     }
 
-    public void HangIn(){
+    public void hangIn(){
         Log.infoF("Rung Arm Retracted Swith Status: %b", rungArmRetractedSwitch.get());
         if(rungArmRetractedSwitch.get() == true){
 
@@ -124,6 +124,14 @@ public class HangSubsystem extends SubsystemBase {
             hangAngle.set(Value.kReverse);
             // System.out.println("Hang In");
         }
+    }
+
+    public boolean isHangOut(){
+        return hangIsOut;
+    }
+
+    public void setHangOut(boolean value){
+        this.hangIsOut = value;
     }
 
     @Override

@@ -8,6 +8,7 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HangSubsystem;
+import frc.robot.utils.Log;
 
 public class MoveHangOutCommand extends CommandBase {
   /**
@@ -19,7 +20,6 @@ public class MoveHangOutCommand extends CommandBase {
     this.hangSubsystem = hangSubsystem;
 
     addRequirements(hangSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -30,9 +30,9 @@ public class MoveHangOutCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("raise intake");
-    hangSubsystem.HangOut();
-    hangSubsystem.hangIsOut = true;
+    Log.info("Move Hang Out");
+    hangSubsystem.hangOut();
+    hangSubsystem.setHangOut(true);
   }
 
   // Called once the command ends or is interrupted.

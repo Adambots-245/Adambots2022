@@ -32,7 +32,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private int accumulate = 0;
   private boolean limitSwitch = false;
 
-  public double error = 0;
+  private double error = 0;
 
   public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, BaseMotorController bandMotor, DigitalInput bandLimitSwitch, Solenoid catapultStop) {
     super();
@@ -47,7 +47,11 @@ public class CatapultSubsystem extends SubsystemBase {
     initialize();
   }
 
-  public void setCatapultMotor(double speed) {
+  public double getError() {
+    return error;
+  }
+
+  public void runCatapult(double speed) {
     catapultMotor.set(ControlMode.PercentOutput, speed);
   }
 
@@ -63,11 +67,11 @@ public class CatapultSubsystem extends SubsystemBase {
     // bandMotor.set(ControlMode.PercentOutput, error);
   }
 
-  public void RaiseStop() {
+  public void raiseStop() {
     catapultStop.set(true);
   }
 
-  public void LowerStop(){
+  public void lowerStop(){
     catapultStop.set(false);
   }
 

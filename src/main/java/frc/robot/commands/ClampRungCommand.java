@@ -8,6 +8,7 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HangSubsystem;
+import frc.robot.utils.Log;
 
 public class ClampRungCommand extends CommandBase {
   /**
@@ -19,7 +20,6 @@ public class ClampRungCommand extends CommandBase {
     this.hangSubsystem = hangSubsystem;
 
     addRequirements(hangSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -30,8 +30,8 @@ public class ClampRungCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("raise intake");
-    hangSubsystem.GrabRung();
+    Log.info("Clamp Rung");
+    hangSubsystem.grabRung();
   }
 
   // Called once the command ends or is interrupted.

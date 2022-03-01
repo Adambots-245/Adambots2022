@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CatapultSubsystem;
+import frc.robot.utils.Log;
 
 public class RunBandCommand extends CommandBase {
   private CatapultSubsystem catapultSubsystem;
@@ -30,6 +31,7 @@ public class RunBandCommand extends CommandBase {
   @Override
   public void execute() {
     //System.out.println("Band Motor Command ..." + speed.getAsDouble());
+    Log.infoF("Band Motor Command: %f", speed.getAsDouble());
     catapultSubsystem.runBandMotor(speed.getAsDouble());
   }
 

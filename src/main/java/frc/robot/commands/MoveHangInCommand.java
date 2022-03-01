@@ -31,7 +31,7 @@ public class MoveHangInCommand extends CommandBase {
   @Override
   public void execute() {
     System.out.println("raise intake");
-    hangSubsystem.HangIn();
+    hangSubsystem.hangIn();
   }
 
   // Called once the command ends or is interrupted.
