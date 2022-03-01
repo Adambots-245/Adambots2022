@@ -35,9 +35,12 @@ public final class Constants {
     public static final int CHOO_CHOO_MOTOR_PORT = 24;
     public static final int BAND_MOTOR_PORT = 14;
 
-    public static final int CLIMBING_1_MOTOR_PORT = 15;
-    public static final int CLIMBING_2_MOTOR_PORT = 16;
-    // public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
+    public static final int HANG_ANGLE_1_MOTOR_PORT = 33;
+    public static final int HANG_ANGLE_2_MOTOR_PORT = 32;
+    public static final int HANG_WINCH_1_MOTOR_PORT = 15;
+    public static final int HANG_WINCH_2_MOTOR_PORT = 16;
+    public static final int CLIMBING_RAISE_ELEVATOR_MOTOR_PORT = 23;
+    public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
 
     public static final int INTAKE_MOTOR_PORT = 18;
     public static final int INFEED_CONVEYOR_MOTOR_PORT = 19;
@@ -47,8 +50,14 @@ public final class Constants {
     // solenoid IDs
     public static final int HIGH_GEAR_SOL_PORT = 7;
 
-    public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
-    public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
+    //public static final int RAISE_POWER_CELL_INTAKE_SOL_PORT = 0;
+    //public static final int LOWER_POWER_CELL_INTAKE_SOL_PORT = 1;
+
+    public static final int LOWER_HANG_CLAMP_SOL_PORT = 0;
+    public static final int RAISE_HANG_CLAMP_SOL_PORT = 1;
+
+    public static final int HANG_ARM_OUT_SOL_PORT = 2;
+    public static final int HANG_ARM_IN_SOL_PORT = 3;
 
     public static final int RAISE_CATAPULT_STOP_SOL_PORT = 5;
 
@@ -67,14 +76,18 @@ public final class Constants {
     public static final int CHOO_CHOO_DIO = 9;
     public static final int BAND_DIO = 6;
     
-	public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
-	public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
+	// public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
+	// public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
+    public static final int RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 5;
+    public static final int LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 4;
+    public static final int RUNG_ARM_ADVANCED_LIMIT_SWITCH_PORT = 2;
+    public static final int RUNG_ARM_RETRACTED_LIMIT_SWITCH_PORT = 3;
+    public static final int RUNG_ARM_MID_LIMIT_SWITCH_PORT = 8;
 
     // speed values
     public static final int INTAKE_SPEED = 1;
     public static final int OUTTAKE_SPEED = -1;
     public static final double STOP_MOTOR_SPEED = 0;
-    public static final double NORMAL_SPEED_MODIFIER = 1;
     public static final double LOW_SPEED_MODIFIER = 0.5;
     public static final double MAX_MOTOR_SPEED = 1;
     public static final double WINCH_SPEED = -.75;

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+// import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Gamepad.Buttons;
@@ -21,7 +21,7 @@ import frc.robot.Gamepad.GamepadConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.subsystems.*;
-import frc.robot.utils.Log;
+//import frc.robot.utils.Log;
 
 
 /**
@@ -41,6 +41,14 @@ public class RobotContainer {
   // private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.WinchMotor1, RobotMap.WinchMotor2, RobotMap.LimitSwitch1, RobotMap.LimitSwitch2);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, RobotMap.ChooChooLimitSwitch, RobotMap.BandMotor, RobotMap.BandLimitSwitch, RobotMap.CatapultStop);
+  //private final BlasterSubsystem blasterSubsystem = new BlasterSubsystem(RobotMap.BlasterMotor, RobotMap.BlasterHood);
+  //private final ControlPanelSubsystem panelSubsystem = new ControlPanelSubsystem(RobotMap.PanelMotor, RobotMap.ColorSensor);
+  //private final ConveyorSubsystem conveyorSubsystem = new ConveyorSubsystem(RobotMap.ConveyorMotor, RobotMap.AlignmentBeltMotor, RobotMap.IntakePhotoEye, RobotMap.SpacingPhotoEye, RobotMap.ExitPhotoEye);
+  //private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, RobotMap.GearShifter, RobotMap.FrontRightMotor, RobotMap.FrontLeftMotor, RobotMap.BackLeftMotor, RobotMap.BackRightMotor);
+  //private final GondolaSubsystem gondolaSubsystem = new GondolaSubsystem(RobotMap.GondolaMotor);
+  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, RobotMap.winchMotor1, RobotMap.winchMotor2, RobotMap.leftRungSwitch, RobotMap.rightRungSwitch, RobotMap.rungArmRetractedSwitch, RobotMap.rungArmMidSwitch, RobotMap.rungArmAdvancedSwitch);
+  //private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.ArmMover, RobotMap.IntakeMotor, RobotMap.FeedToBlasterMotor);
+  //private TurretSubsystem turretSubsystem = new TurretSubsystem(RobotMap.TurretMotor, RobotMap.LeftLimitSwitch, RobotMap.RightLimitSwitch);
   
   // commands
   private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
@@ -56,7 +64,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-    setupDefaultCommands();
+    //setupDefaultCommands();
 
     // Log.saveToFile("/home/lvuser/robot.txt");
 
@@ -121,6 +129,17 @@ public class RobotContainer {
       // hang 
       
       // Buttons.secondaryAButton.whenHeld(new WinchCommand(hangSubsystem), false);
+      //Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
+      //Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
+      // blasterSubsystem.setDefaultCommand(new BlasterPercentOutput(blasterSubsystem, () -> Buttons.primaryJoystick.getRightTriggerAxis()));
+      // hang 
+      
+      Buttons.secondaryRB.whenHeld(new WinchCommand(hangSubsystem));
+      Buttons.secondaryLB.whenHeld(new UnwinchCommand(hangSubsystem));
+      Buttons.secondaryDPadN.whenPressed(new ClampRungCommand(hangSubsystem), false);
+      Buttons.secondaryDPadS.whenPressed(new UnclampRungCommand(hangSubsystem), false);
+      Buttons.secondaryDPadW.whenPressed(new MoveHangOutCommand(hangSubsystem), false);
+      Buttons.secondaryDPadE.whenPressed(new MoveHangInCommand(hangSubsystem), false);
       //raiseElevatorCommand = new RaiseElevatorCommand(hangSubsystem, () -> Buttons.secondaryJoystick.getLeftY());    
       //gondolaCommand = new GondolaCommand(hangSubsystem, ()->Buttons.secondaryJoystick.getLeftX());
       
@@ -129,6 +148,10 @@ public class RobotContainer {
       // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, shooterVelocity));
       // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.TRENCH_SHOOTER_VELOCITY));
      // SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
+      //SmartDashboard.putData("10 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY));
+      // SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, shooterVelocity));
+      //SmartDashboard.putData("trench 35 foot blaster velocity", new BlasterConstantOutputCommand(blasterSubsystem, RobotMap.LidarSensor, Constants.TRENCH_SHOOTER_VELOCITY));
+      //SmartDashboard.putData(new IndexToBlasterCommand(intakeSubsystem));
 
     // mode switching 
       // startIntakeCommand.addRequirements(elevatorSubsystem, conveyorSubsystem, alignmentBeltSubsystem);
@@ -149,7 +172,7 @@ public class RobotContainer {
   }
 
   private void dash(){
-    // autoChooser.setDefaultOption("None", null);
+    autoChooser.setDefaultOption("None", null);
    // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    
@@ -159,11 +182,11 @@ public class RobotContainer {
   }
 
   private void setupDefaultCommands(){
-    driveTrainSubsystem.setDefaultCommand(
-        new DriveCommand(driveTrainSubsystem, 
-        () -> deaden(Buttons.primaryJoystick.getLeftY()),
-        () -> Buttons.primaryJoystick.getRightX())
-        );  
+    //driveTrainSubsystem.setDefaultCommand(
+      //  new DriveCommand(driveTrainSubsystem, 
+       // () -> deaden(Buttons.primaryJoystick.getLeftY()),
+        //() -> Buttons.primaryJoystick.getRightX())
+        //);  
 
     intakeSubsystem.setDefaultCommand(
         new StartIntakeCommand(intakeSubsystem, 

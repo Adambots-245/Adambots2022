@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import frc.robot.sensors.ColorSensor;
+//import frc.robot.sensors.ColorSensor;
 import frc.robot.sensors.Gyro;
 import frc.robot.sensors.Lidar;
 import frc.robot.sensors.PhotoEye;
@@ -34,6 +34,7 @@ public class RobotMap {
     // public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
     public static final BaseMotorController ChooChooMotor = new WPI_VictorSPX(Constants.CHOO_CHOO_MOTOR_PORT);
 	public static final BaseMotorController BandMotor = new WPI_TalonSRX(Constants.BAND_MOTOR_PORT);
+    public static final DoubleSolenoid RungClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
 
     public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
     // public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
@@ -54,12 +55,18 @@ public class RobotMap {
 
     // public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
 
-    // public static final WPI_VictorSPX HangMotor = new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
-    public static final WPI_VictorSPX WinchMotor1 = new WPI_VictorSPX(Constants.CLIMBING_1_MOTOR_PORT);
-    public static final WPI_VictorSPX WinchMotor2 = new WPI_VictorSPX(Constants.CLIMBING_2_MOTOR_PORT);
+    public static final WPI_VictorSPX HangMotor = new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
+    public static final BaseMotorController winchMotor1 = new WPI_VictorSPX(Constants.HANG_WINCH_1_MOTOR_PORT);
+    public static final BaseMotorController winchMotor2 = new WPI_VictorSPX(Constants.HANG_WINCH_2_MOTOR_PORT);
+    //public static final DoubleSolenoid hangClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
+    //public static final DoubleSolenoid hangAngle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.HANG_ARM_OUT_SOL_PORT, Constants.HANG_ARM_IN_SOL_PORT);
 
-    public static final DigitalInput LimitSwitch1 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_1_PORT);
-    public static final DigitalInput LimitSwitch2 = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH_2_PORT);
+    public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rungArmAdvancedSwitch = new DigitalInput(Constants.RUNG_ARM_ADVANCED_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rungArmRetractedSwitch = new DigitalInput(Constants.RUNG_ARM_RETRACTED_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rungArmMidSwitch = new DigitalInput(Constants.RUNG_ARM_MID_LIMIT_SWITCH_PORT);
+    
 
     // public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
     public static final WPI_VictorSPX IntakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR_PORT);
