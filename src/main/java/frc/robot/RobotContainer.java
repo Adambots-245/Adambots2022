@@ -97,6 +97,9 @@ public class RobotContainer {
 
       Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
 
+      Buttons.secondaryYButton.whenPressed(new BandMoveCommand(catapultSubsystem, 300));
+      Buttons.secondaryAButton.whenPressed(new BandMoveCommand(catapultSubsystem, -300));
+
       Buttons.secondaryRB.whenHeld(new WinchCommand(hangSubsystem));
       Buttons.secondaryLB.whenHeld(new UnwinchCommand(hangSubsystem));
       Buttons.secondaryDPadN.whenPressed(new ClampRungCommand(hangSubsystem), false);
@@ -129,10 +132,10 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
     
-    catapultSubsystem.setDefaultCommand(
-      new RunBandCommand(catapultSubsystem,  
-      () -> deaden(Buttons.secondaryJoystick.getLeftY()))
-    );
+    // catapultSubsystem.setDefaultCommand(
+    //   new RunBandCommand(catapultSubsystem,  
+    //   () -> deaden(Buttons.secondaryJoystick.getLeftY()))
+    // );
   }
 
   // deadzoning
