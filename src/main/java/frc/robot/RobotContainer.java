@@ -46,7 +46,6 @@ public class RobotContainer {
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
                                                                             RobotMap.ChooChooLimitSwitch, 
                                                                             RobotMap.BandMotor, 
-                                                                            RobotMap.BandLimitSwitch, 
                                                                             RobotMap.CatapultStop);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, 
                                                                 RobotMap.winchMotor1, 
@@ -97,8 +96,7 @@ public class RobotContainer {
 
       Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
 
-      Buttons.secondaryYButton.whenPressed(new BandMoveCommand(catapultSubsystem, 1024*20*5));
-      Buttons.secondaryAButton.whenPressed(new BandMoveCommand(catapultSubsystem, -1024*20*5));
+      Buttons.secondaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.5, 90, true));
 
       Buttons.secondaryRB.whenHeld(new WinchCommand(hangSubsystem));
       Buttons.secondaryLB.whenHeld(new UnwinchCommand(hangSubsystem));
