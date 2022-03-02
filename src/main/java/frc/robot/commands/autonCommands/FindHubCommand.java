@@ -18,7 +18,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.GyroPIDSubsystem;
 
 /** Add your docs here. */
-public class TurnToHubCommand extends CommandBase {
+public class FindHubCommand extends CommandBase {
   double counter;
   DriveTrainSubsystem driveTrain;
   double targetAngle;
@@ -29,7 +29,7 @@ public class TurnToHubCommand extends CommandBase {
   NetworkTableEntry hubAngleEntry;
   double turnAngle;
 
-  public TurnToHubCommand(DriveTrainSubsystem inpuDriveTrain) {
+  public FindHubCommand(DriveTrainSubsystem inpuDriveTrain) {
     driveTrain = inpuDriveTrain;
 
     gyroPIDSubsystem = new GyroPIDSubsystem();
