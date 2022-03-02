@@ -137,19 +137,19 @@ public class HangSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         if(goingDown == true && rungArmRetractedSwitch.get() == true){
-            Log.info("Going down and run arm retracted. Stopping Winch Motors");
+            //Log.info("Going down and run arm retracted. Stopping Winch Motors");
           
             winchMotor2.set(ControlMode.PercentOutput, 0);
             winchMotor1.set(ControlMode.PercentOutput, 0);
         }
         if(goingDown == false && hangIsOut == false && rungArmMidSwitch.get() == true){
-            Log.info("Not Going down, no hang out and arm at mid point. Stopping Winch Motors");
+            //Log.info("Not Going down, no hang out and arm at mid point. Stopping Winch Motors");
 
             winchMotor2.set(ControlMode.PercentOutput, 0);
             winchMotor1.set(ControlMode.PercentOutput, 0);
         }
         if(goingDown == false && hangIsOut == true && rungArmAdvancedSwitch.get() == true){
-            Log.info("Not Going down, hang out true and arm at advanced point. Stopping Winch Motors");
+            //Log.info("Not Going down, hang out true and arm at advanced point. Stopping Winch Motors");
 
             winchMotor2.set(ControlMode.PercentOutput, 0);
             winchMotor1.set(ControlMode.PercentOutput, 0);

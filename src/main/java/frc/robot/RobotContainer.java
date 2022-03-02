@@ -97,8 +97,8 @@ public class RobotContainer {
 
       Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
 
-      Buttons.secondaryYButton.whenPressed(new BandMoveCommand(catapultSubsystem, 300));
-      Buttons.secondaryAButton.whenPressed(new BandMoveCommand(catapultSubsystem, -300));
+      Buttons.secondaryYButton.whenPressed(new BandMoveCommand(catapultSubsystem, 1024*20*5));
+      Buttons.secondaryAButton.whenPressed(new BandMoveCommand(catapultSubsystem, -1024*20*5));
 
       Buttons.secondaryRB.whenHeld(new WinchCommand(hangSubsystem));
       Buttons.secondaryLB.whenHeld(new UnwinchCommand(hangSubsystem));

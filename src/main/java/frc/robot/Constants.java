@@ -143,7 +143,7 @@ public final class Constants {
 	public static final double CAMERA_OFFSET = 4;
 
     //Catapult Constants
-    public static final double ACCEPTABLE_BAND_ERROR = 0.05;
+    public static final double ACCEPTABLE_BAND_ERROR = 300;
 
     // blaster PID constants
     public static final double BLASTER_KF = .054;
