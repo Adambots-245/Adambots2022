@@ -20,6 +20,8 @@ import frc.robot.Gamepad.GamepadConstants;
 
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
+import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton1Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
 import frc.robot.utils.Log;
@@ -149,12 +151,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    if (autoChooser.getSelected() != null)
-      Log.info("Chosen Auton Command: ", autoChooser.getSelected().toString());
-    else
-      Log.info("Chosen Auton Command: None");
+    // if (autoChooser.getSelected() != null)
+      // Log.info("Chosen Auton Command: ", autoChooser.getSelected().toString());
+    // else
+      // Log.info("Chosen Auton Command: None");
       
-    return autoChooser.getSelected();
+    //return autoChooser.getSelected();
+    return new Test(driveTrainSubsystem, intakeSubsystem, catapultSubsystem, null);
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))

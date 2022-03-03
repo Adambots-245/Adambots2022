@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
@@ -30,7 +31,11 @@ public class Test extends SequentialCommandGroup{
 
     public Test(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
         super(
-            new TurnToHubCommand(driveTrain)
+            new ParallelRaceGroup(
+                new WaitCommand(7), 
+                new TurnToHubCommand(driveTrain)
+            )
+            
         );  
     }
 }
