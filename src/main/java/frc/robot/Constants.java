@@ -133,6 +133,7 @@ public final class Constants {
     public static final int IMG_HOR_MID = IMG_WIDTH / 2;
     public static final int DRIVER_STATION_FPS = 6;
     public static final int PROCESSING_FPS = 30; // DON'T CHANGE
+    public static final int ANGLE_NOT_DETECTED = 600;
 
     // Colors are (B, G, R) (Don't ask me)
     public static final Scalar RED = new Scalar(0, 0, 255);
