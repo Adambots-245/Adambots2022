@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -12,7 +13,9 @@ import edu.wpi.first.cscore.*;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.opencv.core.*;
@@ -44,7 +47,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private Thread visionThread;
     private NetworkTableEntry hubAngleEntry;
     private NetworkTableEntry ballAngleEntry;
-    private NetworkTableEntry distanceEntry;
     private Solenoid ringLight;
     private MedianFilter hubMaxYFilter;
     private MedianFilter hubMinYFilter;
@@ -120,7 +122,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         NetworkTable table = instance.getTable("Vision");
         hubAngleEntry = table.getEntry("hubAngle");
         ballAngleEntry = table.getEntry("ballAngle");
-        distanceEntry = table.getEntry("distance");
 
         visionThread = new Thread(() -> {
             run();
@@ -152,13 +153,25 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             redContours = redGrip.filterContoursOutput();
             blueContours = blueGrip.filterContoursOutput();
 
-            RotatedRect[] rects = findBoundingBoxes(blueContours);
+            SmartDashboard.putString("Team", DriverStation.getAlliance().toString());
+
+            RotatedRect[] rects;
+            Mat properMat;
+            if (DriverStation.getAlliance() == Alliance.Red) {
+                 rects = findBoundingBoxes(redContours);
+                 properMat = redMat;
+            }
+            else {
+                 rects = findBoundingBoxes(blueContours);
+                 properMat = blueMat;
+            }
+            
             //SmartDashboard.putNumber("rectslength", rects.length);
             //SmartDashboard.putNumber("redContourslength", blueContours.size());
             if (rects.length != 0) {
                 //RotatedRect rect = findLargestRect(rects);
                 RotatedRect rect = rects[0];
-                draw(rect, blueMat);
+                draw(rect, properMat);
                 //findCrosshair(ballPts, ballCrosshair);
                 //drawCrosshair(ballCrosshair, blueMat);
             }
@@ -171,14 +184,22 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
             if(hubCrosshair != null) {
                 synchronized (lock) {
-                    hubAngle = calculateAngle(hubCrosshair, hubAngleEntry);
+                    hubAngle = calculateAngle(hubCrosshair);
+                    hubAngleEntry.setDouble(hubAngle); 
                 }
+            }else{
+                hubAngleEntry.setDouble(Constants.ANGLE_NOT_DETECTED);
             }
+            
             if(ballCrosshair != null) {
                 synchronized (lock) {
-                    ballAngle = calculateAngle(ballCrosshair, ballAngleEntry);
+                    ballAngle = calculateAngle(ballCrosshair);
+                    ballAngleEntry.setDouble(ballAngle);
                 }
+            }else{
+                ballAngleEntry.setDouble(Constants.ANGLE_NOT_DETECTED);
             }
+
             SmartDashboard.putNumber("hubAngle", hubAngle);
             SmartDashboard.putNumber("ballAngle", ballAngle);
             
@@ -275,8 +296,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("pixelWidth", pixelWidth);
         SmartDashboard.putNumber("parabola Error", parabolaError);
 
-        distanceEntry.setDouble(finalDistance);
-
         //if ()
         drawRect(hubPts, hubMat);
         hubCrosshair = findCrosshair(hubPts, hubCrosshair);
@@ -334,7 +353,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             j = (i + 1) % 4;
             if (crosshair == null || (pts[i].y + pts[j].y) / 2 < crosshair.y)
                 crosshair = new Point((pts[i].x + pts[j].x) / 2, (pts[i].y + pts[j].y) / 2);
-
         }
         */
         return crosshair;
@@ -344,15 +362,20 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     public void drawCrosshair(Point crosshair, Mat mat) {
         Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y - 5), new Point(crosshair.x + 5, crosshair.y + 5), Constants.BLACK, 3);
         Imgproc.line(mat, new Point(crosshair.x - 5, crosshair.y + 5), new Point(crosshair.x + 5, crosshair.y - 5), Constants.BLACK, 3);
+
     }
 
     // Calculate horizontal turret angle
-    public double calculateAngle(Point crosshair, NetworkTableEntry angleEntry) {
+    public double calculateAngle(Point crosshair) {
         pixelDistance = (int) crosshair.x - Constants.IMG_HOR_MID;
         double angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
-        angleEntry.setDouble(angle);
         return angle;
     }
+
+    // Getter for angle
+    //public double getAngle() { 
+        //return angle;
+    //}
 
     public Thread getVisionThread() {
         return visionThread;

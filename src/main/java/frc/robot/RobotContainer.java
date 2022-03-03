@@ -20,6 +20,8 @@ import frc.robot.Gamepad.GamepadConstants;
 
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
+import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton1Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
 import frc.robot.utils.Log;
@@ -92,26 +94,23 @@ public class RobotContainer {
     
       // primary controls
       
-      Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
+      //Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
 
       Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
 
       // Buttons.secondaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.5, 90, true));
 
-      Buttons.secondaryRB.whenHeld(new WinchCommand(hangSubsystem));
-      Buttons.secondaryLB.whenHeld(new UnwinchCommand(hangSubsystem));
-      Buttons.secondaryDPadN.whenPressed(new ClampRungCommand(hangSubsystem), false);
-      Buttons.secondaryDPadS.whenPressed(new UnclampRungCommand(hangSubsystem), false);
-      Buttons.secondaryDPadW.whenPressed(new MoveHangOutCommand(hangSubsystem), false);
-      Buttons.secondaryDPadE.whenPressed(new MoveHangInCommand(hangSubsystem), false);
-
-      // Buttons.secondaryLB.toggleWhenPressed(new BlasterDistanceBasedCommand(blasterSubsystem, RobotMap.LidarSensor, Buttons.secondaryJoystick));
-
-      // Buttons.secondaryYButton.whenReleased(new BackboardToggleCommand(blasterSubsystem));
+      Buttons.secondaryRB.whileHeld(new WinchCommand(hangSubsystem));
+      Buttons.secondaryLB.whileHeld(new UnwinchCommand(hangSubsystem));
+      Buttons.secondaryAButton.whenPressed(new ClampRungCommand(hangSubsystem));
+      Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
+      Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
+      Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
   }
 
   private void dash(){
     autoChooser.setDefaultOption("None", null);
+    
     // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    
@@ -130,10 +129,10 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
     
-    // catapultSubsystem.setDefaultCommand(
-    //   new RunBandCommand(catapultSubsystem,  
-    //   () -> deaden(Buttons.secondaryJoystick.getLeftY()))
-    // );
+    catapultSubsystem.setDefaultCommand(
+      new RunBandCommand(catapultSubsystem,  
+      () -> deaden(Buttons.secondaryJoystick.getLeftY()))
+    );
   }
 
   // deadzoning
@@ -148,12 +147,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    if (autoChooser.getSelected() != null)
-      Log.info("Chosen Auton Command: ", autoChooser.getSelected().toString());
-    else
-      Log.info("Chosen Auton Command: None");
+    // if (autoChooser.getSelected() != null)
+      // Log.info("Chosen Auton Command: ", autoChooser.getSelected().toString());
+    // else
+      // Log.info("Chosen Auton Command: None");
       
-    return autoChooser.getSelected();
+    //return autoChooser.getSelected();
+    return new Test(driveTrainSubsystem, intakeSubsystem, catapultSubsystem, null);
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))
