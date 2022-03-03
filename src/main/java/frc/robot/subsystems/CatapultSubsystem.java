@@ -111,10 +111,10 @@ public class CatapultSubsystem extends SubsystemBase {
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    bandMotor();
+    //bandMotor();
 
     prevChooChooLimitSwitchState = ChooChooLimitSwitchState;
 
-    System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
+    //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
   }
 }

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.sensors.PhotoEye;
 import frc.robot.utils.Log;
 
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
@@ -23,11 +24,11 @@ public class HangSubsystem extends SubsystemBase {
     public BaseMotorController winchMotor2;
     private DigitalInput leftRungSwitch;
     private DigitalInput rightRungSwitch;
-    private DigitalInput rungArmAdvancedSwitch;
-    private DigitalInput rungArmRetractedSwitch;
-    private DigitalInput rungArmMidSwitch;
+    private PhotoEye rungArmAdvancedSwitch;
+    private PhotoEye rungArmRetractedSwitch;
+    private PhotoEye rungArmMidSwitch;
 
-    public HangSubsystem(BaseMotorController hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, DigitalInput rungArmRetractedSwitch, DigitalInput rungArmMidSwitch, DigitalInput rungArmAdvancedSwitch, DoubleSolenoid hangAngle, DoubleSolenoid hangClamp) {
+    public HangSubsystem(BaseMotorController hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, PhotoEye rungArmRetractedSwitch, PhotoEye rungArmMidSwitch, PhotoEye rungArmAdvancedSwitch, DoubleSolenoid hangAngle, DoubleSolenoid hangClamp) {
 
         super();
 
@@ -43,8 +44,6 @@ public class HangSubsystem extends SubsystemBase {
         this.rungArmAdvancedSwitch = rungArmAdvancedSwitch;
         this.rungArmRetractedSwitch = rungArmRetractedSwitch;
         this.rungArmMidSwitch = rungArmMidSwitch;
-
-        //this.winchMotor2.setInverted(true);
 
         this.hangClamp = hangClamp;
 
@@ -71,23 +70,26 @@ public class HangSubsystem extends SubsystemBase {
 
     public void winchDown() {
         Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);
-        goingDown = true;
-        winchMotor2.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
-        winchMotor1.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
+        if (rungArmRetractedSwitch.isDetecting()) {
+            goingDown = true;
+            winchMotor2.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
+            winchMotor1.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
+        }
     }
 
     public void winchUp() {
         Log.infoF("Winch going up - Speed: %f", Constants.WINCH_SPEED);
-
-        goingDown = false;
-        winchMotor2.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
-        winchMotor1.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
-        }    
+        if (rungArmAdvancedSwitch.isDetecting()) {
+            goingDown = false;
+            winchMotor2.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
+            winchMotor1.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
+        }
+    }    
 
 
     public void winchOff() {
-        Log.info("Stopping Winch ...");
-
+        //Log.info("Stopping Winch ...");
+        goingDown = false;
         winchMotor2.set(ControlMode.PercentOutput, 0);
         winchMotor1.set(ControlMode.PercentOutput, 0);
     }
@@ -117,13 +119,13 @@ public class HangSubsystem extends SubsystemBase {
     }
 
     public void hangIn(){
-        Log.infoF("Rung Arm Retracted Swith Status: %b", rungArmRetractedSwitch.get());
-        if(rungArmRetractedSwitch.get() == true){
+        Log.infoF("Rung Arm Retracted Swith Status: %b", rungArmRetractedSwitch.isDetecting());
+        //if(rungArmRetractedSwitch.get() == true){
 
             Log.info("Hang In initiated");
             hangAngle.set(Value.kReverse);
             // System.out.println("Hang In");
-        }
+        //}
     }
 
     public boolean isHangOut(){
@@ -136,23 +138,19 @@ public class HangSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if(goingDown == true && rungArmRetractedSwitch.get() == true){
+        System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting());
+
+        if(goingDown == true && !rungArmRetractedSwitch.isDetecting() == true){
             //Log.info("Going down and run arm retracted. Stopping Winch Motors");
-          
-            winchMotor2.set(ControlMode.PercentOutput, 0);
-            winchMotor1.set(ControlMode.PercentOutput, 0);
+            //winchOff();
         }
-        if(goingDown == false && hangIsOut == false && rungArmMidSwitch.get() == true){
+        if(goingDown == false && hangIsOut == false && !rungArmMidSwitch.isDetecting() == true){
             //Log.info("Not Going down, no hang out and arm at mid point. Stopping Winch Motors");
-
-            winchMotor2.set(ControlMode.PercentOutput, 0);
-            winchMotor1.set(ControlMode.PercentOutput, 0);
+            //winchOff();
         }
-        if(goingDown == false && hangIsOut == true && rungArmAdvancedSwitch.get() == true){
+        if(goingDown == false && hangIsOut == true && !rungArmAdvancedSwitch.isDetecting() == true){
             //Log.info("Not Going down, hang out true and arm at advanced point. Stopping Winch Motors");
-
-            winchMotor2.set(ControlMode.PercentOutput, 0);
-            winchMotor1.set(ControlMode.PercentOutput, 0);
+            //winchOff();
         }
     }
 }

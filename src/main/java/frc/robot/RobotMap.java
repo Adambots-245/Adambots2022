@@ -63,9 +63,9 @@ public class RobotMap {
 
     public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
     public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
-    public static final DigitalInput rungArmAdvancedSwitch = new DigitalInput(Constants.RUNG_ARM_ADVANCED_LIMIT_SWITCH_PORT);
-    public static final DigitalInput rungArmRetractedSwitch = new DigitalInput(Constants.RUNG_ARM_RETRACTED_LIMIT_SWITCH_PORT);
-    public static final DigitalInput rungArmMidSwitch = new DigitalInput(Constants.RUNG_ARM_MID_LIMIT_SWITCH_PORT);
+    public static final PhotoEye rungArmAdvancedSwitch = new PhotoEye(Constants.RUNG_ARM_ADVANCED_PHOTO_EYE_PORT);
+    public static final PhotoEye rungArmRetractedSwitch = new PhotoEye(Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT);
+    public static final PhotoEye rungArmMidSwitch = new PhotoEye(Constants.RUNG_ARM_MID_PHOTO_EYE_PORT);
     
 
     // public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse

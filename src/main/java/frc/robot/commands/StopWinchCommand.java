@@ -15,7 +15,7 @@ import frc.robot.subsystems.HangSubsystem;
 /**
  * An example command that uses an example subsystem.
  */
-public class WinchCommand extends CommandBase {
+public class StopWinchCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
   /**
@@ -26,7 +26,7 @@ public class WinchCommand extends CommandBase {
   public DoubleSupplier winchSpeed;
   private final HangSubsystem hangSubsystem;
 
-  public WinchCommand(HangSubsystem hangSubsystem) {
+  public StopWinchCommand(HangSubsystem hangSubsystem) {
     this.hangSubsystem = hangSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(hangSubsystem);
@@ -35,7 +35,7 @@ public class WinchCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    hangSubsystem.winchDown();
+    hangSubsystem.winchOff();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,12 +46,11 @@ public class WinchCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    hangSubsystem.winchOff();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
