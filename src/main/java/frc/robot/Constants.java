@@ -77,9 +77,9 @@ public final class Constants {
 	// public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
     public static final int RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 5;
     public static final int LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 4;
-    public static final int RUNG_ARM_ADVANCED_LIMIT_SWITCH_PORT = 2;
-    public static final int RUNG_ARM_RETRACTED_LIMIT_SWITCH_PORT = 3;
-    public static final int RUNG_ARM_MID_LIMIT_SWITCH_PORT = 8;
+    public static final int RUNG_ARM_ADVANCED_PHOTO_EYE_PORT = 2;
+    public static final int RUNG_ARM_RETRACTED_PHOTO_EYE_PORT = 3;
+    public static final int RUNG_ARM_MID_PHOTO_EYE_PORT = 8;
 
     // speed values
     public static final int INTAKE_SPEED = 1;
@@ -88,7 +88,7 @@ public final class Constants {
     public static final double NORMAL_SPEED_MODIFIER = 1;
     public static final double LOW_SPEED_MODIFIER = 0.5;
     public static final double MAX_MOTOR_SPEED = 1;
-    public static final double WINCH_SPEED = -.75;
+    public static final double WINCH_SPEED = -0.75;
     // public static final double CONVEYOR_SPEED = 0.5; // test speeds
     // public static final double CONVEYOR_INDEXER_SPEED = 0.5;
     // public static final double FEED_TO_BLASTER_SPEED = 0.5;
