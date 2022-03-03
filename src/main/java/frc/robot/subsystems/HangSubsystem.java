@@ -28,7 +28,9 @@ public class HangSubsystem extends SubsystemBase {
     private PhotoEye rungArmRetractedSwitch;
     private PhotoEye rungArmMidSwitch;
 
-    public HangSubsystem(BaseMotorController hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, PhotoEye rungArmRetractedSwitch, PhotoEye rungArmMidSwitch, PhotoEye rungArmAdvancedSwitch, DoubleSolenoid hangAngle, DoubleSolenoid hangClamp) {
+    public HangSubsystem(BaseMotorController hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, 
+        DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, PhotoEye rungArmRetractedSwitch, PhotoEye rungArmMidSwitch, 
+        PhotoEye rungArmAdvancedSwitch, DoubleSolenoid hangAngle, DoubleSolenoid hangClamp) {
 
         super();
 
@@ -63,10 +65,6 @@ public class HangSubsystem extends SubsystemBase {
 
     //     // System.out.println(overrideButton.get());
     // }
-
-    //public void changeClimbAngle(double angle, double speed){
-    //    angleClimbMotor
-    //}
 
     public void winchDown() {
         Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);
@@ -138,19 +136,19 @@ public class HangSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting());
+        //System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting());
 
         if(goingDown == true && !rungArmRetractedSwitch.isDetecting() == true){
-            //Log.info("Going down and run arm retracted. Stopping Winch Motors");
-            //winchOff();
+            Log.info("Going down and run arm retracted. Stopping Winch Motors");
+            winchOff();
         }
         if(goingDown == false && hangIsOut == false && !rungArmMidSwitch.isDetecting() == true){
-            //Log.info("Not Going down, no hang out and arm at mid point. Stopping Winch Motors");
-            //winchOff();
+            Log.info("Not Going down, no hang out and arm at mid point. Stopping Winch Motors");
+            winchOff();
         }
         if(goingDown == false && hangIsOut == true && !rungArmAdvancedSwitch.isDetecting() == true){
-            //Log.info("Not Going down, hang out true and arm at advanced point. Stopping Winch Motors");
-            //winchOff();
+            Log.info("Not Going down, hang out true and arm at advanced point. Stopping Winch Motors");
+            winchOff();
         }
     }
 }
