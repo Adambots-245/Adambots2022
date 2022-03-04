@@ -31,10 +31,13 @@ public class Test extends SequentialCommandGroup{
 
     public Test(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
         super(
-            new ParallelRaceGroup(
-                new WaitCommand(7), 
-                new TurnToHubCommand(driveTrain)
-            )
+            new TurnToHubCommand(driveTrain, 1)
+            //new DriveForwardDistanceCommand(driveTrain, 20 * Constants.ENCODER_TICKS_PER_INCH, 0.5)
+
+            // new ParallelRaceGroup(
+                // new WaitCommand(7), 
+               // new AllignToHubCommand(driveTrain)
+            // )
             
         );  
     }

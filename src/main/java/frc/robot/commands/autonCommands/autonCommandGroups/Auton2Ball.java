@@ -22,26 +22,50 @@ import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
-public class Position1Auton2Ball extends SequentialCommandGroup{
+public class Auton2Ball extends SequentialCommandGroup{
 
     // In this class, the robot will intake and shoot 2 balls, without using the ball detection grip file or AI.
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Position1Auton2Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
+    public Auton2Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
         super(
-            // shoot first ba;;
+            // shoot first ball
             new CatapultFireCommand(catapultSubsystem),
             //suck second ball
             new ParallelCommandGroup(
                 new StartIntakeCommand(intakeSubsystem, () -> -1),
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 42, 0.75)
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * firstDistance(), 0.75)
             ),
             //shoot 2nd ball
-            new WaitCommand(3),
+            new ParallelCommandGroup(
+                new WaitCommand(3),
+                new TurnToHubCommand(driveTrain, -1),
+                new AllignToHubCommand(driveTrain)
+            ),
             new CatapultFireCommand(catapultSubsystem),
             new StopIntakeOuttakeCommand(intakeSubsystem)
         );  
+    }
+
+    public static int firstDistance(){
+        int distance = 0;
+
+        switch(DriverStation.getLocation()) {
+            case 1:
+                distance = 42;
+                break;
+            case 2:
+                distance = 42;
+                break;
+            case 3:
+                distance = 42;
+                break;
+            default:
+                distance = 42;
+                break;    
+        }
+        return distance;
     }
 }
 
