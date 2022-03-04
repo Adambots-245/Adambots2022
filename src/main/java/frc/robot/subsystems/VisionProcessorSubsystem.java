@@ -112,7 +112,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         blueMat = new Mat();
 
 
-        ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kMJPEG, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
+        //ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kMJPEG, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
         hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
         // camera.setPixelFormat(VideoMode.PixelFormat.kMJPEG);
         // camera.setFPS(Constants.PROCESSING_FPS);

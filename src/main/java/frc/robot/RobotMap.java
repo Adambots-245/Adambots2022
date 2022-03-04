@@ -63,6 +63,8 @@ public class RobotMap {
 
     public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
     public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
+    public static final DigitalInput leftClampedSwitch = new DigitalInput(Constants.LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rightClampedSwitch = new DigitalInput(Constants.RIGHT_RUNG_CLAMPED_LIMIT_SWITCH_PORT);
     public static final PhotoEye rungArmAdvancedSwitch = new PhotoEye(Constants.RUNG_ARM_ADVANCED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmRetractedSwitch = new PhotoEye(Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmMidSwitch = new PhotoEye(Constants.RUNG_ARM_MID_PHOTO_EYE_PORT);
