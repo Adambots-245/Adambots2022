@@ -75,6 +75,8 @@ public final class Constants {
     
 	// public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
 	// public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
+    public static final int RIGHT_RUNG_CLAMPED_LIMIT_SWITCH_PORT = 1;
+    public static final int LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT = 0;
     public static final int RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 5;
     public static final int LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 4;
     public static final int RUNG_ARM_ADVANCED_PHOTO_EYE_PORT = 2;

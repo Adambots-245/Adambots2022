@@ -58,7 +58,9 @@ public class RobotContainer {
                                                                 RobotMap.rungArmMidSwitch, 
                                                                 RobotMap.rungArmAdvancedSwitch, 
                                                                 RobotMap.hangAngle, 
-                                                                RobotMap.hangClamp);
+                                                                RobotMap.hangClamp,
+                                                                RobotMap.leftClampedSwitch,
+                                                                RobotMap.rightClampedSwitch);
   
   // commands
   private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
