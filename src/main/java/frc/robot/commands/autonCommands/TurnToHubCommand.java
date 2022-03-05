@@ -58,7 +58,7 @@ public class TurnToHubCommand extends CommandBase {
           driveTrain.arcadeDrive(0.05, 10);
           SmartDashboard.putNumber("gyroValue", gyroPIDSubsystem.getMeasurement());
           */
-           driveTrain.arcadeDrive(0, 0.5 * rotation);
+           driveTrain.arcadeDrive(0, 0.5);
            counter++;
            SmartDashboard.putNumber("counter", counter);
           // driveTrain.arcadeDrive(0.25, 0.25);
@@ -78,7 +78,7 @@ public class TurnToHubCommand extends CommandBase {
   @Override
   public boolean isFinished() {
 
-   // return angleBool;
-   return false;
+    return angleBool;
+   //return false;
   }
 }

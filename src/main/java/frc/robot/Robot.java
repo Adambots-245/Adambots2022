@@ -17,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -153,6 +154,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
+    SmartDashboard.putBoolean("Color Sensor", RobotMap.ColorSensor.matchClosestColor(RobotMap.ColorSensor.getColor()) == Color.kBlue);
+    SmartDashboard.putNumber("Color Proximity", RobotMap.ColorSensor.getProximity());
+    // RobotMap.ColorSensor.
   }
 
   @Override

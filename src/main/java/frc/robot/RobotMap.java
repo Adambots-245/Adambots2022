@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-//import frc.robot.sensors.ColorSensor;
+import frc.robot.sensors.ColorSensor;
 import frc.robot.sensors.Gyro;
 import frc.robot.sensors.Lidar;
 import frc.robot.sensors.PhotoEye;
@@ -47,7 +47,7 @@ public class RobotMap {
 	public static final WPI_TalonFX FrontLeftMotor = new WPI_TalonFX(Constants.FL_TALON);
 	public static final WPI_TalonFX BackLeftMotor = new WPI_TalonFX(Constants.BL_TALON);
 	// public static final BaseMotorController PanelMotor = new WPI_TalonSRX(Constants.PANEL_MOTOR_PORT);;
-	// public static final ColorSensor ColorSensor = new ColorSensor();
+	public static final ColorSensor ColorSensor = new ColorSensor();
     public static WPI_TalonFX BackRightMotor = new WPI_TalonFX(Constants.BR_TALON);
 
     // public static final WPI_VictorSPX ConveyorMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_MOTOR_PORT);

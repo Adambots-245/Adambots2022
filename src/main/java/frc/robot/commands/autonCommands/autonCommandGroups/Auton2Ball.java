@@ -19,6 +19,7 @@ import frc.robot.commands.autonCommands.*;
 import frc.robot.sensors.Lidar;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.utils.Utils;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
@@ -35,7 +36,7 @@ public class Auton2Ball extends SequentialCommandGroup{
             //suck second ball
             new ParallelCommandGroup(
                 new StartIntakeCommand(intakeSubsystem, () -> -1),
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * firstDistance(), 0.75)
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), 0.75)
             ),
             //shoot 2nd ball
             new ParallelCommandGroup(
@@ -48,24 +49,6 @@ public class Auton2Ball extends SequentialCommandGroup{
         );  
     }
 
-    public static int firstDistance(){
-        int distance = 0;
-
-        switch(DriverStation.getLocation()) {
-            case 1:
-                distance = 42;
-                break;
-            case 2:
-                distance = 42;
-                break;
-            case 3:
-                distance = 42;
-                break;
-            default:
-                distance = 42;
-                break;    
-        }
-        return distance;
-    }
+    
 }
 

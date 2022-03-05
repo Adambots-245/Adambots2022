@@ -31,7 +31,8 @@ public class Test extends SequentialCommandGroup{
 
     public Test(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
         super(
-            new TurnToHubCommand(driveTrain, 1)
+            new TurnToHubCommand(driveTrain, 1),
+            new AllignToHubCommand(driveTrain)
             //new DriveForwardDistanceCommand(driveTrain, 20 * Constants.ENCODER_TICKS_PER_INCH, 0.5)
 
             // new ParallelRaceGroup(
