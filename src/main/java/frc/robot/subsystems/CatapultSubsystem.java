@@ -30,7 +30,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private Boolean ChooChooLimitSwitchState = false;
   private Boolean prevChooChooLimitSwitchState = false;
   private Boolean prevBandLimitSwitchState = false;
-  private Boolean bandHome = false;
+  private Boolean encoderMode = false;
 
   private double bandTarget = 0;
   private double error = 0;
@@ -56,8 +56,7 @@ public class CatapultSubsystem extends SubsystemBase {
 
     bandMotor.setNeutralMode(NeutralMode.Brake);
     bandMotor.setSelectedSensorPosition(0);
-    //bandMotor.set(ControlMode.PercentOutput, 0.3);
-    bandHome = false;
+    encoderMode = false;
   }
 
   public double getError () {
@@ -72,8 +71,13 @@ public class CatapultSubsystem extends SubsystemBase {
     bandTarget = target;
   }
 
+  public void setEncoderMode(Boolean state) {
+    encoderMode = state;
+  }
+
   public void bandMotor() {
     error = (bandMotor.getSelectedSensorPosition()-bandTarget);
+    System.out.println(error);
     double motorCommand = 0;
     if (Math.abs(error) > Constants.ACCEPTABLE_BAND_ERROR) {
       if (error < 0) {
@@ -96,7 +100,7 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void runBandMotor(double speed){
-    if (bandHome) {
+    if (!encoderMode) {
       if (speed > 0 || !bandHomeLimitSwitch.get()) {
         bandMotor.set(ControlMode.PercentOutput, speed);
       }
@@ -122,15 +126,16 @@ public class CatapultSubsystem extends SubsystemBase {
     }
     if (bandHomeLimitSwitch.get() == true && prevBandLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       bandMotor.set(ControlMode.PercentOutput, 0);
-      bandHome = true;
+      bandMotor.setSelectedSensorPosition(0);
+      bandTarget = 0;
     }
 
     prevChooChooLimitSwitchState = ChooChooLimitSwitchState;
     prevBandLimitSwitchState = bandHomeLimitSwitch.get();
 
-    //if (bandHome) {bandMotor();}
+    if (encoderMode) {bandMotor();}
 
     //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
-    System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
+    // System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
   }
 }

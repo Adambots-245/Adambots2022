@@ -160,7 +160,7 @@ public class HangSubsystem extends SubsystemBase {
             System.out.println("Clamping");
         }
 
-        System.out.println("Left Rung Clamped: " + leftRungSwitch.get() + " | Right Rung Clamped: " + rightRungSwitch.get() + " | Clamped: " + clampedDown + " | Direction: " + direction);
+        // System.out.println("Left Rung Clamped: " + leftRungSwitch.get() + " | Right Rung Clamped: " + rightRungSwitch.get() + " | Clamped: " + clampedDown + " | Direction: " + direction);
         //System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting() + " | Clamped: " + clampedDown);
     }
 }

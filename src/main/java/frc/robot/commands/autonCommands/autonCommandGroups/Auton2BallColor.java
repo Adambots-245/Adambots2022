@@ -39,7 +39,11 @@ public class Auton2BallColor extends SequentialCommandGroup{
                 new RunIntakeCommand(intakeSubsystem, () -> -1)
             ),       
                 // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
-            new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75),
+            new ParallelCommandGroup(
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75)
+               // new BandMoveCommand(catapultSubsystem, -3)
+            ),
+                
             /*
             //shoot 2nd ball
             new ParallelCommandGroup(
@@ -51,6 +55,7 @@ public class Auton2BallColor extends SequentialCommandGroup{
             new WaitCommand(2),
             new CatapultFireCommand(catapultSubsystem),
             new StopIntakeOuttakeCommand(intakeSubsystem)
+           // new BandMoveCommand(catapultSubsystem, 3)
         );  
     }
 

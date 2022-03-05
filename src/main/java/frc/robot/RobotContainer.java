@@ -22,7 +22,9 @@ import frc.robot.Gamepad.GamepadConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
+import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
 import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
@@ -114,6 +116,9 @@ public class RobotContainer {
 
       Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
       Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
+      Buttons.primaryYButton.whenPressed(new BandHomeCommand(catapultSubsystem, -6));
+
+      // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }
 
   private void dash(){
@@ -161,7 +166,7 @@ public class RobotContainer {
       // Log.info("Chosen Auton Command: None");
       
     //return autoChooser.getSelected();
-    return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+    return new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))
