@@ -123,7 +123,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         NetworkTableInstance instance = NetworkTableInstance.getDefault();
         NetworkTable table = instance.getTable("Vision");
         hubAngleEntry = table.getEntry("hubAngle");
-        ballAngleEntry = table.getEntry("ballAngle");
+        //ballAngleEntry = table.getEntry("ballAngle");
 
         visionThread = new Thread(() -> {
             run();

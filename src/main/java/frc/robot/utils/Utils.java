@@ -30,7 +30,11 @@ public class Utils {
                 }
                 break;
             case 2:
-                distance = 42;
+            switch (ballPosition){
+                case ONE:
+                    distance = 30;
+                    break;
+            }
                 break;
             case 3:
                 distance = 42;

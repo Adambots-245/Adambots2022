@@ -29,21 +29,26 @@ public class Auton2Ball extends SequentialCommandGroup{
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Auton2Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
+    public Auton2Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
             // shoot first ball
             new CatapultFireCommand(catapultSubsystem),
             //suck second ball
-            new ParallelCommandGroup(
-                new StartIntakeCommand(intakeSubsystem, () -> -1),
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), 0.75)
-            ),
+            new ParallelDeadlineGroup(
+                new WaitCommand(0.5),
+                new RunIntakeCommand(intakeSubsystem, () -> -1)
+            ),       
+                // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
+            new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75),
+            /*
             //shoot 2nd ball
             new ParallelCommandGroup(
-                new WaitCommand(3),
-                new TurnToHubCommand(driveTrain, -1),
-                new AllignToHubCommand(driveTrain)
+                new WaitCommand(2),
+                new TurnToHubCommand(driveTrain, -1)
             ),
+            new AllignToHubCommand(driveTrain),
+            */
+            new WaitCommand(2),
             new CatapultFireCommand(catapultSubsystem),
             new StopIntakeOuttakeCommand(intakeSubsystem)
         );  
