@@ -126,7 +126,7 @@ public class RobotContainer {
   private void setupDefaultCommands(){
     driveTrainSubsystem.setDefaultCommand(
        new DriveCommand(driveTrainSubsystem, 
-       () -> deaden(Buttons.primaryJoystick.getLeftY()),
+       () -> deaden(-Buttons.primaryJoystick.getLeftY()),
         () -> Buttons.primaryJoystick.getRightX())
         );  
 
