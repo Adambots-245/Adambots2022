@@ -20,7 +20,7 @@ import frc.robot.Gamepad.GamepadConstants;
 
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
-import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton1Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;

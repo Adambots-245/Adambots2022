@@ -85,7 +85,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         ballMinXFilter = new MedianFilter(5);
 
         ringLight.set(true);
-        ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
+        //ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
         hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
 
         processedOutputStreamHub = CameraServer.putVideo("CameraHub-Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
@@ -93,6 +93,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         processedOutputStreamHub.setFPS(Constants.DRIVER_STATION_FPS);
         processedOutputStreamHub.setPixelFormat(PixelFormat.kGray);
 
+        /*
         processedOutputStreamRed = CameraServer.putVideo("CameraRed-Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
         processedOutputStreamRed.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
         processedOutputStreamRed.setFPS(Constants.DRIVER_STATION_FPS);
@@ -102,14 +103,15 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         processedOutputStreamBlue.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
         processedOutputStreamBlue.setFPS(Constants.DRIVER_STATION_FPS);
         processedOutputStreamBlue.setPixelFormat(PixelFormat.kGray);
+        */
 
         hubCvSink = CameraServer.getVideo(hubDetectionCamera);
-        ballCvSink = CameraServer.getVideo(ballDetectionCamera);
+        //ballCvSink = CameraServer.getVideo(ballDetectionCamera);
 
         // grip = new GripPipeline();
         hubMat = new Mat();
-        redMat = new Mat();
-        blueMat = new Mat();
+        //redMat = new Mat();
+        //blueMat = new Mat();
 
 
         //ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kMJPEG, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
@@ -138,16 +140,17 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             if (hubCvSink.grabFrame(hubMat) == 0) {
                 processedOutputStreamHub.notifyError(hubCvSink.getError());
                 continue;
+                /*
             }else if(ballCvSink.grabFrame(redMat) == 0) {
                 processedOutputStreamRed.notifyError(ballCvSink.getError());
                 continue;
             }else if(ballCvSink.grabFrame(blueMat) == 0) {
                 processedOutputStreamBlue.notifyError(ballCvSink.getError());
                 continue;
+            */
             }
-
             hubGrip.process(hubMat);
-            redGrip.process(redMat);
+            /*redGrip.process(redMat);
             blueGrip.process(blueMat);
 
             redContours = redGrip.filterContoursOutput();
@@ -175,6 +178,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                 //findCrosshair(ballPts, ballCrosshair);
                 //drawCrosshair(ballCrosshair, blueMat);
             }
+            */
 
             findBoundingBoxesHub();
             
@@ -190,6 +194,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             }else{
                 hubAngleEntry.setDouble(Constants.ANGLE_NOT_DETECTED);
             }
+            /*
             
             if(ballCrosshair != null) {
                 synchronized (lock) {
@@ -197,16 +202,18 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                     ballAngleEntry.setDouble(ballAngle);
                 }
             }else{
-                ballAngleEntry.setDouble(Constants.ANGLE_NOT_DETECTED);
+                b           ballAngleEntry.setDouble(Constants.ANGLE_NOT_DETECTED);
             }
+            */
 
             SmartDashboard.putNumber("hubAngle", hubAngle);
-            SmartDashboard.putNumber("ballAngle", ballAngle);
+            //SmartDashboard.putNumber("ballAngle", ballAngle);
+            
             
             if (frameCount == 1) {
                 processedOutputStreamHub.putFrame(hubMat);
-                processedOutputStreamRed.putFrame(redMat);
-                processedOutputStreamBlue.putFrame(blueMat);
+                //processedOutputStreamRed.putFrame(redMat);
+                //processedOutputStreamBlue.putFrame(blueMat);
                 frameCount = 0;
             }
 

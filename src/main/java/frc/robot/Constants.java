@@ -136,6 +136,8 @@ public final class Constants {
     public static final int DRIVER_STATION_FPS = 6;
     public static final int PROCESSING_FPS = 30; // DON'T CHANGE
     public static final int ANGLE_NOT_DETECTED = 600;
+    public static final int ANGLE_RANGE = 5;
+    public static final double HUB_TURN_SPEED = 0.2;
 
     // Colors are (B, G, R) (Don't ask me)
     public static final Scalar RED = new Scalar(0, 0, 255);

@@ -5,6 +5,8 @@ import frc.robot.sensors.Gyro;
 
 import java.security.KeyStore.TrustedCertificateEntry;
 
+import com.fasterxml.jackson.databind.deser.std.ContainerDeserializerBase;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -14,19 +16,23 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.GyroPIDSubsystem;
 
 /** Add your docs here. */
-public class TurnToHubCommand extends CommandBase {
-  double counter;
+public class AllignToHubCommand extends CommandBase {
   DriveTrainSubsystem driveTrain;
-  double targetAngle;
   boolean angleBool = false;
   NetworkTable table;
   NetworkTableEntry hubAngleEntry;
-  double turnAngle;
-  int rotation;
+  private GyroPIDSubsystem gyroPIDSubsystem;
+  private double targetAngle;
+  private Gyro gyro;
 
-  public TurnToHubCommand(DriveTrainSubsystem inpuDriveTrain, int rotation) {
+  public AllignToHubCommand(DriveTrainSubsystem inpuDriveTrain) {
     driveTrain = inpuDriveTrain;
-    this.rotation = rotation;
+
+    
+    gyroPIDSubsystem = new GyroPIDSubsystem();
+    gyro = Gyro.getInstance();
+
+    gyroPIDSubsystem.getController().enableContinuousInput(-180, 180);
 
     addRequirements(driveTrain);
   }
@@ -34,12 +40,10 @@ public class TurnToHubCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-   // turnAngle = 1;
+    gyro.reset();
     angleBool = false;
     driveTrain.resetEncoders();
     //Gets the nework table
-    counter = 0;
-    targetAngle = 0;
     NetworkTableInstance instance = NetworkTableInstance.getDefault();
     table = instance.getTable("Vision");
   }
@@ -49,21 +53,17 @@ public class TurnToHubCommand extends CommandBase {
   public void execute() {
           hubAngleEntry = table.getEntry("hubAngle");
           targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);  
-          SmartDashboard.putNumber("hubAutonAngle", targetAngle);
-          /*
-          double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), turnAngle);
-          turnAngle = turnAngle + 1;
-          SmartDashboard.putNumber("turnAngle", turnAngle);
+          // SmartDashboard.putNumber("hubAutonAngle", targetAngle);
           
-          driveTrain.arcadeDrive(0.05, 10);
-          SmartDashboard.putNumber("gyroValue", gyroPIDSubsystem.getMeasurement());
-          */
-           driveTrain.arcadeDrive(0, 0.5 * rotation);
-           counter++;
-           SmartDashboard.putNumber("counter", counter);
-          // driveTrain.arcadeDrive(0.25, 0.25);
+          double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
+          // SmartDashboard.putNumber("turnAngle", turnAngle);
           
-          if (targetAngle != Constants.ANGLE_NOT_DETECTED) {
+          driveTrain.arcadeDrive(Constants.HUB_TURN_SPEED, turnSpeed);
+          // SmartDashboard.putNumber("gyroValue", gyroPIDSubsystem.getMeasurement());
+          
+         // driveTrain.arcadeDrive(0, 0.25);
+          
+          if (targetAngle < Constants.ANGLE_RANGE && targetAngle > -(Constants.ANGLE_RANGE)) {
             angleBool = true;
             }
         
@@ -72,13 +72,13 @@ public class TurnToHubCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    gyro.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
 
-   // return angleBool;
-   return false;
+    return angleBool;
   }
 }
