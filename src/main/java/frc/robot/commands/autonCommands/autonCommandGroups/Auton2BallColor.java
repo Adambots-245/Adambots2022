@@ -23,13 +23,13 @@ import frc.robot.utils.Utils;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
-public class Auton2Ball extends SequentialCommandGroup{
+public class Auton2BallColor extends SequentialCommandGroup{
 
     // In this class, the robot will intake and shoot 2 balls, without using the ball detection grip file or AI.
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Auton2Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
+    public Auton2BallColor(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
             // shoot first ball
             new CatapultFireCommand(catapultSubsystem),

@@ -49,13 +49,11 @@ public class Robot extends TimedRobot {
     Log.instance();
     Log.setFilter(Level.OFF);
     
-    if (Robot.isReal()) {
+    if (Robot.isReal() && false) {
       // Starts vision thread only if not running in simulation mode
       // Vision System calculates the angle to the target and posts it to the NetworkTable
       vision = new VisionProcessorSubsystem(RobotMap.RingLight, 
-                                            new RedGripPipeline(), 
-                                            new HubGripPipeline(), 
-                                            new BlueGripPipeline());
+                                            new HubGripPipeline());
       visionThread = vision.getVisionThread();
       visionThread.setDaemon(true);
       visionThread.start();

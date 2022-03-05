@@ -60,13 +60,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     ArrayList<MatOfPoint> blueContours;
 
 
-    public VisionProcessorSubsystem(Solenoid ringLight, RedGripPipeline redGrip, HubGripPipeline hubGrip, BlueGripPipeline blueGrip) {
+    public VisionProcessorSubsystem(Solenoid ringLight, HubGripPipeline hubGrip) {
         this.ringLight = ringLight;
 
         init();
-        this.redGrip = redGrip;
         this.hubGrip = hubGrip;
-        this.blueGrip = blueGrip;
     }
 
     public void init() {

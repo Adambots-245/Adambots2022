@@ -58,7 +58,7 @@ public class TurnToHubCommand extends CommandBase {
           driveTrain.arcadeDrive(0.05, 10);
           SmartDashboard.putNumber("gyroValue", gyroPIDSubsystem.getMeasurement());
           */
-           driveTrain.arcadeDrive(0, 0.5);
+           driveTrain.arcadeDrive(0, 0.5 * rotation);
            counter++;
            SmartDashboard.putNumber("counter", counter);
           // driveTrain.arcadeDrive(0.25, 0.25);

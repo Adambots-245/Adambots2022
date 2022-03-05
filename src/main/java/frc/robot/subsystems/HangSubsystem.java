@@ -17,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 public class HangSubsystem extends SubsystemBase {
 
     private boolean hangIsOut = false;
-    private boolean goingDown = false;
+    private String direction = "stop";
     private DoubleSolenoid hangClamp;
     private DoubleSolenoid hangAngle;
     public BaseMotorController hangMotor;
@@ -30,6 +30,7 @@ public class HangSubsystem extends SubsystemBase {
     private PhotoEye rungArmAdvancedSwitch;
     private PhotoEye rungArmRetractedSwitch;
     private PhotoEye rungArmMidSwitch;
+    private Boolean suppressClamp;
 
     public HangSubsystem(BaseMotorController hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, 
         DigitalInput leftRungSwitch, DigitalInput rightRungSwitch, PhotoEye rungArmRetractedSwitch, PhotoEye rungArmMidSwitch, 
@@ -62,6 +63,7 @@ public class HangSubsystem extends SubsystemBase {
     private void initialize () {
         winchMotor1.setNeutralMode(NeutralMode.Brake);
         winchMotor2.setNeutralMode(NeutralMode.Brake);
+        suppressClamp = false;
     }
 
     // public void climb(double speed, boolean overrideFlag) {
@@ -78,28 +80,31 @@ public class HangSubsystem extends SubsystemBase {
     //     // System.out.println(overrideButton.get());
     // }
 
-    public void winchDown() {
-        Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);
-        if (rungArmAdvancedSwitch.isDetecting()) {
-            goingDown = false;
+    public void setSuppressClamp (Boolean state) {
+        suppressClamp = state;
+    }
+
+    public void winchDown() { //Goes Up
+        Log.infoF("Winch going up - Speed: %f", Constants.WINCH_SPEED);
+        if (!rungArmAdvancedSwitch.isDetecting()) {
+            direction = "up";
             winchMotor2.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
             winchMotor1.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
         }
     }
 
-    public void winchUp() {
-        Log.infoF("Winch going up - Speed: %f", Constants.WINCH_SPEED);
-        if (rungArmRetractedSwitch.isDetecting()) {
-            goingDown = true;
+    public void winchUp() { //Pulls Down
+        Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);
+        if (!rungArmRetractedSwitch.isDetecting()) {
+            direction = "down";
             winchMotor2.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
             winchMotor1.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
         }
     }    
 
-
     public void winchOff() {
         Log.info("Stopping Winch ...");
-        goingDown = false;
+        direction = "stop";
         winchMotor2.set(ControlMode.PercentOutput, 0);
         winchMotor1.set(ControlMode.PercentOutput, 0);
     }
@@ -117,42 +122,45 @@ public class HangSubsystem extends SubsystemBase {
     public void hangOut(){
         Log.info("Hang out initiated");
         hangAngle.set(Value.kForward);
+        hangIsOut = true;
     }
 
     public void hangIn(){
         Log.info("Hang In initiated");
         hangAngle.set(Value.kReverse);
+        hangIsOut = false;
     }
 
     public boolean isHangOut(){
         return hangIsOut;
     }
 
-    public void setHangOut(boolean value){
-        this.hangIsOut = value;
-    }
-
     @Override
     public void periodic() {
-        //System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting());
-        //System.out.println("Left Clamped: " + leftRungSwitch.get() + " | Right Clamped: " + rightRungSwitch.get() + " | ClampState: " + clampedState);
+        if(direction == "down" && rungArmRetractedSwitch.isDetecting() == true){
+            Log.info("Going down and arm retracted. Stopping Winch Motors");
+            System.out.println("Going down and arm retracted. Stopping Winch Motors");
+            winchOff();
+        }
+        if(direction == "up" && hangIsOut == true && rungArmMidSwitch.isDetecting() == true){
+            Log.info("Going up, hang out and arm at mid point. Stopping Winch Motors");
+            System.out.println("Going up, hang out and arm at mid point. Stopping Winch Motors");
+            winchOff();
+        }
+        if(direction == "up" && rungArmAdvancedSwitch.isDetecting() == true){
+            Log.info("Going up, hang not out and arm at advanced point. Stopping Winch Motors");
+            System.out.println("Going up, hang not out and arm at advanced point. Stopping Winch Motors");
+            winchOff();
+        }
 
-        if(goingDown == true && !rungArmRetractedSwitch.isDetecting() == true){
-            Log.info("Going down and run arm retracted. Stopping Winch Motors");
-            winchOff();
-        }
-        if(goingDown == false && hangIsOut == false && !rungArmMidSwitch.isDetecting() == true){
-            Log.info("Not Going down, no hang out and arm at mid point. Stopping Winch Motors");
-            winchOff();
-        }
-        if(goingDown == false && hangIsOut == true && !rungArmAdvancedSwitch.isDetecting() == true){
-            Log.info("Not Going down, hang out true and arm at advanced point. Stopping Winch Motors");
-            winchOff();
-        }
-
-        if (leftClampedSwitch.get() && rightClampedSwitch.get() && rightRungSwitch.get() && leftRungSwitch.get()) {
+        //clamp if the rung is in place on both sides 
+        Boolean clampedDown = (rightRungSwitch.get() && leftRungSwitch.get());
+        if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
             grabRung();
             System.out.println("Clamping");
         }
+
+        System.out.println("Left Rung Clamped: " + leftRungSwitch.get() + " | Right Rung Clamped: " + rightRungSwitch.get() + " | Clamped: " + clampedDown + " | Direction: " + direction);
+        //System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting() + " | Clamped: " + clampedDown);
     }
 }
