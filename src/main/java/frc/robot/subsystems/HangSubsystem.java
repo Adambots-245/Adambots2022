@@ -17,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 public class HangSubsystem extends SubsystemBase {
 
     private boolean hangIsOut = false;
-    private boolean goingDown = false;
+    private String direction = "stop";
     private DoubleSolenoid hangClamp;
     private DoubleSolenoid hangAngle;
     public BaseMotorController hangMotor;
@@ -87,7 +87,7 @@ public class HangSubsystem extends SubsystemBase {
     public void winchDown() { //Goes Up
         Log.infoF("Winch going up - Speed: %f", Constants.WINCH_SPEED);
         if (!rungArmAdvancedSwitch.isDetecting()) {
-            goingDown = false;
+            direction = "up";
             winchMotor2.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
             winchMotor1.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
         }
@@ -96,7 +96,7 @@ public class HangSubsystem extends SubsystemBase {
     public void winchUp() { //Pulls Down
         Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);
         if (!rungArmRetractedSwitch.isDetecting()) {
-            goingDown = true;
+            direction = "down";
             winchMotor2.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
             winchMotor1.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
         }
@@ -104,7 +104,7 @@ public class HangSubsystem extends SubsystemBase {
 
     public void winchOff() {
         Log.info("Stopping Winch ...");
-        goingDown = false;
+        direction = "stop";
         winchMotor2.set(ControlMode.PercentOutput, 0);
         winchMotor1.set(ControlMode.PercentOutput, 0);
     }
@@ -137,17 +137,17 @@ public class HangSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if(goingDown == true && rungArmRetractedSwitch.isDetecting() == true){
+        if(direction == "down" && rungArmRetractedSwitch.isDetecting() == true){
             Log.info("Going down and arm retracted. Stopping Winch Motors");
             System.out.println("Going down and arm retracted. Stopping Winch Motors");
             winchOff();
         }
-        if(goingDown == false && hangIsOut == true && rungArmMidSwitch.isDetecting() == true){
+        if(direction == "up" && hangIsOut == true && rungArmMidSwitch.isDetecting() == true){
             Log.info("Going up, hang out and arm at mid point. Stopping Winch Motors");
             System.out.println("Going up, hang out and arm at mid point. Stopping Winch Motors");
             winchOff();
         }
-        if(goingDown == false && rungArmAdvancedSwitch.isDetecting() == true){
+        if(direction == "up" && rungArmAdvancedSwitch.isDetecting() == true){
             Log.info("Going up, hang not out and arm at advanced point. Stopping Winch Motors");
             System.out.println("Going up, hang not out and arm at advanced point. Stopping Winch Motors");
             winchOff();
@@ -160,7 +160,7 @@ public class HangSubsystem extends SubsystemBase {
             System.out.println("Clamping");
         }
 
-        System.out.println("Left Rung Clamped: " + leftRungSwitch.get() + " | Right Rung Clamped: " + rightRungSwitch.get() + " | Clamped: " + clampedDown);
+        System.out.println("Left Rung Clamped: " + leftRungSwitch.get() + " | Right Rung Clamped: " + rightRungSwitch.get() + " | Clamped: " + clampedDown + " | Direction: " + direction);
         //System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting() + " | Clamped: " + clampedDown);
     }
 }

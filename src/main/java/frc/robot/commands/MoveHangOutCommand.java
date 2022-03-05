@@ -32,7 +32,6 @@ public class MoveHangOutCommand extends CommandBase {
   public void execute() {
     Log.info("Move Hang Out");
     hangSubsystem.hangOut();
-    hangSubsystem.setHangOut(true);
   }
 
   // Called once the command ends or is interrupted.
