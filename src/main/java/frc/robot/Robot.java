@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     
-    if (Robot.isReal()) {
+    if (Robot.isReal() && false) {
       // Starts vision thread only if not running in simulation mode
       // Vision System calculates the angle to the target and posts it to the NetworkTable
       vision = new VisionProcessorSubsystem(RobotMap.RingLight, 

@@ -71,7 +71,6 @@ public final class Constants {
     // public static final int TURRET_RIGHT_DIO = 3;
 
     public static final int CHOO_CHOO_DIO = 9;
-    public static final int BAND_DIO = 6;
     
 	// public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
 	// public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;

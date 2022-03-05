@@ -48,6 +48,7 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
                                                                             RobotMap.ChooChooLimitSwitch, 
+                                                                            RobotMap.bandHomeSwitch,
                                                                             RobotMap.BandMotor, 
                                                                             RobotMap.CatapultStop);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, 

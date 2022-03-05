@@ -86,7 +86,7 @@ public class HangSubsystem extends SubsystemBase {
 
     public void winchDown() { //Goes Up
         Log.infoF("Winch going up - Speed: %f", Constants.WINCH_SPEED);
-        if (rungArmAdvancedSwitch.isDetecting()) {
+        if (!rungArmAdvancedSwitch.isDetecting()) {
             goingDown = false;
             winchMotor2.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
             winchMotor1.set(ControlMode.PercentOutput, Constants.WINCH_SPEED);
@@ -95,7 +95,7 @@ public class HangSubsystem extends SubsystemBase {
 
     public void winchUp() { //Pulls Down
         Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);
-        if (rungArmRetractedSwitch.isDetecting()) {
+        if (!rungArmRetractedSwitch.isDetecting()) {
             goingDown = true;
             winchMotor2.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
             winchMotor1.set(ControlMode.PercentOutput, -(Constants.WINCH_SPEED));
@@ -122,47 +122,45 @@ public class HangSubsystem extends SubsystemBase {
     public void hangOut(){
         Log.info("Hang out initiated");
         hangAngle.set(Value.kForward);
+        hangIsOut = true;
     }
 
     public void hangIn(){
         Log.info("Hang In initiated");
         hangAngle.set(Value.kReverse);
+        hangIsOut = false;
     }
 
     public boolean isHangOut(){
         return hangIsOut;
     }
 
-    public void setHangOut(boolean value){
-        this.hangIsOut = value;
-    }
-
     @Override
     public void periodic() {
-        //System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting());
-        //System.out.println("Left Clamped: " + leftRungSwitch.get() + " | Right Clamped: " + rightRungSwitch.get() + " | ClampState: " + clampedState);
-
-        if(goingDown == true && !rungArmRetractedSwitch.isDetecting() == true){
+        if(goingDown == true && rungArmRetractedSwitch.isDetecting() == true){
             Log.info("Going down and arm retracted. Stopping Winch Motors");
             System.out.println("Going down and arm retracted. Stopping Winch Motors");
             winchOff();
         }
-        if(goingDown == false && hangIsOut == true && !rungArmMidSwitch.isDetecting() == true){
+        if(goingDown == false && hangIsOut == true && rungArmMidSwitch.isDetecting() == true){
             Log.info("Going up, hang out and arm at mid point. Stopping Winch Motors");
             System.out.println("Going up, hang out and arm at mid point. Stopping Winch Motors");
             winchOff();
         }
-        if(goingDown == false && hangIsOut == false && !rungArmAdvancedSwitch.isDetecting() == true){
+        if(goingDown == false && rungArmAdvancedSwitch.isDetecting() == true){
             Log.info("Going up, hang not out and arm at advanced point. Stopping Winch Motors");
             System.out.println("Going up, hang not out and arm at advanced point. Stopping Winch Motors");
             winchOff();
         }
 
         //clamp if the rung is in place on both sides 
-        Boolean clampDown = rightRungSwitch.get() && leftRungSwitch.get();
-        if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampDown && !suppressClamp) {
+        Boolean clampedDown = (rightRungSwitch.get() && leftRungSwitch.get());
+        if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
             grabRung();
             System.out.println("Clamping");
         }
+
+        System.out.println("Left Rung Clamped: " + leftRungSwitch.get() + " | Right Rung Clamped: " + rightRungSwitch.get() + " | Clamped: " + clampedDown);
+        //System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting() + " | Clamped: " + clampedDown);
     }
 }
