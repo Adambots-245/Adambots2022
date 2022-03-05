@@ -25,18 +25,39 @@ public class Utils {
                     case ONE:
                         distance = 42;
                         break;
-                    // case TWO:
-                        // distance = 
+                     case TWO:
+                         distance = 104;
+                         break;
+                    case THREE:
+                        distance = 156;
+                        break;
+                    default:
+                        break;
                 }
                 break;
             case 2:
-                distance = 42;
+                switch (ballPosition){
+                    case ONE:
+                        distance = 50;
+                        break;
+                    case TWO:
+                        distance = 156;
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case 3:
-                distance = 42;
+                switch (ballPosition){
+                    case ONE:
+                        distance = 42;
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
-                distance = 42;
+                System.out.println("couldn't find team");
                 break;    
         }
         return distance;
