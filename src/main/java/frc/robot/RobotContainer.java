@@ -116,7 +116,7 @@ public class RobotContainer {
 
       Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
       Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
-      Buttons.primaryYButton.whenPressed(new BandHomeCommand(catapultSubsystem, -6));
+      Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, -6));
 
       // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }
@@ -138,7 +138,7 @@ public class RobotContainer {
         );  
 
     intakeSubsystem.setDefaultCommand(
-        new StartIntakeCommand(intakeSubsystem, 
+        new StartIntakeWithColorCommand(intakeSubsystem, 
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
     

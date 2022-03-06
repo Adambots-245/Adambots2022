@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Gamepad.Buttons;
 import frc.robot.subsystems.CatapultSubsystem;
 
 public class BandHomeCommand extends CommandBase {
@@ -16,8 +17,9 @@ public class BandHomeCommand extends CommandBase {
    * Creates a new Command for testing.
    */
 
-  private final CatapultSubsystem catapultSubsystem;
-  private final Double offset;
+  private CatapultSubsystem catapultSubsystem;
+  private Double offset;
+  private Boolean abort;
 
   public BandHomeCommand(CatapultSubsystem catapultSubsystem, double offset) {
     this.catapultSubsystem = catapultSubsystem;
@@ -30,8 +32,14 @@ public class BandHomeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.setEncoderMode(true);
-    catapultSubsystem.setBandTarget(999999999); //4096 ticks per rev, 20 revs per inch
+    if (Buttons.primaryRB.get() && Buttons.primaryLB.get()) { //Only run if both bumpers are pressed, otherwise, cancel the command
+      catapultSubsystem.setEncoderMode(false);
+      catapultSubsystem.runBandMotor(-0.5);
+      abort = false;
+    }
+    else {
+      abort = true;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,12 +50,14 @@ public class BandHomeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    catapultSubsystem.setBandTarget(offset*4096*20);
+    if (!interrupted && !abort) {
+      catapultSubsystem.setBandTarget(offset*4096*20);
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return catapultSubsystem.getError() < Constants.ACCEPTABLE_BAND_ERROR;
+    return catapultSubsystem.getError() < Constants.ACCEPTABLE_BAND_ERROR || abort;
   }
 }

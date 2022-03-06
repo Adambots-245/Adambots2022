@@ -29,6 +29,7 @@ public class BandMoveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    catapultSubsystem.setEncoderMode(true);
     catapultSubsystem.setBandTarget(pos*4096*20); //4096 ticks per rev, 20 revs per inch
   }
 
