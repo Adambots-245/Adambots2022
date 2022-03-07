@@ -19,53 +19,48 @@ import frc.robot.commands.autonCommands.*;
 import frc.robot.sensors.Lidar;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.utils.Utils;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
-public class Auton2Ball extends SequentialCommandGroup{
+public class Auton2BallColor extends SequentialCommandGroup{
 
     // In this class, the robot will intake and shoot 2 balls, without using the ball detection grip file or AI.
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Auton2Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
+    public Auton2BallColor(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
             // shoot first ball
             new CatapultFireCommand(catapultSubsystem),
+            new WaitCommand(0.5),
             //suck second ball
+            new StartIntakeCommand(intakeSubsystem, () -> -1),
+            // new ParallelDeadlineGroup(
+            //     new WaitCommand(0.5),
+            //     new StartIntakeCommand(intakeSubsystem, () -> -1)
+            // ),       
+                // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
-                new StartIntakeCommand(intakeSubsystem, () -> -1),
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * firstDistance(), 0.75)
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75)
+               // new BandMoveCommand(catapultSubsystem, -3)
             ),
+                
+            /*
             //shoot 2nd ball
             new ParallelCommandGroup(
-                new WaitCommand(3),
-                new TurnToHubCommand(driveTrain, -1),
-                new AllignToHubCommand(driveTrain)
+                new WaitCommand(2),
+                new TurnToHubCommand(driveTrain, -1)
             ),
+            new AllignToHubCommand(driveTrain),
+            */
+            new WaitCommand(3),
             new CatapultFireCommand(catapultSubsystem),
             new StopIntakeOuttakeCommand(intakeSubsystem)
+           // new BandMoveCommand(catapultSubsystem, 3)
         );  
     }
 
-    public static int firstDistance(){
-        int distance = 0;
-
-        switch(DriverStation.getLocation()) {
-            case 1:
-                distance = 42;
-                break;
-            case 2:
-                distance = 42;
-                break;
-            case 3:
-                distance = 42;
-                break;
-            default:
-                distance = 42;
-                break;    
-        }
-        return distance;
-    }
+    
 }
 

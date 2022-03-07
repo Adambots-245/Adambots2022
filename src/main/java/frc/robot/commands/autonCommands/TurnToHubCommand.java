@@ -78,7 +78,7 @@ public class TurnToHubCommand extends CommandBase {
   @Override
   public boolean isFinished() {
 
-   // return angleBool;
-   return false;
+    return angleBool;
+   //return false;
   }
 }

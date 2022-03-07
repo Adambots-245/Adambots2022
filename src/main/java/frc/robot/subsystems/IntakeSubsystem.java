@@ -7,11 +7,17 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Driver;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotMap;
 import frc.robot.utils.Log;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -32,9 +38,30 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void intake(double speed) {
-
     Log.infoF("Intake - Speed: %f", speed);
     intakeMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void intakeWithColor(double speed) {
+    Log.infoF("Intake - Speed: %f", speed);
+    
+    Color ballColor = RobotMap.ColorSensor.matchClosestColor(RobotMap.ColorSensor.getColor());
+    int direction = 1;
+
+    if (Constants.BALL_COLOR_DETECTION){
+      switch (DriverStation.getAlliance()){
+        case Red:
+          if (ballColor == Color.kBlue)
+            direction = -1; // reverse the intake
+        case Blue:
+          if (ballColor == Color.kRed)
+            direction = -1;
+        default:
+          break;
+      }
+    }
+    
+    intakeMotor.set(ControlMode.PercentOutput, speed * direction);
   }
 
   public void outtake() {

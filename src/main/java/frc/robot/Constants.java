@@ -71,13 +71,13 @@ public final class Constants {
     // public static final int TURRET_RIGHT_DIO = 3;
 
     public static final int CHOO_CHOO_DIO = 9;
-    public static final int BAND_DIO = 6;
     
 	// public static final int ELEVATOR_LIMIT_SWITCH_1_PORT = 0;
 	// public static final int ELEVATOR_LIMIT_SWITCH_2_PORT = 1;
     public static final int RIGHT_RUNG_CLAMPED_LIMIT_SWITCH_PORT = 1;
     public static final int LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT = 0;
     public static final int RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 5;
+    public static final int BAND_HOME_LIMIT_SWITCH_PORT = 6;
     public static final int LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 4;
     public static final int RUNG_ARM_ADVANCED_PHOTO_EYE_PORT = 2;
     public static final int RUNG_ARM_RETRACTED_PHOTO_EYE_PORT = 3;
@@ -101,9 +101,9 @@ public final class Constants {
     public final static Color UNKNOWN_TARGET = Color.fromHSV(0, 0, 0);
     
     public final static Color BLUE_TARGET = Color.kBlue; //ColorMatch.makeColor(0.125, 0.424, 0.450);
-    public final static Color GREEN_TARGET = Color.kGreen; // ColorMatch.makeColor(0.167, 0.580, 0.252);
+    // public final static Color GREEN_TARGET = Color.kGreen; // ColorMatch.makeColor(0.167, 0.580, 0.252);
     public final static Color RED_TARGET = Color.kRed; //ColorMatch.makeColor(0.518, 0.347, 0.134);
-    public final static Color YELLOW_TARGET = Color.kYellow; // ColorMatch.makeColor(0.311, 0.566, 0.121);
+    // public final static Color YELLOW_TARGET = Color.kYellow; // ColorMatch.makeColor(0.311, 0.566, 0.121);
 
     // Note: The direction that the color wheel itself turns will be the opposite of
     // the below direction
@@ -198,4 +198,5 @@ public final class Constants {
     // CALIBRATE THESE
 	public static final double AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY = 10343;
 	public static final double TRENCH_SHOOTER_VELOCITY = 10343;
+    public static final boolean BALL_COLOR_DETECTION = false;
 }

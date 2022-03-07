@@ -6,20 +6,24 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.HangSubsystem;
-import frc.robot.utils.Log;
 
-public class MoveHangOutCommand extends CommandBase {
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.IntakeSubsystem;
+
+public class StartIntakeWithColorCommand extends CommandBase {
   /**
    * Creates a new IntakeCommand.
    */
-  private final HangSubsystem hangSubsystem;
+  private final IntakeSubsystem intakeSubsystem;
+  private DoubleSupplier speedInput;
 
-  public MoveHangOutCommand(HangSubsystem hangSubsystem) {
-    this.hangSubsystem = hangSubsystem;
-
-    addRequirements(hangSubsystem);
+  public StartIntakeWithColorCommand(IntakeSubsystem intakeSubsystem, DoubleSupplier speedInput) {
+    this.intakeSubsystem = intakeSubsystem;
+    this.speedInput = speedInput;
+    addRequirements(intakeSubsystem);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -30,13 +34,21 @@ public class MoveHangOutCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Log.info("Move Hang Out");
-    hangSubsystem.hangOut();
+    intakeSubsystem.intakeWithColor(speedInput.getAsDouble());
+   // System.out.println("intake speed: " + speedInput.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // intakeSubsystem.intake(0);
+    // if (interrupted) {
+    //   System.out.println("StartIntakeCommand interrupted");
+    // }
+    // else
+    // {
+    //   System.out.println("StartIntakeCommand Ended");
+    // }
   }
 
   // Returns true when the command should end.

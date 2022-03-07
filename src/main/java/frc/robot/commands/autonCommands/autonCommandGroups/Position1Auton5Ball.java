@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
@@ -38,15 +39,19 @@ public class Position1Auton5Ball extends SequentialCommandGroup{
                 new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 42, 0.75)
             ),
             //suck the 3rd ball
-            new TurnToAngleCommand(driveTrain, 0.5, 130, true),
+            new TurnToAngleCommand(driveTrain, 0.5, -58, true),
             new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 110, 1),
-            new TurnToAngleCommand(driveTrain, 0.5, 100, true),
+            new ParallelRaceGroup(
+                new WaitCommand(6),
+                new TurnToHubCommand(driveTrain, 1)
+            ),
+            new AllignToHubCommand(driveTrain),
             //fire second and third ball
             new CatapultFireCommand(catapultSubsystem),
             new WaitCommand(3),
             new CatapultFireCommand(catapultSubsystem),
             //drive to fourth ball
-            new TurnToAngleCommand(driveTrain, 0.5, -50, true),
+            new TurnToAngleCommand(driveTrain, 0.5, -50, true), //Wrong angle
             new DriveForwardDistanceCommand(driveTrain, 120, 1),
             new WaitCommand(3),
             new TurnToAngleCommand(driveTrain, 0.5, 160, true),

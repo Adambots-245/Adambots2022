@@ -11,6 +11,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -21,6 +22,9 @@ import frc.robot.Gamepad.GamepadConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
+import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
 import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
@@ -47,6 +51,7 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
                                                                             RobotMap.ChooChooLimitSwitch, 
+                                                                            RobotMap.bandHomeSwitch,
                                                                             RobotMap.BandMotor, 
                                                                             RobotMap.CatapultStop);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, 
@@ -108,6 +113,12 @@ public class RobotContainer {
       Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
       Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
+
+      Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
+      Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
+      Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, -6));
+
+      // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }
 
   private void dash(){
@@ -122,12 +133,12 @@ public class RobotContainer {
   private void setupDefaultCommands(){
     driveTrainSubsystem.setDefaultCommand(
        new DriveCommand(driveTrainSubsystem, 
-       () -> deaden(Buttons.primaryJoystick.getLeftY()),
+       () -> deaden(-Buttons.primaryJoystick.getLeftY()),
         () -> Buttons.primaryJoystick.getRightX())
         );  
 
     intakeSubsystem.setDefaultCommand(
-        new StartIntakeCommand(intakeSubsystem, 
+        new StartIntakeWithColorCommand(intakeSubsystem, 
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
     
@@ -155,7 +166,7 @@ public class RobotContainer {
       // Log.info("Chosen Auton Command: None");
       
     //return autoChooser.getSelected();
-    return new Test(driveTrainSubsystem, intakeSubsystem, catapultSubsystem, null);
+    return new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))

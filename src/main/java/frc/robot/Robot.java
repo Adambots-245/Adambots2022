@@ -9,14 +9,18 @@ package frc.robot;
 
 import frc.robot.sensors.Gyro;
 import frc.robot.subsystems.*;
+import frc.robot.utils.Log;
 import frc.robot.vision.BlueGripPipeline;
 import frc.robot.vision.HubGripPipeline;
 import frc.robot.vision.RedGripPipeline;
+
+import java.util.logging.Level;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -41,14 +45,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    Log.instance();
+    Log.setFilter(Level.OFF);
     
-    if (Robot.isReal()) {
+    if (Robot.isReal() && false) {
       // Starts vision thread only if not running in simulation mode
       // Vision System calculates the angle to the target and posts it to the NetworkTable
       vision = new VisionProcessorSubsystem(RobotMap.RingLight, 
-                                            new RedGripPipeline(), 
-                                            new HubGripPipeline(), 
-                                            new BlueGripPipeline());
+                                            new HubGripPipeline());
       visionThread = vision.getVisionThread();
       visionThread.setDaemon(true);
       visionThread.start();
@@ -153,6 +158,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
+    SmartDashboard.putBoolean("Color Sensor", RobotMap.ColorSensor.matchClosestColor(RobotMap.ColorSensor.getColor()) == Color.kBlue);
+    SmartDashboard.putNumber("Color Proximity", RobotMap.ColorSensor.getProximity());
+    // RobotMap.ColorSensor.
   }
 
   @Override

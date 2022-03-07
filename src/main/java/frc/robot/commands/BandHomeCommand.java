@@ -7,23 +7,23 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Gamepad.Buttons;
 import frc.robot.subsystems.CatapultSubsystem;
 
-public class CatapultAutoDistanceFireCommand extends CommandBase {
+public class BandHomeCommand extends CommandBase {
   /**
    * Creates a new Command for testing.
    */
 
-  private final CatapultSubsystem catapultSubsystem;
-  private NetworkTableEntry distanceEntry;
+  private CatapultSubsystem catapultSubsystem;
+  private Double offset;
+  private Boolean abort;
 
-  public CatapultAutoDistanceFireCommand(CatapultSubsystem catapultSubsystem) {
+  public BandHomeCommand(CatapultSubsystem catapultSubsystem, double offset) {
     this.catapultSubsystem = catapultSubsystem;
+    this.offset = offset;
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(catapultSubsystem);
@@ -32,15 +32,13 @@ public class CatapultAutoDistanceFireCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    NetworkTableInstance instance = NetworkTableInstance.getDefault();
-    NetworkTable table = instance.getTable("Vision");
-    distanceEntry = table.getEntry("distance");
-
-    double target = distanceEntry.getDouble(420)/1; //Callibrate formula to convert from distance to band tension encoder ticks
-
-    if (distanceEntry.exists()) { //Only worry about moving the bands if the entry actually exists
-      catapultSubsystem.setEncoderMode(true);
-      catapultSubsystem.setBandTarget(target);
+    if (Buttons.primaryRB.get() && Buttons.primaryLB.get()) { //Only run if both bumpers are pressed, otherwise, cancel the command
+      catapultSubsystem.setEncoderMode(false);
+      catapultSubsystem.runBandMotor(-0.5);
+      abort = false;
+    }
+    else {
+      abort = true;
     }
   }
 
@@ -52,13 +50,14 @@ public class CatapultAutoDistanceFireCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    new CatapultFireCommand(catapultSubsystem);
+    if (!interrupted && !abort) {
+      catapultSubsystem.setBandTarget(offset*4096*20);
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //Terminate once we have reached the band target or if there is no distance entry
-    return Math.abs(catapultSubsystem.getError()) < Constants.ACCEPTABLE_BAND_ERROR || !distanceEntry.exists(); 
+    return catapultSubsystem.getError() < Constants.ACCEPTABLE_BAND_ERROR || abort;
   }
 }
