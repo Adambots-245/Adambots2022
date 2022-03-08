@@ -166,7 +166,7 @@ public class RobotContainer {
       // Log.info("Chosen Auton Command: None");
       
     //return autoChooser.getSelected();
-    return new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+    return new Test(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))
