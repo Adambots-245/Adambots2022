@@ -41,19 +41,11 @@ public class StartIntakeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.intake(0);
-    if (interrupted) {
-      System.out.println("StartIntakeCommand interrupted");
-    }
-    else
-    {
-      System.out.println("StartIntakeCommand Ended");
-    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

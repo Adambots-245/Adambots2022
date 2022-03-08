@@ -128,6 +128,7 @@ public class CatapultSubsystem extends SubsystemBase {
       bandMotor.set(ControlMode.PercentOutput, 0);
       bandMotor.setSelectedSensorPosition(0);
       bandTarget = 0;
+      encoderMode = true;
     }
 
     prevChooChooLimitSwitchState = ChooChooLimitSwitchState;

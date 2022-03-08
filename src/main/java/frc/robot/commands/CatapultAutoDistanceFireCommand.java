@@ -36,9 +36,10 @@ public class CatapultAutoDistanceFireCommand extends CommandBase {
     NetworkTable table = instance.getTable("Vision");
     distanceEntry = table.getEntry("distance");
 
-    double target = distanceEntry.getDouble(420)/1; //TODO: Callibrate formula to convert from distance to band tension encoder ticks
+    double target = distanceEntry.getDouble(420)/1; //Callibrate formula to convert from distance to band tension encoder ticks
 
     if (distanceEntry.exists()) { //Only worry about moving the bands if the entry actually exists
+      catapultSubsystem.setEncoderMode(true);
       catapultSubsystem.setBandTarget(target);
     }
   }

@@ -38,7 +38,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void intake(double speed) {
+    Log.infoF("Intake - Speed: %f", speed);
+    intakeMotor.set(ControlMode.PercentOutput, speed);
+  }
 
+  public void intakeWithColor(double speed) {
     Log.infoF("Intake - Speed: %f", speed);
     
     Color ballColor = RobotMap.ColorSensor.matchClosestColor(RobotMap.ColorSensor.getColor());
