@@ -48,16 +48,16 @@ public class DriveCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // if (interrupted) {
-    //   Log.info("DriveCommand interrupted");
-    // } else {
-    //   drivetrain.arcadeDrive(0, 0);
-    // }
+    if (interrupted) {
+      Log.info("DriveCommand interrupted");
+    } else {
+      drivetrain.arcadeDrive(0, 0);
+    }
   }
 
-  // Returns true when the command should end.
+  // As long as this command is used as a default command it should never end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

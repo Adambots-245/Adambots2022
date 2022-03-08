@@ -36,7 +36,7 @@ public class GyroPIDSubsystem extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double targetAngle) {
-    //setSetpoint(targetAngle);
+    setSetpoint(targetAngle);
 
     // Use the output here
   }
