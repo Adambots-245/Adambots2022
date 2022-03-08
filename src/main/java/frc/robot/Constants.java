@@ -90,7 +90,7 @@ public final class Constants {
     public static final double NORMAL_SPEED_MODIFIER = 1;
     public static final double LOW_SPEED_MODIFIER = 0.5;
     public static final double MAX_MOTOR_SPEED = 1;
-    public static final double WINCH_SPEED = -0.75;
+    public static final double WINCH_SPEED = -1;
     // public static final double CONVEYOR_SPEED = 0.5; // test speeds
     // public static final double CONVEYOR_INDEXER_SPEED = 0.5;
     // public static final double FEED_TO_BLASTER_SPEED = 0.5;
