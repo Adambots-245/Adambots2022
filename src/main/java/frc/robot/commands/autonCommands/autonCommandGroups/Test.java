@@ -29,10 +29,12 @@ public class Test extends SequentialCommandGroup{
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Test(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
+    public Test(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
-            new TurnToHubCommand(driveTrain, 1),
-            new AllignToHubCommand(driveTrain)
+            new BandMoveCommand(catapultSubsystem, 5)
+            // new TurnToAngleCommand(driveTrain, 0.2, 90, true)
+            // new TurnToHubCommand(driveTrain, 1),
+            // new AllignToHubCommand(driveTrain)
             //new DriveForwardDistanceCommand(driveTrain, 20 * Constants.ENCODER_TICKS_PER_INCH, 0.5)
 
             // new ParallelRaceGroup(
