@@ -113,10 +113,12 @@ public class RobotContainer {
       Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
       Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
-
+ 
       Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
       Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
-      Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, -6));
+      Buttons.primaryYButton.whenPressed(new BandHomeCommand(catapultSubsystem, 6));
+      // Buttons.primaryRB.whenPressed(new BandMoveCommand(catapultSubsystem, 4));
+      // Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, -6));
 
       // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }
@@ -166,7 +168,7 @@ public class RobotContainer {
       // Log.info("Chosen Auton Command: None");
       
     //return autoChooser.getSelected();
-    return new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+    return new Test(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))
