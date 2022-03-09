@@ -19,11 +19,13 @@ public class BandHomeCommand extends CommandBase {
 
   private CatapultSubsystem catapultSubsystem;
   private Double offset;
+  private Boolean SecondControl;
   private Boolean abort;
 
-  public BandHomeCommand(CatapultSubsystem catapultSubsystem, double offset) {
+  public BandHomeCommand(CatapultSubsystem catapultSubsystem, double offset, Boolean SecondControl) {
     this.catapultSubsystem = catapultSubsystem;
     this.offset = offset;
+    this.SecondControl = SecondControl;
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(catapultSubsystem);
@@ -32,7 +34,7 @@ public class BandHomeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (Buttons.primaryRB.get() && Buttons.primaryLB.get()) { //Only run if both bumpers are pressed, otherwise, cancel the command
+    if (SecondControl) { //Only run if both bumpers are pressed, otherwise, cancel the command
       catapultSubsystem.setEncoderMode(false);
       catapultSubsystem.runBandMotor(-0.5);
       abort = false;
@@ -58,6 +60,6 @@ public class BandHomeCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return catapultSubsystem.getError() < Constants.ACCEPTABLE_BAND_ERROR || abort;
+    return catapultSubsystem.getBandSwitch() || abort;
   }
 }
