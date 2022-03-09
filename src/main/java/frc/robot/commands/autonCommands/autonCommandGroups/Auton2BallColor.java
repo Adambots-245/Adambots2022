@@ -35,7 +35,7 @@ public class Auton2BallColor extends SequentialCommandGroup{
             new CatapultFireCommand(catapultSubsystem),
             new WaitCommand(0.5),
             //suck second ball
-            new StartIntakeCommand(intakeSubsystem, () -> -1),
+            new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
             // new ParallelDeadlineGroup(
             //     new WaitCommand(0.5),
             //     new StartIntakeCommand(intakeSubsystem, () -> -1)

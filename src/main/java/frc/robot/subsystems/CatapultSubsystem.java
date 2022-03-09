@@ -120,11 +120,10 @@ public class CatapultSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Band Encoder In", bandMotor.getSelectedSensorPosition()/4096/20);
-    // SmartDashboard.putNumber("Error", error);
+    SmartDashboard.putNumber("Error", error);
 
     accumulateLogic();
-    // if (encoderMode) 
-    //   bandMotor();
+    if (encoderMode) {bandMotor();}
 
     if (ChooChooLimitSwitchState == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);

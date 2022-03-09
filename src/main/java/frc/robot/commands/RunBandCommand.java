@@ -4,18 +4,16 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CatapultSubsystem;
 import frc.robot.utils.Log;
 
 public class RunBandCommand extends CommandBase {
   private CatapultSubsystem catapultSubsystem;
-  private DoubleSupplier speed;
+  private Double speed;
 
   /** Creates a new RunBandCommand. */
-  public RunBandCommand(CatapultSubsystem catapultSubsystem, DoubleSupplier speed) {
+  public RunBandCommand(CatapultSubsystem catapultSubsystem, Double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     this.catapultSubsystem = catapultSubsystem;
@@ -31,8 +29,9 @@ public class RunBandCommand extends CommandBase {
   @Override
   public void execute() {
     //System.out.println("Band Motor Command ..." + speed.getAsDouble());
-    Log.infoF("Band Motor Command: %f", speed.getAsDouble());
-    catapultSubsystem.runBandMotor(speed.getAsDouble());
+    Log.infoF("Band Motor Command: %f", speed);
+    catapultSubsystem.setEncoderMode(false);
+    catapultSubsystem.runBandMotor(speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -42,6 +41,6 @@ public class RunBandCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
