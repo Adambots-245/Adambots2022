@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Log;
@@ -64,7 +65,7 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void runCatapult(double speed) {
-    this.bandSpeed = speed;
+    catapultMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setBandTarget(double target) {
@@ -80,15 +81,15 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void bandMotor() {
-    error = (bandMotor.getSelectedSensorPosition()-bandTarget);
-    // System.out.println(error);
+    error = (bandTarget+bandMotor.getSelectedSensorPosition());
+    System.out.println(error);
     double motorCommand = 0;
     if (Math.abs(error) > Constants.ACCEPTABLE_BAND_ERROR) {
       if (error < 0) {
-        motorCommand = -Constants.MAX_BAND_MOVE_SPEED;
+        motorCommand = Constants.MAX_BAND_MOVE_SPEED;
       }
       else {
-        motorCommand = Constants.MAX_BAND_MOVE_SPEED;
+        motorCommand = -Constants.MAX_BAND_MOVE_SPEED;
       }
     }
     bandSpeed = motorCommand;
@@ -118,14 +119,18 @@ public class CatapultSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Band Encoder In", bandMotor.getSelectedSensorPosition()/4096/20);
+    // SmartDashboard.putNumber("Error", error);
+
     accumulateLogic();
-    if (encoderMode) 
-      bandMotor();
+    // if (encoderMode) 
+    //   bandMotor();
 
     if (ChooChooLimitSwitchState == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
-    if (bandHomeLimitSwitch.get() == true && bandSpeed < 0) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
+
+    if (bandHomeLimitSwitch.get() == true && bandSpeed > 0) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       bandMotor.setSelectedSensorPosition(0);
       bandTarget = 0;
       bandSpeed = 0;

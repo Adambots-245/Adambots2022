@@ -115,11 +115,11 @@ public class RobotContainer {
       Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
  
-      Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
-      Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
-      Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, 6, Buttons.primaryRB.get()));
-      // Buttons.primaryRB.whenPressed(new BandMoveCommand(catapultSubsystem, 4));
-      // Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, -6));
+      // Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
+      // Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
+      Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, 6, Buttons.primaryLB.get()));
+      Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, 4.4));
+      Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, 1.9));
 
       // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }
@@ -141,14 +141,14 @@ public class RobotContainer {
         );  
 
     intakeSubsystem.setDefaultCommand(
-        new StartIntakeWithColorCommand(intakeSubsystem, 
+        new StartIntakeCommand(intakeSubsystem, 
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
     
-    // catapultSubsystem.setDefaultCommand(
-    //   new RunBandCommand(catapultSubsystem,  
-    //   () -> deaden(Buttons.secondaryJoystick.getLeftY()))
-    // );
+    catapultSubsystem.setDefaultCommand(
+      new RunBandCommand(catapultSubsystem,  
+      () -> deaden(Buttons.secondaryJoystick.getLeftY()))
+    );
   }
 
   // deadzoning
@@ -169,7 +169,7 @@ public class RobotContainer {
       // Log.info("Chosen Auton Command: None");
       
     //return autoChooser.getSelected();
-    return new Test(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+    return new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))

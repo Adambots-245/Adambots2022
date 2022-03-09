@@ -34,14 +34,14 @@ public class BandHomeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (SecondControl) { //Only run if both bumpers are pressed, otherwise, cancel the command
+    // if (SecondControl) { //Only run if both bumpers are pressed, otherwise, cancel the command
       catapultSubsystem.setEncoderMode(false);
-      catapultSubsystem.runBandMotor(-0.5);
+      catapultSubsystem.runBandMotor(0.5);
       abort = false;
-    }
-    else {
-      abort = true;
-    }
+    // }
+    // else {
+      // abort = true;
+    // }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

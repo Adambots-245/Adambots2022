@@ -42,8 +42,8 @@ public class Auton2BallColor extends SequentialCommandGroup{
             // ),       
                 // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75)
-               // new BandMoveCommand(catapultSubsystem, -3)
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75),
+                new BandMoveCommand(catapultSubsystem, 5)
             ),
                 
             /*
