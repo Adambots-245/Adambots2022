@@ -34,8 +34,8 @@ public class BandMoveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    catapultSubsystem.setEncoderMode(true);
     catapultSubsystem.setBandTarget(pos*4096*20); //4096 ticks per rev, 20 revs per inch
-    catapultSubsystem.bandMotor();;
   }
 
   // Called once the command ends or is interrupted.

@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Log;
@@ -29,12 +30,12 @@ public class CatapultSubsystem extends SubsystemBase {
 
   private Boolean ChooChooLimitSwitchState = false;
   private Boolean prevChooChooLimitSwitchState = false;
-  private Boolean prevBandLimitSwitchState = false;
   private Boolean encoderMode = false;
 
   private double bandTarget = 0;
   private double error = 0;
   private int accumulate = 0;
+  private double bandSpeed = 0;
 
   public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandHomeLimitSwitch, BaseMotorController bandMotor, Solenoid catapultStop) {
     super();
@@ -75,8 +76,12 @@ public class CatapultSubsystem extends SubsystemBase {
     encoderMode = state;
   }
 
+  public boolean getBandSwitch () {
+    return bandHomeLimitSwitch.get();
+  }
+
   public void bandMotor() {
-    error = (bandMotor.getSelectedSensorPosition()-bandTarget);
+    error = (bandTarget+bandMotor.getSelectedSensorPosition());
     System.out.println(error);
     double motorCommand = 0;
     if (Math.abs(error) > Constants.ACCEPTABLE_BAND_ERROR) {
@@ -87,8 +92,7 @@ public class CatapultSubsystem extends SubsystemBase {
         motorCommand = -Constants.MAX_BAND_MOVE_SPEED;
       }
     }
-
-    bandMotor.set(ControlMode.PercentOutput, motorCommand);
+    bandSpeed = motorCommand;
   }
 
   public void raiseStop() {
@@ -100,11 +104,7 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void runBandMotor(double speed){
-    if (!encoderMode) {
-      if (speed > 0 || !bandHomeLimitSwitch.get()) {
-        bandMotor.set(ControlMode.PercentOutput, speed);
-      }
-    }
+    bandSpeed = speed;
   }
 
   public void accumulateLogic () {
@@ -119,22 +119,26 @@ public class CatapultSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Band Encoder In", bandMotor.getSelectedSensorPosition()/4096/20);
+    // SmartDashboard.putNumber("Error", error);
+
     accumulateLogic();
+    // if (encoderMode) 
+    //   bandMotor();
 
     if (ChooChooLimitSwitchState == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
-    if (bandHomeLimitSwitch.get() == true && prevBandLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
-      bandMotor.set(ControlMode.PercentOutput, 0);
+
+    if (bandHomeLimitSwitch.get() == true && bandSpeed > 0) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       bandMotor.setSelectedSensorPosition(0);
       bandTarget = 0;
+      bandSpeed = 0;
       encoderMode = true;
     }
+    bandMotor.set(ControlMode.PercentOutput, bandSpeed);
 
     prevChooChooLimitSwitchState = ChooChooLimitSwitchState;
-    prevBandLimitSwitchState = bandHomeLimitSwitch.get();
-
-    if (encoderMode) {bandMotor();}
 
     //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
     // System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
