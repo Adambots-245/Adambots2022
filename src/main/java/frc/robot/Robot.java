@@ -18,6 +18,7 @@ import java.util.logging.Level;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -52,10 +53,13 @@ public class Robot extends TimedRobot {
     if (Robot.isReal() && false) {
       // Starts vision thread only if not running in simulation mode
       // Vision System calculates the angle to the target and posts it to the NetworkTable
-      vision = new VisionProcessorSubsystem(RobotMap.RingLight, 
-                                            new HubGripPipeline());
+      vision = new VisionProcessorSubsystem(RobotMap.RingLight, new HubGripPipeline());
       visionThread = vision.getVisionThread();
       visionThread.setDaemon(true);
+      visionThread.start();
+    }
+    else{
+      visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
       visionThread.start();
     }
 

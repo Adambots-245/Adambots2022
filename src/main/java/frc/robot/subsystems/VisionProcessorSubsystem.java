@@ -185,10 +185,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
 
             if(hubCrosshair != null) {
-                synchronized (lock) {
+                // synchronized (lock) {
                     hubAngle = calculateAngle(hubCrosshair);
                     hubAngleEntry.setDouble(hubAngle); 
-                }
+                // }
             }else{
                 hubAngleEntry.setDouble(Constants.ANGLE_NOT_DETECTED);
             }

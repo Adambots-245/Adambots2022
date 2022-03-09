@@ -1,8 +1,28 @@
 {
+  "HALProvider": {
+    "RoboRIO": {
+      "3.3V Rail": {
+        "open": true
+      },
+      "5V Rail": {
+        "open": true
+      },
+      "6V Rail": {
+        "open": true
+      },
+      "RoboRIO Input": {
+        "open": true
+      },
+      "window": {
+        "visible": true
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/BlasterSubsystem": "Subsystem",
+      "/LiveWindow/CameraSubsystem": "Subsystem",
       "/LiveWindow/ControlPanelSubsystem": "Subsystem",
       "/LiveWindow/ConveyorSubsystem": "Subsystem",
       "/LiveWindow/DriveTrainSubsystem": "Subsystem",
@@ -15,18 +35,48 @@
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[2]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[4]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[8]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[9]": "Digital Input",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/Talon FX [10]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon FX [11]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon FX [12]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon FX [13]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [14]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Victor SPX [15]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Victor SPX [16]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Victor SPX [18]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Victor SPX [23]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Victor SPX [24]": "Motor Controller",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
       "/SmartDashboard/10 foot blaster velocity": "Command",
       "/SmartDashboard/Auton Mode": "String Chooser",
       "/SmartDashboard/IndexToBlasterCommand": "Command",
       "/SmartDashboard/trench 35 foot blaster velocity": "Command"
+    },
+    "windows": {
+      "/LiveWindow/CameraSubsystem": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "CameraPublisher": {
+      "USB Camera 0": {
+        "open": true
+      },
+      "open": true
+    },
+    "LiveWindow": {
+      "open": true
     }
   }
 }
