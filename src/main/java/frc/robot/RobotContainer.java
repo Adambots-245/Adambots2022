@@ -10,6 +10,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -116,7 +117,7 @@ public class RobotContainer {
  
       Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
       Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
-      Buttons.primaryYButton.whenPressed(new BandHomeCommand(catapultSubsystem, 6));
+      Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, 6, Buttons.primaryRB.get()));
       // Buttons.primaryRB.whenPressed(new BandMoveCommand(catapultSubsystem, 4));
       // Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, -6));
 
@@ -144,10 +145,10 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
     
-    catapultSubsystem.setDefaultCommand(
-      new RunBandCommand(catapultSubsystem,  
-      () -> deaden(Buttons.secondaryJoystick.getLeftY()))
-    );
+    // catapultSubsystem.setDefaultCommand(
+    //   new RunBandCommand(catapultSubsystem,  
+    //   () -> deaden(Buttons.secondaryJoystick.getLeftY()))
+    // );
   }
 
   // deadzoning
