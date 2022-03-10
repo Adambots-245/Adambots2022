@@ -26,6 +26,7 @@ import com.revrobotics.ColorMatch;
  */
 
 public final class Constants {
+    public static final double HOME_TENSION = 5.8;
     // motor IDs
     public static final int FL_TALON = 12;
     public static final int BL_TALON = 13;
