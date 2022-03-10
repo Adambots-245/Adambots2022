@@ -30,7 +30,7 @@ public class BandHomeCommand extends CommandBase {
   @Override
   public void initialize() {
     catapultSubsystem.setEncoderMode(false);
-    catapultSubsystem.runBandMotor(0.5);
+    catapultSubsystem.runBandMotor(0.7);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

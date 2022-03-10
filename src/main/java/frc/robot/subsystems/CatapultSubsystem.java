@@ -131,7 +131,6 @@ public class CatapultSubsystem extends SubsystemBase {
 
     if (bandHomeLimitSwitch.get() == true && bandSpeed > 0) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       bandMotor.setSelectedSensorPosition(0);
-      bandTarget = 0;
       bandSpeed = 0;
       encoderMode = true;
     }

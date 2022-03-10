@@ -118,8 +118,8 @@ public class RobotContainer {
       // Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
       // Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
       Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, 6));
-      Buttons.primaryDPadN.whenPressed(new BandHomeCommand(catapultSubsystem, 6));
-      Buttons.primaryDPadS.whenPressed(new BandHomeCommand(catapultSubsystem, 6));
+      Buttons.primaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
+      Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
       Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, 4.4));
       Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, 1.9));
 

@@ -16,7 +16,7 @@ public class BandMoveCommand extends CommandBase {
    */
 
   private final CatapultSubsystem catapultSubsystem;
-  private final Double pos;
+  private final double pos;
 
   public BandMoveCommand(CatapultSubsystem catapultSubsystem, double pos) {
     this.catapultSubsystem = catapultSubsystem;
