@@ -56,7 +56,7 @@ public class CatapultSubsystem extends SubsystemBase {
     accumulate = 0;
 
     bandMotor.setNeutralMode(NeutralMode.Brake);
-    bandMotor.setSelectedSensorPosition(0);
+    bandMotor.setSelectedSensorPosition(-6*4096*20);
     encoderMode = false;
   }
 
