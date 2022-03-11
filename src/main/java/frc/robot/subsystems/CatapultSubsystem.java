@@ -118,7 +118,7 @@ public class CatapultSubsystem extends SubsystemBase {
     else {
       accumulate = Math.max(accumulate-1, -5);
     }
-    ChooChooLimitSwitchState = (accumulate >= 5);
+    ChooChooLimitSwitchState = (accumulate >= 0);
   }
 
   @Override

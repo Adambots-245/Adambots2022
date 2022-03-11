@@ -23,7 +23,7 @@ public class BallPrimeAndFireCommandGroup extends SequentialCommandGroup{
         super(
           //shoot ball
           new CatapultPrimeCommand(catapultSubsystem),
-          new WaitCommand(0.5),
+          new WaitCommand(0.3),
           new CatapultFireCommand(catapultSubsystem)
         );  
     }

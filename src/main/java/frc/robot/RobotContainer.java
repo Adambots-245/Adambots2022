@@ -121,7 +121,7 @@ public class RobotContainer {
       Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
       Buttons.primaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
       Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
-      Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, 4.4));
+      Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
       Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, 1.9));
       Buttons.primaryRB.whenPressed(new BallPrimeAndFireCommandGroup(catapultSubsystem));
       Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
