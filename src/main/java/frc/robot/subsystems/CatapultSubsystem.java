@@ -80,6 +80,10 @@ public class CatapultSubsystem extends SubsystemBase {
     return bandHomeLimitSwitch.get();
   }
 
+  public boolean getCatapultSwitch () {
+    return ChooChooLimitSwitchState;
+  }
+
   public void bandMotor() {
     error = (bandTarget+bandMotor.getSelectedSensorPosition());
     System.out.println(error);
@@ -114,7 +118,7 @@ public class CatapultSubsystem extends SubsystemBase {
     else {
       accumulate = Math.max(accumulate-1, -5);
     }
-    ChooChooLimitSwitchState = (accumulate >= 0);
+    ChooChooLimitSwitchState = (accumulate >= 5);
   }
 
   @Override

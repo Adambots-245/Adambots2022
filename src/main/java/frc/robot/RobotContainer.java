@@ -24,6 +24,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
+import frc.robot.commands.autonCommands.autonCommandGroups.BallPrimeAndFireCommandGroup;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
 import frc.robot.commands.autonCommands.autonCommandGroups.Test;
@@ -122,7 +123,8 @@ public class RobotContainer {
       Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
       Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, 4.4));
       Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, 1.9));
-
+      Buttons.primaryRB.whenPressed(new BallPrimeAndFireCommandGroup(catapultSubsystem));
+      Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
       // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }
 
