@@ -29,6 +29,8 @@ public class CatapultBackdriveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    finished = false;
+    prevSwitchState = catapultSubsystem.getCatapultSwitch();
     catapultSubsystem.runCatapult(1);
   }
 
