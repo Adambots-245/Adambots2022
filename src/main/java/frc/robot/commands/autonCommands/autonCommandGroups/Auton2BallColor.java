@@ -32,19 +32,16 @@ public class Auton2BallColor extends SequentialCommandGroup{
     public Auton2BallColor(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
             new CatapultPrimeCommand(catapultSubsystem),
-            new WaitCommand(0.5),
             new CatapultFireCommand(catapultSubsystem),
-            new WaitCommand(0.3),
+
+            // new WaitCommand(0.3),
             //suck second ball
             new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
-            // new ParallelDeadlineGroup(
-            //     new WaitCommand(0.5),
-            //     new StartIntakeCommand(intakeSubsystem, () -> -1)
-            // ),       
+   
                 // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
                 new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 34, -0.75),
-                new BandMoveCommand(catapultSubsystem, 3.1)
+                new BandMoveCommand(catapultSubsystem, 3.1) //Tension for second ball shot
             ),
                 
             /*
@@ -55,12 +52,11 @@ public class Auton2BallColor extends SequentialCommandGroup{
             ),
             new AllignToHubCommand(driveTrain),
             */
-            new WaitCommand(3.5),
-            new StopIntakeOuttakeCommand(intakeSubsystem),
+            new WaitCommand(4), //Waiting for intake to suck ball into catapult
+            new StopIntakeOuttakeCommand(intakeSubsystem), //Stopping intake after ball is in the catapult
             new CatapultPrimeCommand(catapultSubsystem),
-            new WaitCommand(0.5),
             new CatapultFireCommand(catapultSubsystem),
-            new BandMoveCommand(catapultSubsystem, 3.9)
+            new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION)
         );  
     }
 

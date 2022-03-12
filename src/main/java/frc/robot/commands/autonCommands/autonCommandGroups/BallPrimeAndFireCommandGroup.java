@@ -3,6 +3,8 @@ package frc.robot.commands.autonCommands.autonCommandGroups;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.Constants;
 import frc.robot.sensors.Gyro;
 import frc.robot.subsystems.CatapultSubsystem;
@@ -22,9 +24,14 @@ public class BallPrimeAndFireCommandGroup extends SequentialCommandGroup{
     public BallPrimeAndFireCommandGroup (CatapultSubsystem catapultSubsystem) { 
         super(
           //shoot ball
-          new CatapultPrimeCommand(catapultSubsystem),
-          new WaitCommand(0.3),
-          new CatapultFireCommand(catapultSubsystem)
+          // new ParallelDeadlineGroup(
+          //   new WaitCommand(2),
+          //   new CatapultRunCommand(catapultSubsystem)
+          // )
+
+            new CatapultPrimeCommand(catapultSubsystem),
+            // new WaitCommand(0.5), //Delay between priming and firing to ensure a complete fire and make it easier to debug
+            new CatapultFireCommand(catapultSubsystem)
         );  
     }
 }
