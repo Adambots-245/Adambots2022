@@ -23,10 +23,10 @@ import frc.robot.Gamepad.GamepadConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallDefault;
 import frc.robot.commands.autonCommands.autonCommandGroups.BallPrimeAndFireCommandGroup;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallDefault;
 import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
@@ -123,15 +123,22 @@ public class RobotContainer {
       Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
       Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
       Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
-      Buttons.primaryRB.whenPressed(new BallPrimeAndFireCommandGroup(catapultSubsystem));
-      Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
+     // Buttons.primaryRB.whenPressed(new BallPrimeAndFireCommandGroup(catapultSubsystem));
+     // Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
+
+      // buttons for the drive subsystem
+      Buttons.primaryXButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
+      Buttons.primaryBButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
+      Buttons.primaryLB.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem));
+      Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
+
       // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }
 
   private void dash(){
     autoChooser.setDefaultOption("None", null);
-    autoChooser.addOption("Auton2BallColor", new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
-    autoChooser.addOption("Auton2BallFlat", new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("Auton2BallColor", new Auton2BallDefault(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("Auton2BallFlat", new Auton2BallDefault(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
 
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    
@@ -175,7 +182,7 @@ public class RobotContainer {
       
     //return autoChooser.getSelected();
 
-    return new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+    return new Auton2BallDefault(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
     // System.out.println(autoChooser.getSelected().toString());
     // return autoChooser.getSelected();
 
