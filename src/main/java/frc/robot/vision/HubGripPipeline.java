@@ -1,5 +1,3 @@
-package frc.robot.vision;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,11 +7,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.HashMap;
 
-import edu.wpi.first.vision.VisionPipeline;
-
 import org.opencv.core.*;
 import org.opencv.core.Core.*;
-//import org.opencv.features2d.FeatureDetector;
+import org.opencv.features2d.FeatureDetector;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
@@ -25,7 +21,7 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class HubGripPipeline implements VisionPipeline {
+public class HubGripPipeline {
 
 	//Outputs
 	private Mat hsvThresholdOutput = new Mat();
@@ -40,12 +36,12 @@ public class HubGripPipeline implements VisionPipeline {
 	/**
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
-	@Override	public void process(Mat source0) {
+	public void process(Mat source0) {
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = source0;
-		double[] hsvThresholdHue = {61.510791366906474, 89.09090909090908};
-		double[] hsvThresholdSaturation = {103.19244604316545, 255.0};
-		double[] hsvThresholdValue = {68.79496402877699, 255.0};
+		double[] hsvThresholdHue = {64.74820143884891, 101.37759851070429};
+		double[] hsvThresholdSaturation = {110.07194244604315, 255.0};
+		double[] hsvThresholdValue = {80.26079136690649, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step CV_erode0:
@@ -64,17 +60,17 @@ public class HubGripPipeline implements VisionPipeline {
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 0;
-		double filterContoursMinPerimeter = 0;
-		double filterContoursMinWidth = 0;
-		double filterContoursMaxWidth = 1000.0;
-		double filterContoursMinHeight = 0;
-		double filterContoursMaxHeight = 1000;
-		double[] filterContoursSolidity = {0, 100};
-		double filterContoursMaxVertices = 1000000;
-		double filterContoursMinVertices = 0;
-		double filterContoursMinRatio = 0;
-		double filterContoursMaxRatio = 1000;
+		double filterContoursMinArea = 85.0;
+		double filterContoursMinPerimeter = 0.0;
+		double filterContoursMinWidth = 0.0;
+		double filterContoursMaxWidth = 100.0;
+		double filterContoursMinHeight = 6.0;
+		double filterContoursMaxHeight = 45.0;
+		double[] filterContoursSolidity = {71.94244604316548, 100.0};
+		double filterContoursMaxVertices = 45.0;
+		double filterContoursMinVertices = 0.0;
+		double filterContoursMinRatio = 1.0;
+		double filterContoursMaxRatio = 10.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
@@ -227,3 +223,4 @@ public class HubGripPipeline implements VisionPipeline {
 
 
 }
+

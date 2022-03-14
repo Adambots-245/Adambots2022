@@ -1,0 +1,184 @@
+<grip:Pipeline>
+  <sources>
+    <grip:MultiImageFile>
+      <property name="path[2]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad7ft10in.png"/>
+      <property name="path[5]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad17ft2in.png"/>
+      <property name="path[8]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad8ft10in.png"/>
+      <property name="path[20]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal10ft6in.png"/>
+      <property name="path[23]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal16ft6in.png"/>
+      <property name="path[12]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter2ft10in.png"/>
+      <property name="path[15]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter5ft10in.png"/>
+      <property name="index" value="8"/>
+      <property name="path[18]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal5ft6in.png"/>
+      <property name="path[0]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Chute8ft6in.png"/>
+      <property name="path[3]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad10ft10in.png"/>
+      <property name="path[6]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad5ft4in.png"/>
+      <property name="path[9]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad10ft10in.png"/>
+      <property name="path[21]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal12ft6in.png"/>
+      <property name="path[24]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal18ft6in.png"/>
+      <property name="path[10]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad12ft10in.png"/>
+      <property name="path[13]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter3ft10in.png"/>
+      <property name="path[16]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter6ft10in.png"/>
+      <property name="path[19]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal8ft6in.png"/>
+      <property name="numImages" value="26"/>
+      <property name="path[1]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad6ft0in.png"/>
+      <property name="path[4]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad13ft10in.png"/>
+      <property name="path[7]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad6ft10in.png"/>
+      <property name="path[22]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal14ft6in.png"/>
+      <property name="path[25]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal22ft6in.png"/>
+      <property name="path[11]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad13ft6in.png"/>
+      <property name="path[14]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter4ft10in.png"/>
+      <property name="path[17]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter7ft10in.png"/>
+    </grip:MultiImageFile>
+    <grip:ImageFile>
+      <property name="path" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter2ft10in.png"/>
+    </grip:ImageFile>
+  </sources>
+  <steps>
+    <grip:Step name="HSV Threshold">
+      <grip:Input step="0" socket="0"/>
+      <grip:Input step="0" socket="1">
+        <value>
+          <double>64.74820143884891</double>
+          <double>101.37759851070429</double>
+        </value>
+      </grip:Input>
+      <grip:Input step="0" socket="2">
+        <value>
+          <double>110.07194244604315</double>
+          <double>255.0</double>
+        </value>
+      </grip:Input>
+      <grip:Input step="0" socket="3">
+        <value>
+          <double>80.26079136690649</double>
+          <double>255.0</double>
+        </value>
+      </grip:Input>
+      <grip:Output step="0" socket="0" previewed="false"/>
+    </grip:Step>
+    <grip:Step name="CV erode">
+      <grip:Input step="1" socket="0"/>
+      <grip:Input step="1" socket="1"/>
+      <grip:Input step="1" socket="2"/>
+      <grip:Input step="1" socket="3">
+        <value>1.0</value>
+      </grip:Input>
+      <grip:Input step="1" socket="4">
+        <value>BORDER_CONSTANT</value>
+      </grip:Input>
+      <grip:Input step="1" socket="5"/>
+      <grip:Output step="1" socket="0" previewed="false"/>
+    </grip:Step>
+    <grip:Step name="Find Contours">
+      <grip:Input step="2" socket="0"/>
+      <grip:Input step="2" socket="1">
+        <value>false</value>
+      </grip:Input>
+      <grip:Output step="2" socket="0" previewed="false"/>
+    </grip:Step>
+    <grip:Step name="Filter Contours">
+      <grip:Input step="3" socket="0"/>
+      <grip:Input step="3" socket="1">
+        <value>75.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="2">
+        <value>0.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="3">
+        <value>0.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="4">
+        <value>100.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="5">
+        <value>6.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="6">
+        <value>45.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="7">
+        <value>
+          <double>71.94244604316548</double>
+          <double>100.0</double>
+        </value>
+      </grip:Input>
+      <grip:Input step="3" socket="8">
+        <value>60.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="9">
+        <value>0.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="10">
+        <value>1.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="11">
+        <value>10.0</value>
+      </grip:Input>
+      <grip:Output step="3" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="NTPublish ContoursReport">
+      <grip:Input step="4" socket="0"/>
+      <grip:Input step="4" socket="1">
+        <value>HubDetection</value>
+      </grip:Input>
+      <grip:Input step="4" socket="2">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="4" socket="3">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="4" socket="4">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="4" socket="5">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="4" socket="6">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="4" socket="7">
+        <value>true</value>
+      </grip:Input>
+    </grip:Step>
+  </steps>
+  <connections>
+    <grip:Connection>
+      <grip:Output step="2" socket="0" previewed="false"/>
+      <grip:Input step="3" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="0" socket="0" previewed="false"/>
+      <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="3" socket="0" previewed="true"/>
+      <grip:Input step="4" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
+      <grip:Input step="0" socket="0"/>
+    </grip:Connection>
+  </connections>
+  <settings>
+    <teamNumber>245</teamNumber>
+    <publishAddress>roboRIO-245-FRC.local</publishAddress>
+    <deployAddress>roboRIO-245-FRC.local</deployAddress>
+    <deployDir>/home/lvuser</deployDir>
+    <deployUser>lvuser</deployUser>
+    <deployJavaHome>/usr/local/frc/JRE/</deployJavaHome>
+    <deployJvmOptions>-Xmx50m -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:MaxNewSize=16m</deployJvmOptions>
+  </settings>
+  <codeGenerationSettings>
+    <language>Java</language>
+    <className>HubGripPipelineSec</className>
+    <implementWpilibPipeline>true</implementWpilibPipeline>
+    <saveDir>D:\Projects\FRC\Adambots2022\src\main\java\frc\robot\vision</saveDir>
+    <packageName>frc.robot.vision</packageName>
+    <moduleName>grip</moduleName>
+  </codeGenerationSettings>
+</grip:Pipeline>
