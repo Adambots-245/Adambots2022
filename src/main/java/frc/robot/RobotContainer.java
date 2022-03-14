@@ -24,6 +24,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
+import frc.robot.commands.autonCommands.autonCommandGroups.BallPrimeAndFireCommandGroup;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallColor;
 import frc.robot.commands.autonCommands.autonCommandGroups.Test;
@@ -117,19 +118,21 @@ public class RobotContainer {
  
       // Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
       // Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
-      Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, 6));
+      Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
       Buttons.primaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
       Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
-      Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, 4.4));
-      Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, 1.9));
-
+      Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
+      Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
+      Buttons.primaryRB.whenPressed(new BallPrimeAndFireCommandGroup(catapultSubsystem));
+      Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
       // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }
 
   private void dash(){
     autoChooser.setDefaultOption("None", null);
-    
-    // autoChooser.addOption("Snag N' Yeet", new SnagNYeetCommandGroup(driveTrainSubsystem, intakeSubsystem, conveyorSubsystem, turretSubsystem, RobotMap.LidarSensor, blasterSubsystem, Buttons.secondaryJoystick));
+    autoChooser.addOption("Auton2BallColor", new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("Auton2BallFlat", new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    
     SmartDashboard.putData("Auton Mode", autoChooser);
@@ -171,7 +174,11 @@ public class RobotContainer {
       // Log.info("Chosen Auton Command: None");
       
     //return autoChooser.getSelected();
+
     return new Auton2BallColor(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+    // System.out.println(autoChooser.getSelected().toString());
+    // return autoChooser.getSelected();
+
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
     // .andThen(new TurnToAngleFromCameraCommand(driveTrainSubsystem))

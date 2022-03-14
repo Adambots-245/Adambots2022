@@ -56,7 +56,7 @@ public class CatapultSubsystem extends SubsystemBase {
     accumulate = 0;
 
     bandMotor.setNeutralMode(NeutralMode.Brake);
-    bandMotor.setSelectedSensorPosition(0);
+    bandMotor.setSelectedSensorPosition(-Constants.HOME_TENSION*4096*20);
     encoderMode = false;
   }
 
@@ -78,6 +78,10 @@ public class CatapultSubsystem extends SubsystemBase {
 
   public boolean getBandSwitch () {
     return bandHomeLimitSwitch.get();
+  }
+
+  public boolean getCatapultSwitch () {
+    return ChooChooLimitSwitchState;
   }
 
   public void bandMotor() {
@@ -114,7 +118,7 @@ public class CatapultSubsystem extends SubsystemBase {
     else {
       accumulate = Math.max(accumulate-1, -5);
     }
-    ChooChooLimitSwitchState = (accumulate >= 0);
+    ChooChooLimitSwitchState = (accumulate >= 3);
   }
 
   @Override

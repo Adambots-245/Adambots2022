@@ -10,14 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CatapultSubsystem;
 
-public class CatapultFireCommand extends CommandBase {
+public class CatapultRunCommand extends CommandBase {
   /**
    * Creates a new Command for testing.
    */
 
   private final CatapultSubsystem catapultSubsystem;
 
-  public CatapultFireCommand(CatapultSubsystem catapultSubsystem) {
+  public CatapultRunCommand(CatapultSubsystem catapultSubsystem) {
     this.catapultSubsystem = catapultSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
 
@@ -27,13 +27,12 @@ public class CatapultFireCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.runCatapult(1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Firing");
+    catapultSubsystem.runCatapult(1);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +43,6 @@ public class CatapultFireCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !catapultSubsystem.getCatapultSwitch();
+    return false;
   }
 }

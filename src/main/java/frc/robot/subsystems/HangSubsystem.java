@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.ClampRungCommand;
 import frc.robot.sensors.PhotoEye;
 import frc.robot.utils.Log;
 
@@ -172,16 +173,16 @@ public class HangSubsystem extends SubsystemBase {
 
         //clamp if the rung is in place on both sides 
         Boolean clampedDown = (rightRungSwitch.get() && leftRungSwitch.get());
-        if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
-            grabRung();
-            clampedDown = true;
-            // System.out.println("Clamping");
-        }
+        // if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
+        //     new ClampRungCommand(this);
+        //     // clampedDown = true;
+        //     System.out.println("Clamping");
+        // }
 
         winchMotor2.set(ControlMode.PercentOutput, motorSpeed);
         winchMotor1.set(ControlMode.PercentOutput, motorSpeed);
 
-        // System.out.println("Left Rung Clamped: " + leftRungSwitch.get() + " | Right Rung Clamped: " + rightRungSwitch.get() + " | Clamped: " + clampedDown + " | Direction: " + direction);
+        // System.out.println("Left Rung Clamped: " + leftClampedSwitch.get() + " | Right Rung Clamped: " + rightClampedSwitch.get() + " | Clamped: " + clampedDown);
         //System.out.println("Retracted: " + rungArmRetractedSwitch.isDetecting() + " | Mid: " + rungArmMidSwitch.isDetecting() + " | Extended: " + rungArmAdvancedSwitch.isDetecting() + " | Clamped: " + clampedDown);
     }
 }

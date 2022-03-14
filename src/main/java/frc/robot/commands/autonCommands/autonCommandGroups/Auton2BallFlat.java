@@ -23,25 +23,29 @@ import frc.robot.utils.Utils;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
-public class Auton2BallColor extends SequentialCommandGroup{
+public class Auton2BallFlat extends SequentialCommandGroup{
 
     // In this class, the robot will intake and shoot 2 balls, without using the ball detection grip file or AI.
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Auton2BallColor(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
+    public Auton2BallFlat(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
-            new CatapultPrimeCommand(catapultSubsystem),
+            // shoot first ball
             new CatapultFireCommand(catapultSubsystem),
-
-            // new WaitCommand(0.3),
+            new WaitCommand(0.5),
             //suck second ball
-            new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
-   
+
+            // new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
+            
+            // new ParallelDeadlineGroup(
+            //     new WaitCommand(0.5),
+            //     new StartIntakeCommand(intakeSubsystem, () -> -1)
+            // ),       
                 // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 34, -0.75),
-                new BandMoveCommand(catapultSubsystem, 3.1) //Tension for second ball shot
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 38, -0.75),
+                new BandMoveCommand(catapultSubsystem, 4.3)
             ),
                 
             /*
@@ -52,11 +56,10 @@ public class Auton2BallColor extends SequentialCommandGroup{
             ),
             new AllignToHubCommand(driveTrain),
             */
-            new WaitCommand(4), //Waiting for intake to suck ball into catapult
-            new StopIntakeOuttakeCommand(intakeSubsystem), //Stopping intake after ball is in the catapult
-            new CatapultPrimeCommand(catapultSubsystem),
+            new WaitCommand(5),
             new CatapultFireCommand(catapultSubsystem),
-            new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION)
+            new StopIntakeOuttakeCommand(intakeSubsystem),
+            new BandMoveCommand(catapultSubsystem, 4.4)
         );  
     }
 
