@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import java.sql.Driver;
 import java.util.ArrayList;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -13,9 +12,7 @@ import edu.wpi.first.cscore.*;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.networktables.*;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.opencv.core.*;
@@ -289,7 +286,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     private double findDistance(double fMinX, double fMaxX) {
         int pixelWidth = (int) (fMaxX - fMinX);
+      //  int initialDistance = 96;
         int calculatedDistance = 0; 
+      //  int error = 8;
+      //  double slope = 0.125;
+
         
         double width = 1016; // width of the hub in mm
         
