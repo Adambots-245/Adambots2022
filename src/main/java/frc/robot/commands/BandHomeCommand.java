@@ -8,8 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.Gamepad.Buttons;
 import frc.robot.subsystems.CatapultSubsystem;
 
 public class BandHomeCommand extends CommandBase {
@@ -19,13 +17,10 @@ public class BandHomeCommand extends CommandBase {
 
   private CatapultSubsystem catapultSubsystem;
   private Double offset;
-  private Boolean SecondControl;
-  private Boolean abort;
 
-  public BandHomeCommand(CatapultSubsystem catapultSubsystem, double offset, Boolean SecondControl) {
+  public BandHomeCommand(CatapultSubsystem catapultSubsystem, double offset) {
     this.catapultSubsystem = catapultSubsystem;
     this.offset = offset;
-    this.SecondControl = SecondControl;
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(catapultSubsystem);
@@ -34,14 +29,8 @@ public class BandHomeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // if (SecondControl) { //Only run if both bumpers are pressed, otherwise, cancel the command
-      catapultSubsystem.setEncoderMode(false);
-      catapultSubsystem.runBandMotor(0.5);
-      abort = false;
-    // }
-    // else {
-      // abort = true;
-    // }
+    catapultSubsystem.setEncoderMode(false);
+    catapultSubsystem.runBandMotor(0.7);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -52,7 +41,7 @@ public class BandHomeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (!interrupted && !abort) {
+    if (!interrupted) {
       catapultSubsystem.setBandTarget(offset*4096*20);
     }
   }
@@ -60,6 +49,6 @@ public class BandHomeCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return catapultSubsystem.getBandSwitch() || abort;
+    return catapultSubsystem.getBandSwitch();
   }
 }

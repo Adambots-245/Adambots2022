@@ -82,6 +82,8 @@ public class RobotMap {
 	public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
+    public static final Solenoid YellowLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.YELLOW_LEDS_SOL_PORT);
+
 
     // public static final PhotoEye IntakePhotoEye = new PhotoEye(7);
 	// public static final PhotoEye SpacingPhotoEye = new PhotoEye(8);
