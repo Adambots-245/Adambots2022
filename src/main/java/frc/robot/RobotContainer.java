@@ -117,7 +117,9 @@ public class RobotContainer {
  
       // Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
       // Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
-      Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, 6, Buttons.primaryLB.get()));
+      Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, 6));
+      Buttons.primaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
+      Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
       Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, 4.4));
       Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, 1.9));
 
@@ -145,10 +147,10 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
     
-    catapultSubsystem.setDefaultCommand(
-      new RunBandCommand(catapultSubsystem,  
-      () -> deaden(Buttons.secondaryJoystick.getLeftY()))
-    );
+    // catapultSubsystem.setDefaultCommand(
+    //   new RunBandCommand(catapultSubsystem,  
+    //   () -> deaden(Buttons.secondaryJoystick.getLeftY()))
+    // );
   }
 
   // deadzoning

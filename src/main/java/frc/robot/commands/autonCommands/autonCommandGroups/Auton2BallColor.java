@@ -35,7 +35,7 @@ public class Auton2BallColor extends SequentialCommandGroup{
             new CatapultFireCommand(catapultSubsystem),
             new WaitCommand(0.5),
             //suck second ball
-            new StartIntakeCommand(intakeSubsystem, () -> -1),
+            new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
             // new ParallelDeadlineGroup(
             //     new WaitCommand(0.5),
             //     new StartIntakeCommand(intakeSubsystem, () -> -1)
@@ -43,7 +43,7 @@ public class Auton2BallColor extends SequentialCommandGroup{
                 // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
                 new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75),
-                new BandMoveCommand(catapultSubsystem, 5)
+                new BandMoveCommand(catapultSubsystem, 4.5)
             ),
                 
             /*
@@ -54,10 +54,10 @@ public class Auton2BallColor extends SequentialCommandGroup{
             ),
             new AllignToHubCommand(driveTrain),
             */
-            new WaitCommand(3),
+            new WaitCommand(5),
             new CatapultFireCommand(catapultSubsystem),
-            new StopIntakeOuttakeCommand(intakeSubsystem)
-           // new BandMoveCommand(catapultSubsystem, 3)
+            new StopIntakeOuttakeCommand(intakeSubsystem),
+            new BandMoveCommand(catapultSubsystem, 4.4)
         );  
     }
 

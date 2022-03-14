@@ -5,25 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonCommands;
+
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.CatapultSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class BandMoveCommand extends CommandBase {
+public class AutonStartIntakeCommand extends CommandBase {
   /**
-   * Creates a new Command for testing.
+   * Creates a new IntakeCommand.
    */
+  private final IntakeSubsystem intakeSubsystem;
+  private DoubleSupplier speedInput;
 
-  private final CatapultSubsystem catapultSubsystem;
-  private final double pos;
-
-  public BandMoveCommand(CatapultSubsystem catapultSubsystem, double pos) {
-    this.catapultSubsystem = catapultSubsystem;
-    this.pos = pos;
+  public AutonStartIntakeCommand(IntakeSubsystem intakeSubsystem, DoubleSupplier speedInput) {
+    this.intakeSubsystem = intakeSubsystem;
+    this.speedInput = speedInput;
+    addRequirements(intakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-
-    addRequirements(catapultSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -34,8 +34,8 @@ public class BandMoveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    catapultSubsystem.setEncoderMode(true);
-    catapultSubsystem.setBandTarget(pos*4096*20); //4096 ticks per rev, 20 revs per inch
+    intakeSubsystem.intake(speedInput.getAsDouble());
+   // System.out.println("intake speed: " + speedInput.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
