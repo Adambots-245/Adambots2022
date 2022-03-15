@@ -37,8 +37,8 @@ public class CameraSubsystem extends SubsystemBase {
 
         hubCvSink = CameraServer.getVideo(hubDetectionCamera);
         ballCvSink = CameraServer.getVideo(ballDetectionCamera);
-        hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
-        ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
+        hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, Constants.PROCESSING_FPS);
+        ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, Constants.PROCESSING_FPS);
         // hubMat = new Mat();
 
         visionThread = new Thread(() -> {

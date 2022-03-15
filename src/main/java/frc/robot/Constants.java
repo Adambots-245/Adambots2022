@@ -123,24 +123,30 @@ public final class Constants {
 
     // PID slots
     public static final int DRIVE_PID_SLOT = 0;
-
+    
     // Acceleration ramping constant for drive train
     public static final double SEC_NEUTRAL_TO_FULL = 0.4;
-
+    
     // Vision Constants
     public static final int BALL_CAM_NUMBER = 1;
     public static final int HUB_CAM_NUMBER = 0;
     public static final int CAM_EXPOSURE = 5;
-    public static final int IMG_WIDTH = 320;
-    public static final int IMG_HEIGHT = 240;
+    public static final int FRAME_WIDTH = 320;
+    public static final int FRAME_HEIGHT = 240;
     public static final int HOR_FOV_DEGREES = 60;
-    public static final double HOR_DEGREES_PER_PIXEL = (double) HOR_FOV_DEGREES / IMG_WIDTH;
-    public static final int IMG_HOR_MID = IMG_WIDTH / 2;
+    public static final double HOR_DEGREES_PER_PIXEL = (double) HOR_FOV_DEGREES / FRAME_WIDTH;
+    public static final int IMG_HOR_MID = FRAME_WIDTH / 2;
     public static final int DRIVER_STATION_FPS = 6;
     public static final int PROCESSING_FPS = 30; // DON'T CHANGE
     public static final int ANGLE_NOT_DETECTED = 600;
     public static final int ANGLE_RANGE = 5;
     public static final double HUB_TURN_SPEED = 0.3;
+    public static final String VISION_TABLE_NAME = "Vision";
+    public static final String HUB_ANGLE_ENTRY_NAME = "hubAngle";
+    public static final String HUB_DISTANCE_ENTRY_NAME = "hubdistance";
+    public static final int HUB_CAMERA_EXPOSURE = 10;
+    public static final double CAMERA_FOV = 68.5;
+    
 
     // Colors are (B, G, R) (Don't ask me)
     public static final Scalar RED = new Scalar(0, 0, 255);

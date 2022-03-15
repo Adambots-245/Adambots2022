@@ -20,6 +20,10 @@ import org.opencv.imgproc.Imgproc;
 
 public class VisionProcessorSubsystem extends SubsystemBase {
 
+    /**
+     *
+     */
+    private static final int SAMPLE_SIZE = 5;
     private static UsbCamera ballDetectionCamera;
     private static UsbCamera hubDetectionCamera;
     private static CvSource processedOutputStreamHub;
@@ -45,10 +49,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private NetworkTableEntry hubAngleEntry;
     // private NetworkTableEntry ballAngleEntry;
     private Solenoid ringLight;
-    // private MedianFilter hubMaxYFilter;
-    // private MedianFilter hubMinYFilter;
-    // private MedianFilter hubMaxXFilter;
-    // private MedianFilter hubMinXFilter;
+    private MedianFilter hubMaxYFilter;
+    private MedianFilter hubMinYFilter;
+    private MedianFilter hubMaxXFilter;
+    private MedianFilter hubMinXFilter;
     // private MedianFilter ballMaxYFilter;
     // private MedianFilter ballMinYFilter;
     // private MedianFilter ballMaxXFilter;
@@ -67,10 +71,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     public void init() {
         // Creates a MedianFilter with a window size of 5 samples
-        // hubMaxYFilter = new MedianFilter(5);
-        // hubMinYFilter = new MedianFilter(5);
-        // hubMaxXFilter = new MedianFilter(5);
-        // hubMinXFilter = new MedianFilter(5);
+        // Used to avoid flickering of detected objects when distance is large
+        hubMaxYFilter = new MedianFilter(SAMPLE_SIZE);
+        hubMinYFilter = new MedianFilter(SAMPLE_SIZE);
+        hubMaxXFilter = new MedianFilter(SAMPLE_SIZE);
+        hubMinXFilter = new MedianFilter(SAMPLE_SIZE);
  
         // ballMaxYFilter = new MedianFilter(5);
         // ballMinYFilter = new MedianFilter(5);
@@ -80,9 +85,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         ringLight.set(true);
         //ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
         hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
+        hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, Constants.PROCESSING_FPS);
+        hubDetectionCamera.setExposureManual(Constants.HUB_CAMERA_EXPOSURE); //10% exposure
 
-        processedOutputStreamHub = CameraServer.putVideo("CameraHub-Output", Constants.IMG_WIDTH, Constants.IMG_HEIGHT);
-        processedOutputStreamHub.setVideoMode(PixelFormat.kGray, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.DRIVER_STATION_FPS);
+        processedOutputStreamHub = CameraServer.putVideo("CameraHub-Output", Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
+        processedOutputStreamHub.setVideoMode(PixelFormat.kGray, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, Constants.DRIVER_STATION_FPS);
         processedOutputStreamHub.setFPS(Constants.DRIVER_STATION_FPS);
         processedOutputStreamHub.setPixelFormat(PixelFormat.kGray);
 
@@ -105,14 +112,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         //redMat = new Mat();
         //blueMat = new Mat();
 
-
         //ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kMJPEG, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
-        hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.IMG_WIDTH, Constants.IMG_HEIGHT, Constants.PROCESSING_FPS);
-        hubDetectionCamera.setExposureManual(10); //10% exposure
 
         NetworkTableInstance instance = NetworkTableInstance.getDefault();
-        NetworkTable table = instance.getTable("Vision");
-        hubAngleEntry = table.getEntry("hubAngle");
+        NetworkTable table = instance.getTable(Constants.VISION_TABLE_NAME);
+        hubAngleEntry = table.getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
         //ballAngleEntry = table.getEntry("ballAngle");
 
         visionThread = new Thread(() -> {
@@ -175,14 +179,14 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                 double finalDistance = findDistance(hubBounds[0].x, hubBounds[1].x);
                   
                 NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
-                NetworkTableEntry teDist = ntinst.getTable("Vision").getEntry("hubdistance");
+                NetworkTableEntry teDist = ntinst.getTable(Constants.VISION_TABLE_NAME).getEntry(Constants.HUB_DISTANCE_ENTRY_NAME);
                 teDist.setDouble(finalDistance);
-                SmartDashboard.putNumber("hubDistance", finalDistance);
+                SmartDashboard.putNumber(Constants.HUB_DISTANCE_ENTRY_NAME, finalDistance);
                 
                 drawRect(hubBounds, hubVideoFrame);
                 Point ch = findCrosshair(hubBounds);
                 
-                NetworkTableEntry teAngle = ntinst.getTable("Vision").getEntry("hubangle");
+                NetworkTableEntry teAngle = ntinst.getTable(Constants.VISION_TABLE_NAME).getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
                 double hubAngle = Constants.ANGLE_NOT_DETECTED; // 600 is angle not found
                 
                 if (ch != null){
@@ -191,7 +195,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                     hubAngle = calculateAngle(ch);
                     teAngle.setDouble(hubAngle); 
                 }
-                SmartDashboard.putNumber("hubAngle", hubAngle);
+                SmartDashboard.putNumber(Constants.HUB_ANGLE_ENTRY_NAME, hubAngle);
                 
                 int location = 0;
                 Imgproc.putText(hubVideoFrame, String.format("Angle: %.2f Deg", hubAngle), new Point(0, location = location + 30), Imgproc.FONT_HERSHEY_SIMPLEX, 1, new Scalar(0, 0, 255), 2); 
@@ -220,18 +224,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         }
     }
 
-    // Calculate the crosshair position
+    // Calculate the crosshair (center) position
     public Point findCrosshair(Point[] pts) {
-        // i is starting point for line, j is next point
-        //int j;
         Point crosshair = new Point((pts[0].x + pts[2].x) / 2, (pts[0].y + pts[2].y) / 2);
-        /*
-        for (int i = 0; i < 4; i++) {
-            j = (i + 1) % 4;
-            if (crosshair == null || (pts[i].y + pts[j].y) / 2 < crosshair.y)
-                crosshair = new Point((pts[i].x + pts[j].x) / 2, (pts[i].y + pts[j].y) / 2);
-        }
-        */
+        
         return crosshair;
       }
 
@@ -253,18 +249,18 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             for(int a=0; a<rects.length; a++ ) {
                 Point[] ppts = new Point[4];
                 rects[a].points(ppts);
-                drawRect(ppts, videoFrame, new Scalar(0, 0, 255));
+                drawRect(ppts, videoFrame, new Scalar(0, 0, 255)); //red
 
                 minX = Math.min(minX, rects[a].boundingRect().x);
-                maxX = Math.max(maxX, rects[a].boundingRect().x);
+                maxX = Math.max(maxX, rects[a].boundingRect().x + rects[a].boundingRect().width);
                 minY = Math.min(minY, rects[a].boundingRect().y);
-                maxY = Math.max(maxY, rects[a].boundingRect().y);
+                maxY = Math.max(maxY, rects[a].boundingRect().y + rects[a].boundingRect().height);
             }
 
-            // double fMinY = hubMinYFilter.calculate(minY);
-            // double fMaxY = hubMaxYFilter.calculate(maxY);
-            // double fMinX = hubMinXFilter.calculate(minX);
-            // double fMaxX = hubMaxXFilter.calculate(maxX);
+            double fMinY = hubMinYFilter.calculate(minY);
+            double fMaxY = hubMaxYFilter.calculate(maxY);
+            double fMinX = hubMinXFilter.calculate(minX);
+            double fMaxX = hubMaxXFilter.calculate(maxX);
             
             //SmartDashboard.putNumber("minX", fMinY);
             //SmartDashboard.putNumber("minY", fMaxY);
@@ -275,10 +271,10 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
             framePts = new Point[4];
      
-            framePts[0] = new Point(minX, minY);
-            framePts[1] = new Point(maxX, minY);
-            framePts[2] = new Point(maxX, maxY);
-            framePts[3] = new Point(minX, maxY);
+            framePts[0] = new Point(fMinX, fMinY);
+            framePts[1] = new Point(fMaxX, fMinY);
+            framePts[2] = new Point(fMaxX, fMaxY);
+            framePts[3] = new Point(fMinX, fMaxY);
         }
 
         return framePts;
@@ -286,12 +282,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     private double findDistance(double fMinX, double fMaxX) {
         int pixelWidth = (int) (fMaxX - fMinX);
-      //  int initialDistance = 96;
         int calculatedDistance = 0; 
-      //  int error = 8;
-      //  double slope = 0.125;
 
-        
         double width = 1016; // width of the hub in mm
         
         double focalLength = findFocalLength();
@@ -300,7 +292,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         //focalLength = 60; // mm https://commons.wikimedia.org/wiki/File:Microsoft_Lifecam_HD-3000_webcam.jpg
         // focalLength = (pixels * initialDistance) / width;
 
-        calculatedDistance = (int) (((width * focalLength) / pixelWidth)/25.4); // in inch
+        calculatedDistance = (int) (((width * focalLength) / pixelWidth)/25.4); // in inch (25.4 mm per inch)
   
         // equation for accurate distance to hub
         // Get error values from various distances and use https://www.dcode.fr/function-equation-finder to find an equation
@@ -320,15 +312,18 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private double findFocalLength(){
         
         if (focalLength == 0){
-            double fieldOfView = 68.5;
+            // Adjust field of view for the camera type - this is for Microsoft Lifecam HD-3000
+            double fieldOfView = Constants.CAMERA_FOV; //Source: https://dl2jx7zfbtwvr.cloudfront.net/specsheets/WEBC1010.pdf
             double radVal = Math.toRadians(fieldOfView);
-            double arcTanVal = 240 / 320;
+            double arcTanVal = Constants.FRAME_HEIGHT / Constants.FRAME_WIDTH;
             double cosVal = Math.cos(arcTanVal);
             double tanVal = Math.tan(radVal * cosVal);
             double angrad = Math.atan(tanVal);
             double horizontalFieldOfView = Math.toDegrees(angrad);
             // H_FOV = np.degrees(np.arctan(np.tan(np.radians(D_FOV)*np.cos(np.arctan(height/width)))))
-            focalLength = 320/ (2*Math.tan(Math.toRadians(horizontalFieldOfView/2)));
+
+            // focal Length f = A / tan(a) where A = frame width / 2 and a = HFOV / 2 in radians
+            focalLength = Constants.FRAME_WIDTH/(2*Math.tan(Math.toRadians(horizontalFieldOfView/2)));
         }
 
         return focalLength;
@@ -351,7 +346,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                 rect = rects[i];
 
         }
-
 
         return rect;
     }
@@ -378,16 +372,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     // Calculate the crosshair position
     public Point findCrosshair(Point[] pts, Point crosshair) {
-        // i is starting point for line, j is next point
-        //int j;
         crosshair = new Point((pts[0].x + pts[2].x) / 2, (pts[0].y + pts[2].y) / 2);
-        /*
-        for (int i = 0; i < 4; i++) {
-            j = (i + 1) % 4;
-            if (crosshair == null || (pts[i].y + pts[j].y) / 2 < crosshair.y)
-                crosshair = new Point((pts[i].x + pts[j].x) / 2, (pts[i].y + pts[j].y) / 2);
-        }
-        */
         return crosshair;
     }
 
@@ -409,11 +394,6 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         double angle = pixelDistance * Constants.HOR_DEGREES_PER_PIXEL;
         return angle;
     }
-
-    // Getter for angle
-    //public double getAngle() { 
-        //return angle;
-    //}
 
     public Thread getVisionThread() {
         return visionThread;
