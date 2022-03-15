@@ -124,10 +124,14 @@ public class RobotContainer {
      // Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
 
       // buttons for the drive subsystem
-      Buttons.primaryXButton.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
-      Buttons.primaryBButton.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
-      Buttons.primaryLB.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem));
-      Buttons.primaryRB.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
+      Buttons.primaryLB.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
+      Buttons.primaryRB.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
+
+      //Buttons.primaryAButton.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem)); MIGHT NEED BUT DON'T GOT BUTTONS
+      //Buttons.primaryAButton.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
+
+      // buttons for vision
+      Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
 
       // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }

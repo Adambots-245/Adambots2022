@@ -53,15 +53,9 @@ public class AllignToHubCommand extends CommandBase {
   public void execute() {
           hubAngleEntry = table.getEntry("hubAngle");
           targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);  
-          // SmartDashboard.putNumber("hubAutonAngle", targetAngle);
           
           double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
-          // SmartDashboard.putNumber("turnAngle", turnAngle);
-          
           driveTrain.arcadeDrive(Constants.HUB_TURN_SPEED, turnSpeed);
-          // SmartDashboard.putNumber("gyroValue", gyroPIDSubsystem.getMeasurement());
-          
-         // driveTrain.arcadeDrive(0, 0.25);
           
           if (targetAngle < Constants.ANGLE_RANGE && targetAngle > -(Constants.ANGLE_RANGE)) {
             angleBool = true;
