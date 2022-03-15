@@ -29,7 +29,7 @@ public class Position1Auton5Ball extends SequentialCommandGroup{
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Position1Auton5Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem, GyroPIDSubsystem gyro) { 
+    public Position1Auton5Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
             //fire first ball
             new CatapultFireCommand(catapultSubsystem),

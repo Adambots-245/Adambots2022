@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import java.security.PublicKey;
 import java.sql.Driver;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -74,8 +75,17 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(ControlMode.PercentOutput, Constants.STOP_MOTOR_SPEED);
   }
 
+  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    /*
+    if (sensor == true){ 
+        stop();
+    } else {
+      intake();
+    }
+    */
   }
 }

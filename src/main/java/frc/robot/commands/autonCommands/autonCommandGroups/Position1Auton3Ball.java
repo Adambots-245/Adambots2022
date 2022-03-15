@@ -33,17 +33,12 @@ public class Position1Auton3Ball extends SequentialCommandGroup{
 
     public Position1Auton3Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
-          //shoot the first ball
-            new CatapultFireCommand(catapultSubsystem),
-
-            // new ParallelDeadlineGroup(
-            //     new WaitCommand(0.5),
-            //     new StartIntakeCommand(intakeSubsystem, () -> -1)
-            // ),      
+            new CatapultFireCommand(catapultSubsystem), //shoot first ball
+     
             new WaitCommand(0.5),
-            new StartIntakeCommand(intakeSubsystem, () -> -1),
+            new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
             //suck the 2nd ball
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 42, -0.75),
+            new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 42, -0.75),
             
             //fire 2nd ball
             new WaitCommand(2),

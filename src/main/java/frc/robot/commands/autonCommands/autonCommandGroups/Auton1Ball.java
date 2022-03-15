@@ -30,10 +30,9 @@ public class Auton1Ball extends SequentialCommandGroup{
 
     public Auton1Ball(CatapultSubsystem catapultSubsystem, DriveTrainSubsystem driveTrain) { 
         super(
-          //shoot ball
-          new CatapultFireCommand(catapultSubsystem),
+          new CatapultFireCommand(catapultSubsystem), //shoot ball
           new WaitCommand(1),
-          new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 20, -0.75)
+          new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 20, -0.75) // leave tarmac for points
         );  
     }
 }

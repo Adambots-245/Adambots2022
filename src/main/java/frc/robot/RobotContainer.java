@@ -25,6 +25,8 @@ import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton5Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Position2Auton4Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
@@ -139,7 +141,11 @@ public class RobotContainer {
 
   private void dash(){
     autoChooser.setDefaultOption("None", null);
+    autoChooser.addOption("Auton1Ball", new Auton1Ball(catapultSubsystem, driveTrainSubsystem));
     autoChooser.addOption("Auton2Ball", new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("Position1Auton3Ball", new Position1Auton3Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("Position1Auton5Ball", new Position1Auton5Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("Position2Auton4Ball", new Position2Auton4Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
 
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    
@@ -181,11 +187,9 @@ public class RobotContainer {
     // else
       // Log.info("Chosen Auton Command: None");
       
-    //return autoChooser.getSelected();
-
     return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
     // System.out.println(autoChooser.getSelected().toString());
-    // return autoChooser.getSelected();
+    //return autoChooser.getSelected();
 
     // return new LowerIntakeArmCommand(intakeSubsystem)
     // .andThen(new WaitCommand(4))
