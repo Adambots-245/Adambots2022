@@ -23,10 +23,8 @@ import frc.robot.Gamepad.GamepadConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallDefault;
-import frc.robot.commands.autonCommands.autonCommandGroups.BallPrimeAndFireCommandGroup;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Auton2BallDefault;
 import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
@@ -141,8 +139,7 @@ public class RobotContainer {
 
   private void dash(){
     autoChooser.setDefaultOption("None", null);
-    autoChooser.addOption("Auton2BallColor", new Auton2BallDefault(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
-    autoChooser.addOption("Auton2BallFlat", new Auton2BallDefault(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("Auton2Ball", new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
 
     // autoChooser.setDefaultOption("Yeet3PushNom3", new Yeet3PushNom3(driveTrainSubsystem, intakeSubsystem, turretSubsystem, blasterSubsystem, RobotMap.LidarSensor, conveyorSubsystem));
    
@@ -186,7 +183,7 @@ public class RobotContainer {
       
     //return autoChooser.getSelected();
 
-    return new Auton2BallDefault(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+    return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
     // System.out.println(autoChooser.getSelected().toString());
     // return autoChooser.getSelected();
 

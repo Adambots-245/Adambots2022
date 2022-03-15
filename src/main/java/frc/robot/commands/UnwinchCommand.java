@@ -30,7 +30,6 @@ public class UnwinchCommand extends CommandBase {
   @Override
   public void initialize() {
     hangSubsystem.winchUp(); //Pulls Down
-    hangSubsystem.setSuppressClamp(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +41,6 @@ public class UnwinchCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     hangSubsystem.winchOff();
-    hangSubsystem.setSuppressClamp(true);
   }
 
   // Returns true when the command should end.

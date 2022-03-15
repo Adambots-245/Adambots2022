@@ -1,51 +1,37 @@
 // auton
 package frc.robot.commands.autonCommands.autonCommandGroups;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.sensors.Gyro;
 import frc.robot.subsystems.CatapultSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.GyroPIDSubsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
-import frc.robot.sensors.Lidar;
-import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utils.Utils;
-import edu.wpi.first.wpilibj.DriverStation;
 
 
-public class Auton2BallFlat extends SequentialCommandGroup{
+public class Auton2Ball extends SequentialCommandGroup{
 
     // In this class, the robot will intake and shoot 2 balls, without using the ball detection grip file or AI.
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Auton2BallFlat(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
+    public Auton2Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
-            // shoot first ball
             new CatapultFireCommand(catapultSubsystem),
-            new WaitCommand(0.5),
-            //suck second ball
 
-            // new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
-            
-            // new ParallelDeadlineGroup(
-            //     new WaitCommand(0.5),
-            //     new StartIntakeCommand(intakeSubsystem, () -> -1)
-            // ),       
+            //suck second ball
+            new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
+   
                 // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 38, -0.75),
-                new BandMoveCommand(catapultSubsystem, 4.3)
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 34, -0.75),
+                new BandMoveCommand(catapultSubsystem, 3.1) //Tension for second ball shot
             ),
                 
             /*
@@ -56,10 +42,10 @@ public class Auton2BallFlat extends SequentialCommandGroup{
             ),
             new AllignToHubCommand(driveTrain),
             */
-            new WaitCommand(5),
+            new WaitCommand(4), //Waiting for intake to suck ball into catapult
+            new StopIntakeOuttakeCommand(intakeSubsystem), //Stopping intake after ball is in the catapult
             new CatapultFireCommand(catapultSubsystem),
-            new StopIntakeOuttakeCommand(intakeSubsystem),
-            new BandMoveCommand(catapultSubsystem, 4.4)
+            new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION)
         );  
     }
 
