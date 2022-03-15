@@ -32,7 +32,6 @@ public class HangSubsystem extends SubsystemBase {
     private PhotoEye rungArmAdvancedSwitch;
     private PhotoEye rungArmRetractedSwitch;
     private PhotoEye rungArmMidSwitch;
-    private Boolean suppressClamp;
     private double motorSpeed = 0;
 
     public HangSubsystem(BaseMotorController hangMotor, BaseMotorController winchMotor1, BaseMotorController winchMotor2, 
@@ -66,7 +65,6 @@ public class HangSubsystem extends SubsystemBase {
     private void initialize () {
         winchMotor1.setNeutralMode(NeutralMode.Brake);
         winchMotor2.setNeutralMode(NeutralMode.Brake);
-        suppressClamp = false;
         motorSpeed = 0;
         hangIsOut = false;
     }
@@ -84,10 +82,6 @@ public class HangSubsystem extends SubsystemBase {
 
     //     // System.out.println(overrideButton.get());
     // }
-
-    public void setSuppressClamp (Boolean state) {
-        suppressClamp = state;
-    }
 
     public void winchDown() { //Goes Up
         Log.infoF("Winch going up - Speed: %f", Constants.WINCH_SPEED);
@@ -173,11 +167,10 @@ public class HangSubsystem extends SubsystemBase {
 
         //clamp if the rung is in place on both sides 
         Boolean clampedDown = (rightRungSwitch.get() && leftRungSwitch.get());
-        // if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
-        //     new ClampRungCommand(this);
-        //     // clampedDown = true;
-        //     System.out.println("Clamping");
-        // }
+        if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
+            grabRung();
+            System.out.println("Clamping");
+        }
 
         winchMotor2.set(ControlMode.PercentOutput, motorSpeed);
         winchMotor1.set(ControlMode.PercentOutput, motorSpeed);
