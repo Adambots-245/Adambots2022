@@ -56,8 +56,7 @@ public class RobotContainer {
                                                                             RobotMap.bandHomeSwitch,
                                                                             RobotMap.BandMotor, 
                                                                             RobotMap.CatapultStop);
-  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.HangMotor, 
-                                                                RobotMap.winchMotor1, 
+  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.winchMotor1, 
                                                                 RobotMap.winchMotor2, 
                                                                 RobotMap.leftRungSwitch, 
                                                                 RobotMap.rightRungSwitch, 
