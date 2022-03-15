@@ -16,8 +16,8 @@ public class CatapultBackdriveCommand extends CommandBase {
    */
 
   private final CatapultSubsystem catapultSubsystem;
-  private boolean prevSwitchState = false;
-  private boolean finished = false;
+  private boolean prevSwitchState;
+  private boolean finished;
 
   public CatapultBackdriveCommand(CatapultSubsystem catapultSubsystem) {
     this.catapultSubsystem = catapultSubsystem;
@@ -37,7 +37,7 @@ public class CatapultBackdriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    finished = !catapultSubsystem.getCatapultSwitch() && prevSwitchState;
+    finished = !catapultSubsystem.getCatapultSwitch() && prevSwitchState; //Stop if switch goes from high to low (aka we fired)
 
     prevSwitchState = catapultSubsystem.getCatapultSwitch();
   }
@@ -45,7 +45,7 @@ public class CatapultBackdriveCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    catapultSubsystem.runCatapult(0);
+    catapultSubsystem.runCatapult(0); //Stop once catapult has released
   }
 
   // Returns true when the command should end.
