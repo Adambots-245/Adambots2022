@@ -26,10 +26,14 @@ public class CatapultSubsystem extends SubsystemBase {
   private BaseMotorController bandMotor;
   private DigitalInput chooChooLimitSwitch;
   private DigitalInput bandHomeLimitSwitch;
+  private DigitalInput chooChooOpticalSensor;
   private Solenoid catapultStop;
 
   private Boolean ChooChooLimitSwitchState = false;
   private Boolean prevChooChooLimitSwitchState = false;
+
+  private Boolean chooChooOpticalSensorState = false;
+
   private Boolean encoderMode = false;
 
   private double bandTarget = 0;
@@ -42,7 +46,8 @@ public class CatapultSubsystem extends SubsystemBase {
 
     this.catapultMotor = catapultMotor;
     this.bandMotor = bandMotor;
-    this.chooChooLimitSwitch = chooChooLimitSwitch;
+    //this.chooChooLimitSwitch = chooChooLimitSwitch;
+    this.chooChooOpticalSensor = chooChooLimitSwitch;
     this.bandHomeLimitSwitch = bandHomeLimitSwitch;
     this.catapultStop = catapultStop;
 
@@ -78,10 +83,12 @@ public class CatapultSubsystem extends SubsystemBase {
 
   public boolean getBandSwitch () {
     return bandHomeLimitSwitch.get();
+    
   }
 
   public boolean getCatapultSwitch () {
-    return ChooChooLimitSwitchState;
+    // return ChooChooLimitSwitchState;
+    return chooChooOpticalSensorState;
   }
 
   public void bandMotor() {
@@ -112,13 +119,15 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void accumulateLogic () {
-    if (chooChooLimitSwitch.get()) {
+    // if (chooChooLimitSwitch.get()) {
+    if (chooChooOpticalSensor.get()) {
       accumulate = Math.min(accumulate+1, 5);
     }
     else {
       accumulate = Math.max(accumulate-1, -5);
     }
-    ChooChooLimitSwitchState = (accumulate >= 3);
+    // ChooChooLimitSwitchState = (accumulate >= 3);
+    chooChooOpticalSensorState = (accumulate >= 3);
   }
 
   @Override
@@ -126,10 +135,12 @@ public class CatapultSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Band Encoder In", bandMotor.getSelectedSensorPosition()/4096/20);
     SmartDashboard.putNumber("Error", error);
 
-    accumulateLogic();
+    //accumulateLogic();
+    chooChooOpticalSensorState = chooChooOpticalSensor.get();
     if (encoderMode) {bandMotor();}
 
-    if (ChooChooLimitSwitchState == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
+    // if (ChooChooLimitSwitchState == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
+    if (chooChooOpticalSensorState == true) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
 
@@ -140,7 +151,7 @@ public class CatapultSubsystem extends SubsystemBase {
     }
     bandMotor.set(ControlMode.PercentOutput, bandSpeed);
 
-    prevChooChooLimitSwitchState = ChooChooLimitSwitchState;
+    // prevChooChooLimitSwitchState = ChooChooLimitSwitchState;
 
     //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
     // System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
