@@ -18,7 +18,7 @@ import frc.robot.subsystems.GyroPIDSubsystem;
 /** Add your docs here. */
 public class AllignToHubCommand extends CommandBase {
   DriveTrainSubsystem driveTrain;
-  boolean angleBool = false;
+  boolean atSetPoint = false;
   NetworkTable table;
   NetworkTableEntry hubAngleEntry;
   private GyroPIDSubsystem gyroPIDSubsystem;
@@ -41,27 +41,26 @@ public class AllignToHubCommand extends CommandBase {
   @Override
   public void initialize() {
     gyro.reset();
-    angleBool = false;
+    atSetPoint = false;
     driveTrain.resetEncoders();
     //Gets the nework table
     NetworkTableInstance instance = NetworkTableInstance.getDefault();
-    table = instance.getTable("Vision");
+    table = instance.getTable(Constants.VISION_TABLE_NAME);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-          hubAngleEntry = table.getEntry("hubAngle");
-          targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);  
-          
-          double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
-          driveTrain.arcadeDrive(Constants.HUB_TURN_SPEED, turnSpeed);
-          
-          if (targetAngle < Constants.ANGLE_RANGE && targetAngle > -(Constants.ANGLE_RANGE)) {
-            angleBool = true;
-            }
-        
-      }
+    hubAngleEntry = table.getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
+    targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);  
+    
+    double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
+    driveTrain.arcadeDrive(Constants.HUB_TURN_SPEED, turnSpeed);
+    
+    if (targetAngle < Constants.ANGLE_RANGE && targetAngle > -(Constants.ANGLE_RANGE)) {
+      atSetPoint = true;
+    }
+  }
       
   // Called once the command ends or is interrupted.
   @Override
@@ -73,6 +72,6 @@ public class AllignToHubCommand extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    return angleBool;
+    return atSetPoint;
   }
 }

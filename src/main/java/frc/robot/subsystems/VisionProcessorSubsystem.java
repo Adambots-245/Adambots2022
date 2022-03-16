@@ -309,13 +309,13 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         return finalDistance;
     }
 
-    private double findFocalLength(){
+    public static double findFocalLength(){
         
         if (focalLength == 0){
             // Adjust field of view for the camera type - this is for Microsoft Lifecam HD-3000
-            double fieldOfView = Constants.CAMERA_FOV; //Source: https://dl2jx7zfbtwvr.cloudfront.net/specsheets/WEBC1010.pdf
+            double fieldOfView = Constants.CAMERA_DIAGONAL_FOV; //Source: https://dl2jx7zfbtwvr.cloudfront.net/specsheets/WEBC1010.pdf
             double radVal = Math.toRadians(fieldOfView);
-            double arcTanVal = Constants.FRAME_HEIGHT / Constants.FRAME_WIDTH;
+            double arcTanVal = Math.atan((double) Constants.FRAME_HEIGHT / (double) Constants.FRAME_WIDTH);
             double cosVal = Math.cos(arcTanVal);
             double tanVal = Math.tan(radVal * cosVal);
             double angrad = Math.atan(tanVal);
