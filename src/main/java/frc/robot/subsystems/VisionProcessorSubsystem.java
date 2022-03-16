@@ -23,7 +23,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     /**
      *
      */
-    private static final int SAMPLE_SIZE = 5;
+    private static final int SAMPLE_SIZE = 15;
     private static UsbCamera ballDetectionCamera;
     private static UsbCamera hubDetectionCamera;
     private static CvSource processedOutputStreamHub;
@@ -198,8 +198,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
                 SmartDashboard.putNumber(Constants.HUB_ANGLE_ENTRY_NAME, hubAngle);
                 
                 int location = 0;
-                Imgproc.putText(hubVideoFrame, String.format("Angle: %.2f Deg", hubAngle), new Point(0, location = location + 30), Imgproc.FONT_HERSHEY_SIMPLEX, 1, new Scalar(0, 0, 255), 2); 
-                Imgproc.putText(hubVideoFrame, String.format("Dist: %.2f\"", finalDistance), new Point(hubVideoFrame.width()-225, 25), Imgproc.FONT_HERSHEY_SIMPLEX, 1, new Scalar(0, 0, 255), 2); 
+                Imgproc.putText(hubVideoFrame, String.format("Angle: %.2f Deg", hubAngle), new Point(0, location = location + 30), Imgproc.FONT_HERSHEY_SIMPLEX, 0.5, new Scalar(0, 255, 0), 2); 
+                Imgproc.putText(hubVideoFrame, String.format("Dist: %.2f\"", finalDistance), new Point(hubVideoFrame.width()-125, 25), Imgproc.FONT_HERSHEY_SIMPLEX, 0.5, new Scalar(0, 255, 0), 2); 
+            }
+            else {
+                Imgproc.putText(hubVideoFrame, "Target Not Detected", new Point(0, 30), Imgproc.FONT_HERSHEY_SIMPLEX, 1, new Scalar(0, 0, 255), 2); 
             }
             
             //findBoundingBoxesBall(redContours, redMat);
@@ -239,6 +242,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             rects[i] = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(i).toArray()));
 
         Point framePts[] = null;
+
+        // System.out.println("Contours: " + contours.size());  
 
         if (contours.size() != 0){
             double minX = rects[0].boundingRect().x;

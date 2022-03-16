@@ -113,7 +113,7 @@ public final class Constants {
     public static final String VISION_TABLE_NAME = "Vision";
     public static final String HUB_ANGLE_ENTRY_NAME = "hubAngle";
     public static final String HUB_DISTANCE_ENTRY_NAME = "hubDistance";
-    public static final int HUB_CAMERA_EXPOSURE = 5;
+    public static final int HUB_CAMERA_EXPOSURE = 22;
     public static final double CAMERA_DIAGONAL_FOV = 68.5;
     
 
