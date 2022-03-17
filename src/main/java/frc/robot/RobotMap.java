@@ -61,7 +61,7 @@ public class RobotMap {
     public static final DoubleSolenoid hangClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);
     public static final DoubleSolenoid hangAngle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.HANG_ARM_OUT_SOL_PORT, Constants.HANG_ARM_IN_SOL_PORT);
 
-    public static final DigitalInput chooChooOpticalSensor = new DigitalInput(Constants.CHOO_CHOO_OPTICAL_SENSOR_PORT);
+    public static final DigitalInput chooChooOpticalSensor = new DigitalInput(Constants.CHOO_CHOO_DIO);
     public static final DigitalInput bandHomeSwitch = new DigitalInput(Constants.BAND_HOME_LIMIT_SWITCH_PORT);
     public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
     public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
@@ -80,7 +80,7 @@ public class RobotMap {
 	// public static final DigitalInput LeftLimitSwitch = new DigitalInput(Constants.TURRET_LEFT_DIO);
 	// public static final DigitalInput RightLimitSwitch = new DigitalInput(Constants.TURRET_RIGHT_DIO);
 
-	public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
+	//public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
     public static final Solenoid YellowLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.YELLOW_LEDS_SOL_PORT);

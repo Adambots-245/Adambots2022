@@ -53,6 +53,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
     private MedianFilter hubMinYFilter;
     private MedianFilter hubMaxXFilter;
     private MedianFilter hubMinXFilter;
+    private MedianFilter hubDistanceFilter;
     // private MedianFilter ballMaxYFilter;
     // private MedianFilter ballMinYFilter;
     // private MedianFilter ballMaxXFilter;
@@ -76,6 +77,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         hubMinYFilter = new MedianFilter(SAMPLE_SIZE);
         hubMaxXFilter = new MedianFilter(SAMPLE_SIZE);
         hubMinXFilter = new MedianFilter(SAMPLE_SIZE);
+        hubDistanceFilter = new MedianFilter(SAMPLE_SIZE);
  
         // ballMaxYFilter = new MedianFilter(5);
         // ballMinYFilter = new MedianFilter(5);
@@ -176,7 +178,11 @@ public class VisionProcessorSubsystem extends SubsystemBase {
             Point[] hubBounds = findBoundingBoxesHub(hubVideoFrame, hubGrip.filterContoursOutput());
 
             if (hubBounds != null){
-                double finalDistance = findDistance(hubBounds[0].x, hubBounds[1].x);
+                RotatedRect rect = findMidRect(hubGrip.filterContoursOutput());
+                // double finalDistance = findDistance(hubBounds[0].x, hubBounds[1].x);
+                double width = hubDistanceFilter.calculate(Double.valueOf(rect.boundingRect().width));
+                double finalDistance = findDistance((int) width);
+                System.out.println("Mid Rect Width: " + width);
                   
                 NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
                 NetworkTableEntry teDist = ntinst.getTable(Constants.VISION_TABLE_NAME).getEntry(Constants.HUB_DISTANCE_ENTRY_NAME);
@@ -287,9 +293,14 @@ public class VisionProcessorSubsystem extends SubsystemBase {
 
     private double findDistance(double fMinX, double fMaxX) {
         int pixelWidth = (int) (fMaxX - fMinX);
+
+        return findDistance(pixelWidth);
+    }
+
+    private double findDistance(int pixelWidth) {
         int calculatedDistance = 0; 
 
-        double width = 1016; // width of the hub in mm
+        double width = 125; // width of one strip in mm
         
         double focalLength = findFocalLength();
         // System.out.println("Focal Length: " + focalLength);
@@ -310,7 +321,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         double parabolaError = a * (calculatedDistance * calculatedDistance) + (b * calculatedDistance) + c;
         
   
-        double finalDistance = calculatedDistance + parabolaError;
+        double finalDistance = calculatedDistance; // + parabolaError;
         return finalDistance;
     }
 
@@ -343,7 +354,8 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         return rects;
     }
 
-    public RotatedRect findLargestRect(RotatedRect[] rects) {
+    public RotatedRect findLargestRect(ArrayList<MatOfPoint> contours) {
+        RotatedRect[] rects = findBoundingBoxes(contours);
         RotatedRect rect = rects[0];
        
         for (int i = 0; i < rects.length; i++) {
@@ -353,6 +365,15 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         }
 
         return rect;
+    }
+
+    public RotatedRect findMidRect(ArrayList<MatOfPoint> contours) {
+        RotatedRect[] rects = findBoundingBoxes(contours);
+
+        if (rects.length >= 2)
+            return rects[1];
+        else
+            return rects[0];
     }
 
     public void draw(RotatedRect rect, Mat mat) {
