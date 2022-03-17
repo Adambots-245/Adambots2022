@@ -137,6 +137,7 @@ public class CatapultSubsystem extends SubsystemBase {
 
     //accumulateLogic();
     chooChooOpticalSensorState = chooChooOpticalSensor.get();
+    SmartDashboard.putBoolean("OpticalSensot", chooChooOpticalSensor.get());
     if (encoderMode) {bandMotor();}
 
     // if (ChooChooLimitSwitchState == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
