@@ -43,6 +43,7 @@ public final class Constants {
     public static final int HANG_WINCH_2_MOTOR_PORT = 16;
     public static final int CLIMBING_RAISE_ELEVATOR_MOTOR_PORT = 23;
     public static final int CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT = 24;
+    public static final int CHOO_CHOO_OPTICAL_SENSOR_PORT = 0; // NOT CORRECT
 
     public static final int INTAKE_MOTOR_PORT = 18;
 

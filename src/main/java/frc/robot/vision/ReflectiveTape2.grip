@@ -1,38 +1,8 @@
 <grip:Pipeline>
   <sources>
-    <grip:MultiImageFile>
-      <property name="path[2]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad7ft10in.png"/>
-      <property name="path[5]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad17ft2in.png"/>
-      <property name="path[8]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad8ft10in.png"/>
-      <property name="path[20]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal10ft6in.png"/>
-      <property name="path[23]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal16ft6in.png"/>
-      <property name="path[12]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter2ft10in.png"/>
-      <property name="path[15]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter5ft10in.png"/>
-      <property name="index" value="8"/>
-      <property name="path[18]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal5ft6in.png"/>
-      <property name="path[0]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Chute8ft6in.png"/>
-      <property name="path[3]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad10ft10in.png"/>
-      <property name="path[6]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad5ft4in.png"/>
-      <property name="path[9]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad10ft10in.png"/>
-      <property name="path[21]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal12ft6in.png"/>
-      <property name="path[24]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal18ft6in.png"/>
-      <property name="path[10]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad12ft10in.png"/>
-      <property name="path[13]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter3ft10in.png"/>
-      <property name="path[16]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter6ft10in.png"/>
-      <property name="path[19]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal8ft6in.png"/>
-      <property name="numImages" value="26"/>
-      <property name="path[1]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad6ft0in.png"/>
-      <property name="path[4]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\FarLaunchpad13ft10in.png"/>
-      <property name="path[7]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad6ft10in.png"/>
-      <property name="path[22]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal14ft6in.png"/>
-      <property name="path[25]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\Terminal22ft6in.png"/>
-      <property name="path[11]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\NearLaunchpad13ft6in.png"/>
-      <property name="path[14]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter4ft10in.png"/>
-      <property name="path[17]" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter7ft10in.png"/>
-    </grip:MultiImageFile>
-    <grip:ImageFile>
-      <property name="path" value="D:\Projects\FRC\Pi-2022\2022VisionSampleImages\TarmacCenter2ft10in.png"/>
-    </grip:ImageFile>
+    <grip:Camera>
+      <property name="deviceNumber" value="0"/>
+    </grip:Camera>
   </sources>
   <steps>
     <grip:Step name="HSV Threshold">
@@ -144,24 +114,20 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output step="2" socket="0" previewed="false"/>
-      <grip:Input step="3" socket="0"/>
+      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Input step="2" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output step="0" socket="0" previewed="false"/>
-      <grip:Input step="1" socket="0"/>
+      <grip:Output step="2" socket="0" previewed="false"/>
+      <grip:Input step="3" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="3" socket="0" previewed="true"/>
       <grip:Input step="4" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="false"/>
-      <grip:Input step="2" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="true"/>
-      <grip:Input step="0" socket="0"/>
+      <grip:Output step="0" socket="0" previewed="false"/>
+      <grip:Input step="1" socket="0"/>
     </grip:Connection>
   </connections>
   <settings>
@@ -177,7 +143,7 @@
     <language>Java</language>
     <className>HubGripPipelineSec</className>
     <implementWpilibPipeline>true</implementWpilibPipeline>
-    <saveDir>D:\Projects\FRC\Adambots2022\src\main\java\frc\robot\vision</saveDir>
+    <saveDir>C:\Users\msaar\GRIP</saveDir>
     <packageName>frc.robot.vision</packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>
