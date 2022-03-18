@@ -128,7 +128,7 @@ public class RobotContainer {
       Buttons.primaryLB.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
       Buttons.primaryRB.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
 
-      Buttons.secondaryDPadN.whileHeld(new SwingDampenCommand(driveTrainSubsystem, pitchPIDSubsystem));
+      // Buttons.secondaryDPadN.whileHeld(new SwingDampenCommand(driveTrainSubsystem, pitchPIDSubsystem));
 
       //Buttons.primaryAButton.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem)); MIGHT NEED BUT DON'T GOT BUTTONS
       //Buttons.primaryAButton.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));

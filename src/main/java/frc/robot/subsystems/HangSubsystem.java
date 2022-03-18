@@ -60,8 +60,6 @@ public class HangSubsystem extends SubsystemBase {
     private void initialize () {
         winchMotor1.setNeutralMode(NeutralMode.Brake);
         winchMotor2.setNeutralMode(NeutralMode.Brake);
-        winchMotor1.setInverted(true); //Invert both to make up positive and logic eaier to understand
-        winchMotor2.setInverted(true);
         winchSpeed = 0;
         hangIsOut = false;
     }
@@ -122,24 +120,26 @@ public class HangSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Mid Switch", rungArmMidSwitch.isDetecting());
         SmartDashboard.putBoolean("Adv Switch", rungArmAdvancedSwitch.isDetecting());
         
-        if(winchSpeed < 0 && rungArmRetractedSwitch.isDetecting() == true){
-            Log.info("Going down and arm retracted. Stopping Winch Motors");
-            winchOff();
-        }
-        if(winchSpeed > 0 && hangIsOut == false && rungArmMidSwitch.isDetecting() == true){
-            Log.info("Going up, hang In and arm at mid point. Stopping Winch Motors");
-            winchOff();
-        }
-        if(winchSpeed > 0 && rungArmAdvancedSwitch.isDetecting() == true){
-            Log.info("Going up, arm at advanced point. Stopping Winch Motors");
-            winchOff();
-        }
+        // if(winchSpeed < 0 && rungArmRetractedSwitch.isDetecting() == true){
+        //     Log.info("Going down and arm retracted. Stopping Winch Motors");
+        //     winchOff();
+        // }
+        // if(winchSpeed > 0 && hangIsOut == false && rungArmMidSwitch.isDetecting() == true){
+        //     Log.info("Going up, hang In and arm at mid point. Stopping Winch Motors");
+        //     winchOff();
+        // }
+        // if(winchSpeed > 0 && rungArmAdvancedSwitch.isDetecting() == true){
+        //     Log.info("Going up, arm at advanced point. Stopping Winch Motors");
+        //     winchOff();
+        // }
 
         //clamp if the rung is in place on both sides 
         Boolean clampedDown = (rightRungSwitch.get() || leftRungSwitch.get());
         if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
-            grabRung();
-            Log.info("Clamping");
+    //         grabRung();
+    //         Log.info("Clamping");
+    // System.out.println("Clamping?");
+
         }
 
         winchMotor2.set(ControlMode.PercentOutput, winchSpeed);
