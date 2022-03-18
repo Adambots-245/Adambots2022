@@ -77,7 +77,7 @@ public class VisionProcessorSubsystem extends SubsystemBase {
         hubMinYFilter = new MedianFilter(SAMPLE_SIZE);
         hubMaxXFilter = new MedianFilter(SAMPLE_SIZE);
         hubMinXFilter = new MedianFilter(SAMPLE_SIZE);
-        hubDistanceFilter = new MedianFilter(SAMPLE_SIZE);
+        hubDistanceFilter = new MedianFilter(SAMPLE_SIZE + 15);
  
         // ballMaxYFilter = new MedianFilter(5);
         // ballMinYFilter = new MedianFilter(5);
