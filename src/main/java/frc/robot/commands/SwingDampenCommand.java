@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.PitchPIDSubsystem;
+import frc.robot.utils.Log;
 
 public class SwingDampenCommand extends CommandBase {
   /**
@@ -44,6 +45,9 @@ public class SwingDampenCommand extends CommandBase {
       driveTrainSubsystem.arcadeDrive(-1, 0);
     else
       driveTrainSubsystem.arcadeDrive(1, 0);
+
+    Log.info("Running Gyro");
+    System.out.println("Gyro Running");
   }
 
   // Called once the command ends or is interrupted.

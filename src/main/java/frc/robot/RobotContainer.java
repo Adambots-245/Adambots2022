@@ -88,7 +88,7 @@ public class RobotContainer {
     dash();
 
     SmartDashboard.putData("Test Dampening", new SwingDampenCommand(driveTrainSubsystem, pitchPIDSubsystem));
-    SmartDashboard.putData("Test Dampening", new PitchPIDResetMax(pitchPIDSubsystem));
+    SmartDashboard.putData("Reset Accel Maxes", new PitchPIDResetMax(pitchPIDSubsystem));
   }
 
   /**
