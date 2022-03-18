@@ -8,38 +8,46 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
-import frc.robot.sensors.Gyro;
 
 public class PitchPIDSubsystem extends PIDSubsystem {
   /**
    * Creates a new GyroPIDSubsystem.
    */
+  private Accelerometer accelerometer;
+
   private static double kP = 10;
   private static double kI = 0;
   private static double kD = 0;
+
+  private double maxXAccel = 0;
+  private double maxYAccel = 0;
+  private double maxZAccel = 0;
   
-  private Gyro gyro;
   private double output;
 
-  public PitchPIDSubsystem() {
+  public PitchPIDSubsystem(Accelerometer accelerometer) {
     super(new PIDController(kP, kI, kD));
   
+    this.accelerometer = accelerometer;
+
     getController().setTolerance(Constants.GYRO_TOLERANCE);
     setSetpoint(0);
-  
-    gyro = Gyro.getInstance();
 
     enable();
   }
 
-  public Gyro getGyro(){
-    return gyro;
-  }
-
   public double getOutput(){
     return output;
+  }
+
+  public void resetMax(){
+    maxXAccel = 0;
+    maxYAccel = 0;
+    maxZAccel = 0;
   }
 
   @Override
@@ -51,7 +59,24 @@ public class PitchPIDSubsystem extends PIDSubsystem {
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    return gyro.getPitch();
+
+    double xAccel = accelerometer.getX();
+    double yAccel = accelerometer.getY();
+    double zAccel = accelerometer.getZ();
+
+    maxXAccel = Math.max(xAccel, maxXAccel);
+    maxYAccel = Math.max(yAccel, maxYAccel);
+    maxZAccel = Math.max(zAccel, maxZAccel);
+
+    SmartDashboard.putNumber("X Accel", xAccel);
+    SmartDashboard.putNumber("Y Accel", yAccel);
+    SmartDashboard.putNumber("Z Accel", zAccel);
+
+    SmartDashboard.putNumber("Max X Accel", maxXAccel);
+    SmartDashboard.putNumber("Max Y Accel", maxYAccel);
+    SmartDashboard.putNumber("Max Z Accel", maxZAccel);
+    
+    return zAccel;
   }
 
   public boolean atSetpoint() {

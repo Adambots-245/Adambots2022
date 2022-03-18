@@ -13,11 +13,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import frc.robot.sensors.ColorSensor;
 import frc.robot.sensors.Gyro;
 import frc.robot.sensors.Lidar;
@@ -40,22 +42,23 @@ public class RobotMap {
     // public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
     
     public static final Gyro GyroSensor = Gyro.getInstance();
+    public static final Accelerometer Accelerometer = new BuiltInAccelerometer();
+
     // public static final Lidar LidarSensor = Lidar.getInstance();
 
     public static final Solenoid GearShifter = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.HIGH_GEAR_SOL_PORT);
 	public static final WPI_TalonFX FrontRightMotor = new WPI_TalonFX(Constants.FR_TALON);
 	public static final WPI_TalonFX FrontLeftMotor = new WPI_TalonFX(Constants.FL_TALON);
+    public static final WPI_TalonFX BackRightMotor = new WPI_TalonFX(Constants.BR_TALON);
 	public static final WPI_TalonFX BackLeftMotor = new WPI_TalonFX(Constants.BL_TALON);
 	// public static final BaseMotorController PanelMotor = new WPI_TalonSRX(Constants.PANEL_MOTOR_PORT);;
 	public static final ColorSensor ColorSensor = new ColorSensor();
-    public static WPI_TalonFX BackRightMotor = new WPI_TalonFX(Constants.BR_TALON);
 
     // public static final WPI_VictorSPX ConveyorMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_MOTOR_PORT);
     // public static final WPI_VictorSPX AlignmentBeltMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_INDEXER_MOTOR_PORT);
 
     // public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
 
-    public static final WPI_VictorSPX HangMotor = new WPI_VictorSPX(Constants.CLIMBING_RAISE_ELEVATOR_MOTOR_PORT);
     public static final WPI_VictorSPX winchMotor1 = new WPI_VictorSPX(Constants.HANG_WINCH_1_MOTOR_PORT);
     public static final WPI_VictorSPX winchMotor2 = new WPI_VictorSPX(Constants.HANG_WINCH_2_MOTOR_PORT);
     public static final DoubleSolenoid hangClamp = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_HANG_CLAMP_SOL_PORT, Constants.LOWER_HANG_CLAMP_SOL_PORT);

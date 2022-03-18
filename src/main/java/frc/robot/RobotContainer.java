@@ -10,11 +10,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-// import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Gamepad.Buttons;
@@ -27,7 +23,6 @@ import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton5Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position2Auton4Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.*;
 //import frc.robot.utils.Log;
 import frc.robot.utils.Log;
@@ -44,6 +39,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // subsystems
+  private final PitchPIDSubsystem pitchPIDSubsystem = new PitchPIDSubsystem(RobotMap.Accelerometer);
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem(RobotMap.GyroSensor, 
                                                                                   RobotMap.GearShifter, 
                                                                                   RobotMap.FrontRightMotor, 
@@ -90,6 +86,9 @@ public class RobotContainer {
 
     // configure the dashboard
     dash();
+
+    SmartDashboard.putData("Test Dampening", new SwingDampenCommand(driveTrainSubsystem, pitchPIDSubsystem));
+    SmartDashboard.putData("Test Dampening", new PitchPIDResetMax(pitchPIDSubsystem));
   }
 
   /**
@@ -128,6 +127,8 @@ public class RobotContainer {
       // buttons for the drive subsystem
       Buttons.primaryLB.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
       Buttons.primaryRB.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
+
+      Buttons.secondaryDPadN.whileHeld(new SwingDampenCommand(driveTrainSubsystem, pitchPIDSubsystem));
 
       //Buttons.primaryAButton.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem)); MIGHT NEED BUT DON'T GOT BUTTONS
       //Buttons.primaryAButton.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));

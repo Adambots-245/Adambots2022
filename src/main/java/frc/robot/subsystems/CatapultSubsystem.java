@@ -32,6 +32,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private Boolean ChooChooLimitSwitchState = false;
   private Boolean prevChooChooLimitSwitchState = false;
 
+  private Boolean prevChooChooOpticalSensorState = false;
   private Boolean chooChooOpticalSensorState = false;
 
   private Boolean encoderMode = false;
@@ -120,14 +121,12 @@ public class CatapultSubsystem extends SubsystemBase {
 
   public void accumulateLogic () {
     // if (chooChooLimitSwitch.get()) {
-    if (chooChooOpticalSensor.get()) {
-      accumulate = Math.min(accumulate+1, 5);
-    }
-    else {
-      accumulate = Math.max(accumulate-1, -5);
-    }
+    //   accumulate = Math.min(accumulate+1, 5);
+    // }
+    // else {
+    //   accumulate = Math.max(accumulate-1, -5);
+    // }
     // ChooChooLimitSwitchState = (accumulate >= 3);
-    chooChooOpticalSensorState = (accumulate >= 3);
   }
 
   @Override
@@ -137,15 +136,15 @@ public class CatapultSubsystem extends SubsystemBase {
 
     //accumulateLogic();
     chooChooOpticalSensorState = chooChooOpticalSensor.get();
-    SmartDashboard.putBoolean("OpticalSensot", chooChooOpticalSensor.get());
+    SmartDashboard.putBoolean("OpticalSensor", chooChooOpticalSensor.get());
     if (encoderMode) {bandMotor();}
 
-    // if (ChooChooLimitSwitchState == true && prevChooChooLimitSwitchState == false) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
-    if (chooChooOpticalSensorState == true) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
+    // if (ChooChooLimitSwitchState == true && prevChooChooLimitSwitchState == false) {
+    if (chooChooOpticalSensorState == true && prevChooChooOpticalSensorState == false) { //Testing if Choo Choo sensor goes from low -> high and stopping the motor
       catapultMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    if (bandHomeLimitSwitch.get() == true && bandSpeed > 0) { //Testing if Choo Choo limit switch goes from low -> high and stopping the motor
+    if (bandHomeLimitSwitch.get() == true && bandSpeed > 0) { //Testing if band limit switch is pressed and moving downwards, and if so, stopping and zeroing the encoder
       bandMotor.setSelectedSensorPosition(0);
       bandSpeed = 0;
       encoderMode = true;
@@ -153,6 +152,7 @@ public class CatapultSubsystem extends SubsystemBase {
     bandMotor.set(ControlMode.PercentOutput, bandSpeed);
 
     // prevChooChooLimitSwitchState = ChooChooLimitSwitchState;
+    prevChooChooOpticalSensorState = chooChooOpticalSensorState;
 
     //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
     // System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
