@@ -41,7 +41,7 @@ public class Position1Auton3Ball extends SequentialCommandGroup{
             new WaitCommand(4), // wait for intake to suck ball
             new CatapultFireCommand(catapultSubsystem), //fire 2nd ball
 
-            new TurnToAngleCommand(driveTrain, 0.3, -58, true),
+            new TurnToAngleCommand(driveTrain, -58, true),
             new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 110, -1), //suck 3rd ball
             new TurnToHubCommand(driveTrain, 1), //allign to hub
             new AllignToHubCommand(driveTrain),

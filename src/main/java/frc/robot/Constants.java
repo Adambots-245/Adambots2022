@@ -116,7 +116,7 @@ public final class Constants {
     public static final int DRIVER_STATION_FPS = 6;
     public static final int PROCESSING_FPS = 30; // DON'T CHANGE
     public static final int ANGLE_NOT_DETECTED = 600;
-    public static final int ANGLE_RANGE = 2;
+    public static final int ANGLE_RANGE = 1;
     public static final double HUB_TURN_SPEED = 0.3;
     public static final String VISION_TABLE_NAME = "Vision";
     public static final String HUB_ANGLE_ENTRY_NAME = "hubAngle";

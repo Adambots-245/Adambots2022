@@ -39,7 +39,7 @@ public class Position1Auton5Ball extends SequentialCommandGroup{
                 new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 42, 0.75)
             ),
             //suck the 3rd ball
-            new TurnToAngleCommand(driveTrain, 0.5, -58, true),
+            new TurnToAngleCommand(driveTrain, -58, true),
             new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 110, 1),
             new ParallelRaceGroup(
                 new WaitCommand(6),
@@ -51,10 +51,10 @@ public class Position1Auton5Ball extends SequentialCommandGroup{
             new WaitCommand(3),
             new CatapultFireCommand(catapultSubsystem),
             //drive to fourth ball
-            new TurnToAngleCommand(driveTrain, 0.5, -50, true), //Wrong angle
+            new TurnToAngleCommand(driveTrain, -50, true), //Wrong angle
             new DriveForwardDistanceCommand(driveTrain, 120, 1),
             new WaitCommand(3),
-            new TurnToAngleCommand(driveTrain, 0.5, 160, true),
+            new TurnToAngleCommand(driveTrain, 160, true),
             new DriveForwardDistanceCommand(driveTrain, 80, 1),
             //fire fourth and fifth ball
             new CatapultFireCommand(catapultSubsystem),

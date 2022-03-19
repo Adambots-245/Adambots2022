@@ -10,6 +10,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,6 +46,11 @@ public class CatapultSubsystem extends SubsystemBase {
   private int accumulate = 0;
   private double bandSpeed = 0;
 
+  NetworkTable table;
+  NetworkTableEntry hubDistanceEntry;
+  double hubDistance;
+  double prevHubDistance;
+
   public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandHomeLimitSwitch, BaseMotorController bandMotor, Solenoid catapultStop) {
     super();
 
@@ -64,6 +73,9 @@ public class CatapultSubsystem extends SubsystemBase {
     bandMotor.setNeutralMode(NeutralMode.Brake);
     bandMotor.setSelectedSensorPosition(-Constants.HOME_TENSION*4096*20);
     encoderMode = false;
+
+    NetworkTableInstance instance = NetworkTableInstance.getDefault();
+    table = instance.getTable(Constants.VISION_TABLE_NAME);
   }
 
   public double getError () {
@@ -134,6 +146,9 @@ public class CatapultSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Band Encoder In", bandMotor.getSelectedSensorPosition()/4096/20);
     SmartDashboard.putNumber("Error", error);
 
+    hubDistanceEntry = table.getEntry(Constants.HUB_DISTANCE_ENTRY_NAME);
+    hubDistance = hubDistanceEntry.getDouble(600);
+
     //accumulateLogic();
     chooChooOpticalSensorState = chooChooOpticalSensor.get();
     SmartDashboard.putBoolean("OpticalSensor", chooChooOpticalSensor.get());
@@ -153,6 +168,7 @@ public class CatapultSubsystem extends SubsystemBase {
 
     // prevChooChooLimitSwitchState = ChooChooLimitSwitchState;
     prevChooChooOpticalSensorState = chooChooOpticalSensorState;
+    prevHubDistance = hubDistance;
 
     //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
     // System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
