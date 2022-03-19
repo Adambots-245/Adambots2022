@@ -7,6 +7,7 @@
 
 package frc.robot.commands.autonCommands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.sensors.Gyro;
@@ -73,7 +74,12 @@ public class TurnToAngleCommand extends CommandBase {
     SmartDashboard.putNumber("rightSpeed", driveTrain.getRightDriveEncoderVelocity());
 
     // driveTrain.arcadeDrive(speed, turnSpeed/Math.abs(turnSpeed));
-    turnSpeed = Math.max(turnSpeed, 0.35);
+    
+    // if (turnSpeed > 0) turnSpeed = Math.max(turnSpeed, 0.35);
+    // else turnSpeed = Math.min(turnSpeed, -0.35);
+
+    // turnSpeed = Math.max(turnSpeed, 0.35 * Integer.signum((int)turnSpeed));
+    // turnSpeed = MathUtil.clamp(turnSpeed, 0.35, 1)
     driveTrain.arcadeDrive(speed, turnSpeed);
     // driveTrain.driveDistance(distance);
   }

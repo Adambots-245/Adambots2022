@@ -31,6 +31,7 @@ public class ShiftLowGearCommand extends CommandBase {
   public void execute() {
     System.out.println("low gear");
     driveTrainSubsystem.shiftLowGear();
+    driveTrainSubsystem.setNormalSpeed();
   }
 
   // Called once the command ends or is interrupted.

@@ -70,12 +70,12 @@ public final class Constants {
     //public static final int CHOO_CHOO_DIO = 9;
     
     // Switches and Photo Eyes for Hang Subsystem
-    public static final int RIGHT_RUNG_CLAMPED_LIMIT_SWITCH_PORT = 1;
-    public static final int LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT = 0;
-    public static final int RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 5;
+    public static final int LEFT_RUNG_LIMIT_SWITCH_PORT = 0;
+    public static final int RIGHT_RUNG_LIMIT_SWITCH_PORT = 1;
     public static final int BAND_HOME_LIMIT_SWITCH_PORT = 6;
     public static final int BALL_DETECTOR_INTAKE_PORT = 7;
-    public static final int LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 4;
+    public static final int LEFT_CLAMP_LIMIT_SWITCH_PORT = 4;
+    public static final int RIGHT_CLAMP_LIMIT_SWITCH_PORT = 5;
     public static final int RUNG_ARM_ADVANCED_PHOTO_EYE_PORT = 2;
     public static final int RUNG_ARM_RETRACTED_PHOTO_EYE_PORT = 3;
     public static final int RUNG_ARM_MID_PHOTO_EYE_PORT = 8;
@@ -87,7 +87,7 @@ public final class Constants {
     public static final double NORMAL_SPEED_MODIFIER = 1;
     public static final double OUTTAKE_SPEED = 1;
     public static final double INTAKE_SPEED = 1;
-    public static final double LOW_SPEED_MODIFIER = 0.5;
+    public static final double LOW_SPEED_MODIFIER = 0.65;
     public static final double MAX_MOTOR_SPEED = 1;
     public static final double WINCH_SPEED = 1;
     public static final double MAX_BAND_MOVE_SPEED = 0.75; //test speeds
@@ -103,7 +103,7 @@ public final class Constants {
     public static final int DRIVE_PID_SLOT = 0;
     
     // Acceleration ramping constant for drive train
-    public static final double SEC_NEUTRAL_TO_FULL = 0.8;
+    public static final double SEC_NEUTRAL_TO_FULL = 0.45;
     
     // Vision Constants
     public static final int BALL_CAM_NUMBER = 1;
@@ -150,7 +150,7 @@ public final class Constants {
 	public static final double GYRO_kP = 0.0492; //0.1323; //0.1240
 	public static final double GYRO_kI = 0.001;
 	public static final double GYRO_kD = 0.01371; // 0.0479; //0.0572
-	public static final double GYRO_TOLERANCE = 1; //degrees tolerance for measurement
+	public static final double GYRO_TOLERANCE = 2; //degrees tolerance for measurement
 	public static final double GYRO_RATE_TOLERANCE_DEG_PER_SEC = 10; // degrees per second
     public static final float GYRO_TARGET_ANGLE = 0;
 	public static final boolean GYRO_REVERSED = false;

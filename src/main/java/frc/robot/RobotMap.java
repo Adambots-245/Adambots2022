@@ -66,10 +66,10 @@ public class RobotMap {
 
     public static final DigitalInput chooChooOpticalSensor = new DigitalInput(Constants.CHOO_CHOO_OPTICAL_SENSOR_PORT);
     public static final DigitalInput bandHomeSwitch = new DigitalInput(Constants.BAND_HOME_LIMIT_SWITCH_PORT);
-    public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
-    public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
-    public static final DigitalInput leftClampedSwitch = new DigitalInput(Constants.LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT);
-    public static final DigitalInput rightClampedSwitch = new DigitalInput(Constants.RIGHT_RUNG_CLAMPED_LIMIT_SWITCH_PORT);
+    public static final DigitalInput leftClampSwitch = new DigitalInput(Constants.LEFT_CLAMP_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rightClampSwitch = new DigitalInput(Constants.RIGHT_CLAMP_LIMIT_SWITCH_PORT);
+    public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_RUNG_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_RUNG_LIMIT_SWITCH_PORT);
     public static final PhotoEye rungArmAdvancedSwitch = new PhotoEye(Constants.RUNG_ARM_ADVANCED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmRetractedSwitch = new PhotoEye(Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmMidSwitch = new PhotoEye(Constants.RUNG_ARM_MID_PHOTO_EYE_PORT);

@@ -31,6 +31,7 @@ public class ShiftHighGearCommand extends CommandBase {
   public void execute() {
     System.out.println("high gear");
     driveTrainSubsystem.shiftHighGear();
+    driveTrainSubsystem.setLowSpeed();
   }
 
   // Called once the command ends or is interrupted.

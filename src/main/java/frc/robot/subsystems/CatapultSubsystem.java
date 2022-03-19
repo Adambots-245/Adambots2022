@@ -100,7 +100,7 @@ public class CatapultSubsystem extends SubsystemBase {
 
   public void bandMotor() {
     error = (bandTarget+bandMotor.getSelectedSensorPosition());
-    System.out.println(error);
+    // System.out.println(error);
     double motorCommand = 0;
     if (Math.abs(error) > Constants.ACCEPTABLE_BAND_ERROR) {
       if (error < 0) {

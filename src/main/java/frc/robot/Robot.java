@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -48,16 +49,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    RobotController.setBrownoutVoltage(6.3); //Will only work with RoboRIO 2
+
     Log.instance();
-    // Log.setFilter(Level.OFF);
+    Log.setFilter(Level.OFF);
     
     if (Robot.isReal()) {
       // Starts vision thread only if not running in simulation mode
       // Vision System calculates the angle to the target and posts it to the NetworkTable
-      vision = new VisionProcessorSubsystem(RobotMap.RingLight, new HubGripPipeline());
-      visionThread = vision.getVisionThread();
-      visionThread.setDaemon(true);
-      visionThread.start();
+      // vision = new VisionProcessorSubsystem(RobotMap.RingLight, new HubGripPipeline());
+      // visionThread = vision.getVisionThread();
+      // visionThread.setDaemon(true);
+      // visionThread.start();
     }
     else{
       // visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();

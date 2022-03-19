@@ -34,21 +34,32 @@ public class Position1Auton3Ball extends SequentialCommandGroup{
     public Position1Auton3Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
             new CatapultFireCommand(catapultSubsystem), //shoot first ball
-     
             new WaitCommand(0.5),
             new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
-            new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 42, -0.75), //suck the 2nd ball
-            new WaitCommand(4), // wait for intake to suck ball
-            new CatapultFireCommand(catapultSubsystem), //fire 2nd ball
+   
+            // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
+            new ParallelCommandGroup(
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 34, -0.75), // Drive until intake second ball
+                new BandMoveCommand(catapultSubsystem, 3.1) //Tension for second ball shot
+            ),
+    
+            new WaitCommand(3), //Waiting for intake to suck ball into catapult
+            new CatapultFireCommand(catapultSubsystem), // shoot second ball
+            new WaitCommand(0.5),
 
-            new TurnToAngleCommand(driveTrain, -58, true),
-            new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 110, -1), //suck 3rd ball
-            new TurnToHubCommand(driveTrain, 1), //allign to hub
-            new AllignToHubCommand(driveTrain),
-            new WaitCommand(4), // wait for intake to suck ball
-            new CatapultFireCommand(catapultSubsystem), //shoot 3rd ball
-            new StopIntakeOuttakeCommand(intakeSubsystem)
-           
+
+            new TurnToAngleCommand(driveTrain, 96, true),
+            new WaitCommand(0.5),
+            new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75), //suck 3rd ball
+            new WaitCommand(0.5),
+            // new TurnToHubCommand(driveTrain, 1), //allign to hub
+            // new AllignToHubCommand(driveTrain),
+            new TurnToAngleCommand(driveTrain, -60, true),
+
+            new WaitCommand(2), // wait for intake to suck ball
+            new CatapultTimeFireCommand(catapultSubsystem), //shoot 3rd ball
+            new StopIntakeOuttakeCommand(intakeSubsystem),
+            new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION)
 
         );  
     }
