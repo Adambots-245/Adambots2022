@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
     // and put our autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    Constants.debugTab = Shuffleboard.getTab("Debug");
+    //Constants.debugTab = Shuffleboard.getTab("Debug");
   }
 
   /**
@@ -92,9 +92,6 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-
-    Shuffleboard.getTab("Debug")
-      .add("test", 4);
   }
 
   /**

@@ -63,6 +63,8 @@ public class RobotContainer {
                                                                 RobotMap.hangClamp,
                                                                 RobotMap.leftClampedSwitch,
                                                                 RobotMap.rightClampedSwitch);
+
+  private final DebugSubsystem debugSubsystem = new DebugSubsystem();
   
   // commands
   private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
