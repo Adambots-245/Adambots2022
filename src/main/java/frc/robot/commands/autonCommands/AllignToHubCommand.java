@@ -52,11 +52,14 @@ public class AllignToHubCommand extends CommandBase {
   @Override
   public void execute() {
     hubAngleEntry = table.getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
-    targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);  
+    targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);
     
-    double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
-    driveTrain.arcadeDrive(Constants.HUB_TURN_SPEED, turnSpeed);
-    
+    if (targetAngle > 0){
+        driveTrain.arcadeDrive(0, 0.4);
+    }else{
+        driveTrain.arcadeDrive(0, -0.4);
+    }
+        
     if (targetAngle < Constants.ANGLE_RANGE && targetAngle > -(Constants.ANGLE_RANGE)) {
       atSetPoint = true;
     }

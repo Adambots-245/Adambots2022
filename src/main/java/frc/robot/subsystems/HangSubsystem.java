@@ -1,6 +1,8 @@
 
 package frc.robot.subsystems;
 
+import javax.tools.Diagnostic;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
@@ -60,8 +62,6 @@ public class HangSubsystem extends SubsystemBase {
     private void initialize () {
         winchMotor1.setNeutralMode(NeutralMode.Brake);
         winchMotor2.setNeutralMode(NeutralMode.Brake);
-        winchMotor1.setInverted(true); //Invert both to make up positive and logic eaier to understand
-        winchMotor2.setInverted(true);
         winchSpeed = 0;
         hangIsOut = false;
     }
@@ -77,11 +77,14 @@ public class HangSubsystem extends SubsystemBase {
 
     public void winchUp() { //Pulls Down
         Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);
+
+        
         if (!rungArmRetractedSwitch.isDetecting()) {
             winchSpeed = -Constants.WINCH_SPEED;
         }
         else
             winchSpeed = 0;
+            
     }    
 
     public void winchOff() {
@@ -121,6 +124,7 @@ public class HangSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Retracted Switch", rungArmRetractedSwitch.isDetecting());
         SmartDashboard.putBoolean("Mid Switch", rungArmMidSwitch.isDetecting());
         SmartDashboard.putBoolean("Adv Switch", rungArmAdvancedSwitch.isDetecting());
+
         
         if(winchSpeed < 0 && rungArmRetractedSwitch.isDetecting() == true){
             Log.info("Going down and arm retracted. Stopping Winch Motors");
@@ -134,12 +138,14 @@ public class HangSubsystem extends SubsystemBase {
             Log.info("Going up, arm at advanced point. Stopping Winch Motors");
             winchOff();
         }
-
         //clamp if the rung is in place on both sides 
         Boolean clampedDown = (rightRungSwitch.get() || leftRungSwitch.get());
         if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
-            grabRung();
-            Log.info("Clamping");
+    //         grabRung();
+    //         Log.info("Clamping");
+    // System.out.println("Clamping?");
+
+
         }
 
         winchMotor2.set(ControlMode.PercentOutput, winchSpeed);

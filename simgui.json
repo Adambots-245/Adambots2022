@@ -12,9 +12,6 @@
       },
       "RoboRIO Input": {
         "open": true
-      },
-      "window": {
-        "visible": true
       }
     }
   },
@@ -23,13 +20,16 @@
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/BlasterSubsystem": "Subsystem",
       "/LiveWindow/CameraSubsystem": "Subsystem",
+      "/LiveWindow/CatapultSubsystem": "Subsystem",
       "/LiveWindow/ControlPanelSubsystem": "Subsystem",
       "/LiveWindow/ConveyorSubsystem": "Subsystem",
       "/LiveWindow/DriveTrainSubsystem": "Subsystem",
       "/LiveWindow/GondolaSubsystem": "Subsystem",
+      "/LiveWindow/GyroPIDSubsystem": "Subsystem",
       "/LiveWindow/GyroPIDSubsystem/PID Controller": "PIDController",
       "/LiveWindow/HangSubsystem": "Subsystem",
       "/LiveWindow/IntakeSubsystem": "Subsystem",
+      "/LiveWindow/PitchPIDSubsystem/PID Controller": "PIDController",
       "/LiveWindow/TurretSubsystem": "Subsystem",
       "/LiveWindow/TurretSubsystem/PID Controller": "PIDController",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
@@ -58,6 +58,8 @@
       "/SmartDashboard/10 foot blaster velocity": "Command",
       "/SmartDashboard/Auton Mode": "String Chooser",
       "/SmartDashboard/IndexToBlasterCommand": "Command",
+      "/SmartDashboard/Reset Accel Maxes": "Command",
+      "/SmartDashboard/Test Dampening": "Command",
       "/SmartDashboard/trench 35 foot blaster velocity": "Command"
     },
     "windows": {

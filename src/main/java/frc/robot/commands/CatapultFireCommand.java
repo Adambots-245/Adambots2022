@@ -36,7 +36,7 @@ public class CatapultFireCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    catapultSubsystem.runCatapult(1); //Run the catapult every cycle until we fire
+    catapultSubsystem.runCatapult(0.3); //Run the catapult every cycle until we fire
     finished = !catapultSubsystem.getCatapultSwitch() && prevSwitchState; //Stop if switch goes from high to low (aka we fired)
     
     prevSwitchState = catapultSubsystem.getCatapultSwitch();

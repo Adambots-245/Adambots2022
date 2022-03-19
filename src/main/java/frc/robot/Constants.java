@@ -10,6 +10,7 @@ package frc.robot;
 import org.opencv.core.*;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.util.Color;
 
 import com.revrobotics.ColorMatch;
@@ -26,6 +27,9 @@ import com.revrobotics.ColorMatch;
  */
 
 public final class Constants {
+
+    public static ShuffleboardTab debugTab;
+
     public static final double HOME_TENSION = 5.0;
     public static final double TARMAC_TENSION = 3.9;
     public static final double SAFE_ZONE_TENSION = 1.1;
@@ -111,7 +115,7 @@ public final class Constants {
     public static final int DRIVER_STATION_FPS = 6;
     public static final int PROCESSING_FPS = 30; // DON'T CHANGE
     public static final int ANGLE_NOT_DETECTED = 600;
-    public static final int ANGLE_RANGE = 5;
+    public static final int ANGLE_RANGE = 2;
     public static final double HUB_TURN_SPEED = 0.3;
     public static final String VISION_TABLE_NAME = "Vision";
     public static final String HUB_ANGLE_ENTRY_NAME = "hubAngle";
