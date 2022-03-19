@@ -38,7 +38,6 @@ public class TurnToAngleCommand extends CommandBase {
 
     gyroPIDSubsystem.getController().enableContinuousInput(-180, 180);
 
-
     addRequirements(driveTrain);
 
   }
@@ -54,6 +53,8 @@ public class TurnToAngleCommand extends CommandBase {
     if (resetGyro) {
       gyro.reset();
     }
+
+    
     driveTrain.resetEncoders();
   }
 
@@ -72,6 +73,7 @@ public class TurnToAngleCommand extends CommandBase {
     SmartDashboard.putNumber("rightSpeed", driveTrain.getRightDriveEncoderVelocity());
 
     // driveTrain.arcadeDrive(speed, turnSpeed/Math.abs(turnSpeed));
+    turnSpeed = Math.max(turnSpeed, 0.35);
     driveTrain.arcadeDrive(speed, turnSpeed);
     // driveTrain.driveDistance(distance);
   }

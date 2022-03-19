@@ -41,10 +41,10 @@ public class Position2Auton4Ball extends SequentialCommandGroup{
             // shoot 2nd ball
             new CatapultFireCommand(catapultSubsystem),
             //suck 3rd and 4th ball
-            new TurnToAngleCommand(driveTrain, 0.5, 25 * (DriverStation.getAlliance() == Alliance.Red?1:-1), true),
+            new TurnToAngleCommand(driveTrain, 25 * (DriverStation.getAlliance() == Alliance.Red?1:-1), true),
             new DriveForwardDistanceCommand(driveTrain, 120, 1),
             //allign to hub
-            new TurnToAngleCommand(driveTrain, 0.5, -20 * (DriverStation.getAlliance() == Alliance.Red?1:-1), true),
+            new TurnToAngleCommand(driveTrain, -20 * (DriverStation.getAlliance() == Alliance.Red?1:-1), true),
             new CatapultFireCommand(catapultSubsystem),
             new StopIntakeOuttakeCommand(intake)
         );
