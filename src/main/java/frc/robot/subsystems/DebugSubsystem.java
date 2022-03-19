@@ -40,7 +40,9 @@ public class DebugSubsystem extends SubsystemBase{
 
     // debugTab.add("Gyro Sensor", (Sendable) Gyro.getInstance()).withWidget(BuiltInWidgets.kGyro);
 
-    debugTab.add("Accelerometer", RobotMap.Accelerometer);
+    // debugTab.add("Accelerometer", RobotMap.Accelerometer);
+
+    debugTab.addBoolean("InTake Ball Detector", RobotMap.intakeBallDetector::isDetecting);
     
     debugTab.addBoolean("GearShifter - Port " + Constants.HIGH_GEAR_SOL_PORT, RobotMap.GearShifter::isDisabled);
     
@@ -61,7 +63,7 @@ public class DebugSubsystem extends SubsystemBase{
     debugTab.addBoolean("L Clamp Switch - Port " + Constants.LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT, RobotMap.leftClampedSwitch::get);
     debugTab.addBoolean("R Clamp Switch - Port " + Constants.RIGHT_RUNG_CLAMPED_LIMIT_SWITCH_PORT, RobotMap.rightClampedSwitch::get);
     
-    debugTab.addBoolean("Retracted Switch - Port " + Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT, RobotMap.rungArmRetractedSwitch::isDetecting);
+    debugTab.addBoolean("Retracted Switch - Port " + Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT, RobotMap.rungArmRetractedSwitch::isDetecting).withSize(10, 10);
     debugTab.addBoolean("Mid Switch - Port " + Constants.RUNG_ARM_MID_PHOTO_EYE_PORT, RobotMap.rungArmMidSwitch::isDetecting);
     debugTab.addBoolean("Advanced Switch - Port " + Constants.RUNG_ARM_ADVANCED_PHOTO_EYE_PORT, RobotMap.rungArmAdvancedSwitch::isDetecting);
     

@@ -74,6 +74,7 @@ public final class Constants {
     public static final int LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT = 0;
     public static final int RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 5;
     public static final int BAND_HOME_LIMIT_SWITCH_PORT = 6;
+    public static final int BALL_DETECTOR_INTAKE_PORT = 7;
     public static final int LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT = 4;
     public static final int RUNG_ARM_ADVANCED_PHOTO_EYE_PORT = 2;
     public static final int RUNG_ARM_RETRACTED_PHOTO_EYE_PORT = 3;
@@ -102,7 +103,7 @@ public final class Constants {
     public static final int DRIVE_PID_SLOT = 0;
     
     // Acceleration ramping constant for drive train
-    public static final double SEC_NEUTRAL_TO_FULL = 0.4;
+    public static final double SEC_NEUTRAL_TO_FULL = 0.8;
     
     // Vision Constants
     public static final int BALL_CAM_NUMBER = 1;
@@ -146,10 +147,10 @@ public final class Constants {
     public static final double SHOOTER_OFFSET_DISTANCE = Constants.KNOWN_LIDAR_DISTANCE_TO_TARGET*Math.tan(Constants.KNOWN_OFFSET_ANGLE);
 	
     //gyro PID constants
-	public static final double GYRO_kP = 0.0352; //0.1323; //0.1240
-	public static final double GYRO_kI = 0;
-	public static final double GYRO_kD = 0.01271; // 0.0479; //0.0572
-	public static final double GYRO_TOLERANCE = 0.5; //degrees tolerance for measurement
+	public static final double GYRO_kP = 0.0572; //0.1323; //0.1240
+	public static final double GYRO_kI = 0.0008;
+	public static final double GYRO_kD = 0.01371; // 0.0479; //0.0572
+	public static final double GYRO_TOLERANCE = 1; //degrees tolerance for measurement
 	public static final double GYRO_RATE_TOLERANCE_DEG_PER_SEC = 10; // degrees per second
     public static final float GYRO_TARGET_ANGLE = 0;
 	public static final boolean GYRO_REVERSED = false;

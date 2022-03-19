@@ -46,8 +46,8 @@ public class RobotContainer {
                                                                                   RobotMap.FrontLeftMotor, 
                                                                                   RobotMap.BackLeftMotor, 
                                                                                   RobotMap.BackRightMotor);
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor,
-                                                                      RobotMap.intakeBallSwitch);
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor
+                                                                      );
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
                                                                             RobotMap.chooChooOpticalSensor, 
                                                                             RobotMap.bandHomeSwitch,
@@ -91,7 +91,7 @@ public class RobotContainer {
     dash();
 
     // Set up button on smartdashboard to test commands
-    SmartDashboard.putData("Turn 90 Deg.", new TurnToAngleCommand(driveTrainSubsystem, 0.5, 90, true));
+    SmartDashboard.putData("Turn 45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, 45, true));
   }
 
   /**
@@ -103,7 +103,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
       // Primary Controls
-      Buttons.primaryAButton.whenPressed(new CatapultFireCommand(catapultSubsystem));
+      Buttons.primaryAButton.whenPressed(new CatapultTimeFireCommand(catapultSubsystem));
       Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
       Buttons.primaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
       Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));

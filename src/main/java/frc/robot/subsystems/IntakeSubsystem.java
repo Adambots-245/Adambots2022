@@ -11,6 +11,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,14 +26,13 @@ public class IntakeSubsystem extends SubsystemBase {
    */
 
   private BaseMotorController intakeMotor;
-  private PhotoEye intakeSwitch;
+  // private PhotoEye intakeSwitch;
 
  
 
-  public IntakeSubsystem(BaseMotorController intakeMotor, PhotoEye intakePhotoEye) {
+  public IntakeSubsystem(BaseMotorController intakeMotor) {
     super();
     
-    this.intakeSwitch = intakePhotoEye;
     this.intakeMotor = intakeMotor; 
     this.intakeMotor.setInverted(true);
 
@@ -80,9 +81,11 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    if (intakeSwitch.isDetecting() == true){ 
-        stop();
-    } 
+    // SmartDashboard.putBoolean("intake", intakeSwitch.isDetecting());
+    // if (intakeSwitch.isDetecting() == true){ 
+      //  stop();
+    // } 
     
   }
+}
 
