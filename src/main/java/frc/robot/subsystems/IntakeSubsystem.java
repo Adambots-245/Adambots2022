@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.robot.sensors.PhotoEye;
 import frc.robot.utils.Log;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -23,11 +24,14 @@ public class IntakeSubsystem extends SubsystemBase {
    */
 
   private BaseMotorController intakeMotor;
+  private PhotoEye intakeSwitch;
+
  
 
-  public IntakeSubsystem(BaseMotorController intakeMotor) {
+  public IntakeSubsystem(BaseMotorController intakeMotor, PhotoEye intakePhotoEye) {
     super();
     
+    this.intakeSwitch = intakePhotoEye;
     this.intakeMotor = intakeMotor; 
     this.intakeMotor.setInverted(true);
 
@@ -71,17 +75,14 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(ControlMode.PercentOutput, Constants.STOP_MOTOR_SPEED);
   }
 
-  
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    /*
-    if (sensor == true){ 
+
+    if (intakeSwitch.isDetecting() == true){ 
         stop();
-    } else {
-      intake();
-    }
-    */
+    } 
+    
   }
-}
+
