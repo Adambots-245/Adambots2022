@@ -46,7 +46,8 @@ public class RobotContainer {
                                                                                   RobotMap.FrontLeftMotor, 
                                                                                   RobotMap.BackLeftMotor, 
                                                                                   RobotMap.BackRightMotor);
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor);
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor,
+                                                                      RobotMap.intakeBallSwitch);
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
                                                                             RobotMap.chooChooOpticalSensor, 
                                                                             RobotMap.bandHomeSwitch,
