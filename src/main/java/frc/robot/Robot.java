@@ -60,8 +60,8 @@ public class Robot extends TimedRobot {
       visionThread.start();
     }
     else{
-      visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
-      visionThread.start();
+      // visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
+      // visionThread.start();
     }
 
     RobotMap.YellowLight.set(true);
