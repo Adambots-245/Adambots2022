@@ -20,6 +20,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,7 +48,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
     Log.instance();
     // Log.setFilter(Level.OFF);
     
@@ -68,6 +69,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    Constants.debugTab = Shuffleboard.getTab("Debug");
   }
 
   /**
@@ -89,7 +92,9 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    
+
+    Shuffleboard.getTab("Debug")
+      .add("test", 4);
   }
 
   /**
@@ -139,6 +144,7 @@ public class Robot extends TimedRobot {
   //@Override
   public void autonomousPeriodic() {
     // SmartDashboard.putNumber("yaw",gyroSubsystem.getYaw());
+    
 
   }
 
