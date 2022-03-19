@@ -25,8 +25,7 @@ public class TurnToAngleCommand extends CommandBase {
   private boolean resetGyro = true;
 
   public 
-  TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
-      double targetAngle, boolean resetGyro) {
+  TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double targetAngle, boolean resetGyro) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveTrain = inpuDriveTrain;
     // speed = inputSpeed;
@@ -46,7 +45,7 @@ public class TurnToAngleCommand extends CommandBase {
 
   TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
       double targetAngle) {
-    this(inpuDriveTrain, inputSpeed, targetAngle, true);
+    this(inpuDriveTrain, targetAngle, true);
   }
 
   // Called when the command is initially scheduled.
