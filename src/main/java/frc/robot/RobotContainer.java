@@ -55,15 +55,15 @@ public class RobotContainer {
                                                                             RobotMap.CatapultStop);
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.winchMotor1, 
                                                                 RobotMap.winchMotor2, 
-                                                                RobotMap.leftRungSwitch, 
-                                                                RobotMap.rightRungSwitch, 
+                                                                RobotMap.leftClampSwitch, 
+                                                                RobotMap.rightClampSwitch, 
                                                                 RobotMap.rungArmRetractedSwitch, 
                                                                 RobotMap.rungArmMidSwitch, 
                                                                 RobotMap.rungArmAdvancedSwitch, 
                                                                 RobotMap.hangAngle, 
                                                                 RobotMap.hangClamp,
-                                                                RobotMap.leftClampedSwitch,
-                                                                RobotMap.rightClampedSwitch);
+                                                                RobotMap.leftRungSwitch,
+                                                                RobotMap.rightRungSwitch);
 
   private final DebugSubsystem debugSubsystem = new DebugSubsystem();
   
@@ -91,7 +91,11 @@ public class RobotContainer {
     dash();
 
     // Set up button on smartdashboard to test commands
+    SmartDashboard.putData("Turn -45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, -45, true));
     SmartDashboard.putData("Turn 45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, 45, true));
+    SmartDashboard.putData("DriveForward",new  DriveForwardDistanceCommand(driveTrainSubsystem, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75));
+
+    SmartDashboard.putData("Prime Catapult", new CatapultPrimeCommand(catapultSubsystem));
   }
 
   /**
@@ -120,12 +124,6 @@ public class RobotContainer {
       Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
       Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
-
-      // buttons for the drive subsystem
-      Buttons.primaryLB.whenPressed(new ShiftLowGearCommand(driveTrainSubsystem));
-      Buttons.primaryRB.whenPressed(new ShiftHighGearCommand(driveTrainSubsystem));
-      //Buttons.primaryAButton.whenPressed(new SetLowSpeedCommand(driveTrainSubsystem)); MIGHT NEED BUT DON'T GOT BUTTONS
-      //Buttons.primaryAButton.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
 
       // buttons for vision
       Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
@@ -178,9 +176,9 @@ public class RobotContainer {
     // else
     //   Log.info("Chosen Auton Command: None");
       
-    return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+    // return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
 
-    // System.out.println(autoChooser.getSelected().toString());
-    // return autoChooser.getSelected();
+     System.out.println(autoChooser.getSelected().toString());
+     return autoChooser.getSelected();
   }
 }

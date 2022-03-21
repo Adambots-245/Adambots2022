@@ -61,8 +61,11 @@ public class DebugSubsystem extends SubsystemBase{
 
     
     
-    debugTab.addBoolean("L Clamp Switch - Port " + Constants.LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT, RobotMap.leftClampedSwitch::get);
-    debugTab.addBoolean("R Clamp Switch - Port " + Constants.RIGHT_RUNG_CLAMPED_LIMIT_SWITCH_PORT, RobotMap.rightClampedSwitch::get);
+    debugTab.addBoolean("L Clamp Switch - Port " + Constants.LEFT_CLAMP_LIMIT_SWITCH_PORT, RobotMap.leftClampSwitch::get);
+    debugTab.addBoolean("R Clamp Switch - Port " + Constants.RIGHT_CLAMP_LIMIT_SWITCH_PORT, RobotMap.rightClampSwitch::get);
+
+    debugTab.addBoolean("L Rung Switch - Port " + Constants.LEFT_RUNG_LIMIT_SWITCH_PORT, RobotMap.leftRungSwitch::get);
+    debugTab.addBoolean("R Rung Switch - Port " + Constants.RIGHT_RUNG_LIMIT_SWITCH_PORT, RobotMap.rightRungSwitch::get);
     
     debugTab.addBoolean("Retracted Switch - Port " + Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT, RobotMap.rungArmRetractedSwitch::isDetecting).withSize(10, 10);
     debugTab.addBoolean("Mid Switch - Port " + Constants.RUNG_ARM_MID_PHOTO_EYE_PORT, RobotMap.rungArmMidSwitch::isDetecting);

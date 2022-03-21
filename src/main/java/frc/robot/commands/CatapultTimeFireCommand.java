@@ -3,7 +3,6 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.CatapultSubsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
@@ -17,7 +16,7 @@ public class CatapultTimeFireCommand extends SequentialCommandGroup{
         super(
             new CatapultRunCommand(catapultSubsystem, 1),
             new WaitCommand(1.5), 
-            new CatapultRunCommand(catapultSubsystem, 0.5)
+            new CatapultRunCommand(catapultSubsystem, 0.3)
         );  
     }
 

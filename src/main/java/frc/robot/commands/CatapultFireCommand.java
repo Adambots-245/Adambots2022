@@ -37,7 +37,7 @@ public class CatapultFireCommand extends CommandBase {
   @Override
   public void execute() {
     catapultSubsystem.runCatapult(1); //Run the catapult every cycle until we fire
-    finished = !catapultSubsystem.getCatapultSwitch() && prevSwitchState; //Stop if switch goes from high to low (aka we fired)
+    finished = catapultSubsystem.getCatapultSwitch() == false && prevSwitchState == true; //Stop if switch goes from high to low (aka we fired)
     
     prevSwitchState = catapultSubsystem.getCatapultSwitch();
   }
@@ -45,6 +45,7 @@ public class CatapultFireCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    catapultSubsystem.runCatapult(0.6);
   }
 
   // Returns true when the command should end.

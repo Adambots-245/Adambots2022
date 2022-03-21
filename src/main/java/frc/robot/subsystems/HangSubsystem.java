@@ -127,8 +127,8 @@ public class HangSubsystem extends SubsystemBase {
 
         
         if(winchSpeed < 0 && rungArmRetractedSwitch.isDetecting() == true){
-            Log.info("Going down and arm retracted. Stopping Winch Motors");
-            winchOff();
+            Log.info("Going down and arm retracted. Slowing Winch Motors");
+            winchSpeed = -0.25;
         }
         if(winchSpeed > 0 && hangIsOut == false && rungArmMidSwitch.isDetecting() == true){
             Log.info("Going up, hang In and arm at mid point. Stopping Winch Motors");
