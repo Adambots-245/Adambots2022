@@ -73,7 +73,8 @@ public class RobotMap {
     public static final PhotoEye rungArmAdvancedSwitch = new PhotoEye(Constants.RUNG_ARM_ADVANCED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmRetractedSwitch = new PhotoEye(Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmMidSwitch = new PhotoEye(Constants.RUNG_ARM_MID_PHOTO_EYE_PORT);
-    public static final PhotoEye intakeBallDetector = new PhotoEye(Constants.BALL_DETECTOR_INTAKE_PORT);
+    public static final PhotoEye intakePhotoEye = new PhotoEye(Constants.INTAKE_PHOTO_EYE_PORT);
+    public static final PhotoEye intakeCatapultPhotoEye = new PhotoEye(Constants.INTAKE_CATAPULT_PHOTO_EYE_PORT);
 
     //public static final PhotoEye intakeBallSwitch = new PhotoEye(Constants.INTAKE_PHOTO_EYE_PORT);
     
