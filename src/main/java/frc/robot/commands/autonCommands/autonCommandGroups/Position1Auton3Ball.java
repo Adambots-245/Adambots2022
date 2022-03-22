@@ -39,7 +39,7 @@ public class Position1Auton3Ball extends SequentialCommandGroup{
    
             // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 34, -0.75), // Drive until intake second ball
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75), // Drive until intake second ball
                 new BandMoveCommand(catapultSubsystem, 3.1) //Tension for second ball shot
             ),
     
@@ -48,12 +48,13 @@ public class Position1Auton3Ball extends SequentialCommandGroup{
             new WaitCommand(0.5),
 
 
-            new TurnToAngleCommand(driveTrain, 96, true),
+            new TurnToAngleCommand(driveTrain, 100, true),
             new WaitCommand(0.5),
             new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75), //suck 3rd ball
             new WaitCommand(0.5),
             // new TurnToHubCommand(driveTrain, 1), //allign to hub
             // new AllignToHubCommand(driveTrain),
+            
             new TurnToAngleCommand(driveTrain, -60, true),
 
             new WaitCommand(2), // wait for intake to suck ball

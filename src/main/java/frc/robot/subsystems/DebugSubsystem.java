@@ -56,6 +56,8 @@ public class DebugSubsystem extends SubsystemBase{
     debugTab.add("Winch 1 - Port " + Constants.HANG_WINCH_1_MOTOR_PORT, RobotMap.winchMotor1);
     debugTab.add("Winch 2 - Port " + Constants.HANG_WINCH_2_MOTOR_PORT, RobotMap.winchMotor2);
 
+    // debugTab.addBoolean("Intake Phot Eye", )
+
     // debugTab.add("Hang Clamp - Port " + Constants.clamp)
 
     

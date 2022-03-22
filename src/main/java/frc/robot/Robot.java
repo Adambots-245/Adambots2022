@@ -63,10 +63,11 @@ public class Robot extends TimedRobot {
       // visionThread.start();
     }
     // else{
-      visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
-      visionThread.start();
+      // visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
+      // visionThread.start();
     // }
 
+    // RobotMap.RingLight.set(true);
     RobotMap.YellowLight.set(true);
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
