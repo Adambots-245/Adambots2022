@@ -62,10 +62,10 @@ public class Robot extends TimedRobot {
       // visionThread.setDaemon(true);
       // visionThread.start();
     }
-    else{
-      // visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
-      // visionThread.start();
-    }
+    // else{
+      visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
+      visionThread.start();
+    // }
 
     RobotMap.YellowLight.set(true);
 
