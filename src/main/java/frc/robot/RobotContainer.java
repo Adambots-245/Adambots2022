@@ -46,7 +46,8 @@ public class RobotContainer {
                                                                                   RobotMap.FrontLeftMotor, 
                                                                                   RobotMap.BackLeftMotor, 
                                                                                   RobotMap.BackRightMotor);
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor,
+                                                                        RobotMap.intakeExtend
                                                                       );
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
                                                                             RobotMap.chooChooOpticalSensor, 
@@ -124,6 +125,8 @@ public class RobotContainer {
       Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
       Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
+      Buttons.secondaryDPadW.whenPressed(new IntakeOutCommand(intakeSubsystem));
+      Buttons.secondaryDPadE.whenPressed(new IntakeInCommand(intakeSubsystem));
 
       // buttons for vision
       Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
