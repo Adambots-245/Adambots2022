@@ -42,8 +42,8 @@ public class DebugSubsystem extends SubsystemBase{
 
     // debugTab.add("Accelerometer", RobotMap.Accelerometer);
 
-    debugTab.addBoolean("Intake Photo Eye", RobotMap.intakePhotoEye::isDetecting);
-    debugTab.addBoolean("Intake Catapult Photo Eye", RobotMap.intakeCatapultPhotoEye::isDetecting);
+    // debugTab.addBoolean("Intake Photo Eye", RobotMap.intakePhotoEye::isDetecting);
+    // debugTab.addBoolean("Intake Catapult Photo Eye", RobotMap.intakeCatapultPhotoEye::isDetecting);
     
     debugTab.addBoolean("GearShifter - Port " + Constants.HIGH_GEAR_SOL_PORT, RobotMap.GearShifter::isDisabled);
     

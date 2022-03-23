@@ -80,7 +80,7 @@ public final class Constants {
     public static final int RUNG_ARM_RETRACTED_PHOTO_EYE_PORT = 3;
     public static final int RUNG_ARM_MID_PHOTO_EYE_PORT = 8;
 
-    public static final int INTAKE_PHOTO_EYE_PORT = 17;
+    // public static final int INTAKE_PHOTO_EYE_PORT = 17;
     public static final int INTAKE_CATAPULT_PHOTO_EYE_PORT = 0;
 
     // speed values
