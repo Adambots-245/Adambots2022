@@ -10,7 +10,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -26,14 +28,17 @@ public class IntakeSubsystem extends SubsystemBase {
    */
 
   private BaseMotorController intakeMotor;
+  private DoubleSolenoid intakeExtend;
+  private boolean intakeIsOut;
   // private PhotoEye intakeSwitch;
 
  
 
-  public IntakeSubsystem(BaseMotorController intakeMotor) {
+  public IntakeSubsystem(BaseMotorController intakeMotor, DoubleSolenoid intakeExtend) {
     super();
     
     this.intakeMotor = intakeMotor; 
+    this.intakeExtend = intakeExtend;
     this.intakeMotor.setInverted(true);
 
     Log.info("Initializing Intake Subsystem");
@@ -74,6 +79,18 @@ public class IntakeSubsystem extends SubsystemBase {
   public void stop(){
     Log.info("Stopping Intake Motor");
     intakeMotor.set(ControlMode.PercentOutput, Constants.STOP_MOTOR_SPEED);
+  }
+
+  public void intakeOut(){
+    Log.info("Intake out initiated");
+    intakeExtend.set(Value.kForward);
+    intakeIsOut = true;
+  }
+
+  public void intakeIn(){
+    Log.info("Intake in initiated");
+    intakeExtend.set(Value.kReverse);
+    intakeIsOut = false;
   }
 
 

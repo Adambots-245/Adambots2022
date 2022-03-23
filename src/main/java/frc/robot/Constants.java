@@ -53,6 +53,11 @@ public final class Constants {
     // solenoid IDs
     public static final int HIGH_GEAR_SOL_PORT = 7;
 
+    //intake
+    public static final int INTAKE_OUT_SOL_PORT = 16; //FIX
+    public static final int INTAKE_IN_SOL_PORT = 17; //FIX
+
+    //hang
     public static final int LOWER_HANG_CLAMP_SOL_PORT = 0;
     public static final int RAISE_HANG_CLAMP_SOL_PORT = 1;
     public static final int HANG_ARM_OUT_SOL_PORT = 2;

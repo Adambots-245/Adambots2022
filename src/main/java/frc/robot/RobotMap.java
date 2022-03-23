@@ -56,6 +56,7 @@ public class RobotMap {
 
     // public static final WPI_VictorSPX ConveyorMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_MOTOR_PORT);
     // public static final WPI_VictorSPX AlignmentBeltMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_INDEXER_MOTOR_PORT);
+    public static final DoubleSolenoid intakeExtend = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_OUT_SOL_PORT, Constants.INTAKE_IN_SOL_PORT);
 
     // public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
 
