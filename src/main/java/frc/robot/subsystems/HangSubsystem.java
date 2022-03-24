@@ -138,6 +138,7 @@ public class HangSubsystem extends SubsystemBase {
             Log.info("Going up, arm at advanced point. Stopping Winch Motors");
             winchOff();
         }
+
         //clamp if the rung is in place on both sides 
         Boolean clampedDown = (rightRungSwitch.get() || leftRungSwitch.get());
         if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {

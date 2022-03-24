@@ -21,7 +21,8 @@ import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3Ball;
+import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallBlue;
+import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallRed;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton5Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position2Auton4Ball;
 import frc.robot.subsystems.*;
@@ -47,13 +48,15 @@ public class RobotContainer {
                                                                                   RobotMap.BackLeftMotor, 
                                                                                   RobotMap.BackRightMotor);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor,
-                                                                        RobotMap.intakeExtend
+                                                                        RobotMap.intakeExtend,
+                                                                        RobotMap.intakePhotoEye,
+                                                                        RobotMap.intakeCatapultPhotoEye
                                                                       );
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
                                                                             RobotMap.chooChooOpticalSensor, 
                                                                             RobotMap.bandHomeSwitch,
-                                                                            RobotMap.BandMotor, 
-                                                                            RobotMap.CatapultStop);
+                                                                            RobotMap.BandMotor
+                                                                            );
   private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.winchMotor1, 
                                                                 RobotMap.winchMotor2, 
                                                                 RobotMap.leftClampSwitch, 
@@ -125,8 +128,8 @@ public class RobotContainer {
       Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
       Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
-      Buttons.secondaryDPadW.whenPressed(new IntakeOutCommand(intakeSubsystem));
-      Buttons.secondaryDPadE.whenPressed(new IntakeInCommand(intakeSubsystem));
+      Buttons.secondaryDPadN.whenPressed(new IntakeOutCommand(intakeSubsystem));
+      Buttons.secondaryDPadS.whenPressed(new IntakeInCommand(intakeSubsystem));
 
       // buttons for vision
       Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
@@ -135,11 +138,12 @@ public class RobotContainer {
 
   private void dash(){
     autoChooser.setDefaultOption("None", null);
-    autoChooser.addOption("Auton1Ball", new Auton1Ball(catapultSubsystem, driveTrainSubsystem));
+    autoChooser.addOption("Auton1Ball", new Auton1Ball(catapultSubsystem, driveTrainSubsystem, intakeSubsystem));
     autoChooser.addOption("Auton2Ball", new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
-    autoChooser.addOption("Position1Auton3Ball", new Position1Auton3Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
-    autoChooser.addOption("Position1Auton5Ball", new Position1Auton5Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
-    autoChooser.addOption("Position2Auton4Ball", new Position2Auton4Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("RedPosition1Auton3Ball", new Position1Auton3BallRed(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("BluePosition1Auton3Ball", new Position1Auton3BallBlue(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    // autoChooser.addOption("Position1Auton5Ball", new Position1Auton5Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    // autoChooser.addOption("Position2Auton4Ball", new Position2Auton4Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
    
     SmartDashboard.putData("Auton Mode", autoChooser);
   }

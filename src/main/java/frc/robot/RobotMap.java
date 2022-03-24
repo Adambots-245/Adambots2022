@@ -30,7 +30,7 @@ import frc.robot.sensors.PhotoEye;
  * Add your docs here.
  */
 public class RobotMap {
-    public static final Solenoid CatapultStop = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_CATAPULT_STOP_SOL_PORT);
+    // public static final Solenoid CatapultStop = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_CATAPULT_STOP_SOL_PORT);
 
     // public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
     // public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
@@ -74,8 +74,9 @@ public class RobotMap {
     public static final PhotoEye rungArmAdvancedSwitch = new PhotoEye(Constants.RUNG_ARM_ADVANCED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmRetractedSwitch = new PhotoEye(Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmMidSwitch = new PhotoEye(Constants.RUNG_ARM_MID_PHOTO_EYE_PORT);
-    // public static final PhotoEye intakePhotoEye = new PhotoEye(Constants.INTAKE_PHOTO_EYE_PORT);
-    // public static final PhotoEye intakeCatapultPhotoEye = new PhotoEye(Constants.INTAKE_CATAPULT_PHOTO_EYE_PORT);
+
+    public static final PhotoEye intakePhotoEye = new PhotoEye(Constants.INTAKE_PHOTO_EYE_PORT);
+    public static final PhotoEye intakeCatapultPhotoEye = new PhotoEye(Constants.INTAKE_CATAPULT_PHOTO_EYE_PORT);
 
     //public static final PhotoEye intakeBallSwitch = new PhotoEye(Constants.INTAKE_PHOTO_EYE_PORT);
     
@@ -91,7 +92,7 @@ public class RobotMap {
 	//public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
-    public static final Solenoid YellowLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.YELLOW_LEDS_SOL_PORT);
+    // public static final Solenoid YellowLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.YELLOW_LEDS_SOL_PORT);
 
 
     // public static final PhotoEye IntakePhotoEye = new PhotoEye(7);

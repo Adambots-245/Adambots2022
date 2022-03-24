@@ -31,7 +31,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private DigitalInput chooChooLimitSwitch;
   private DigitalInput bandHomeLimitSwitch;
   private DigitalInput chooChooOpticalSensor;
-  private Solenoid catapultStop;
+  // private Solenoid catapultStop;
 
   private Boolean ChooChooLimitSwitchState = false;
   private Boolean prevChooChooLimitSwitchState = false;
@@ -46,7 +46,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private int accumulate = 0;
   private double bandSpeed = 0;
 
-  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandHomeLimitSwitch, BaseMotorController bandMotor, Solenoid catapultStop) {
+  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandHomeLimitSwitch, BaseMotorController bandMotor) {
     super();
 
     this.catapultMotor = catapultMotor;
@@ -54,7 +54,7 @@ public class CatapultSubsystem extends SubsystemBase {
     //this.chooChooLimitSwitch = chooChooLimitSwitch;
     this.chooChooOpticalSensor = chooChooLimitSwitch;
     this.bandHomeLimitSwitch = bandHomeLimitSwitch;
-    this.catapultStop = catapultStop;
+    // this.catapultStop = catapultStop;
 
     Log.info("Initializing Catapult");
     initialize();
@@ -113,13 +113,13 @@ public class CatapultSubsystem extends SubsystemBase {
     bandSpeed = motorCommand;
   }
 
-  public void raiseStop() {
-    catapultStop.set(true);
-  }
+  // public void raiseStop() {
+    // catapultStop.set(true);
+  // }
 
-  public void lowerStop(){
-    catapultStop.set(false);
-  }
+  // public void lowerStop(){
+  //   catapultStop.set(false);
+  // }
 
   public void runBandMotor(double speed){
     bandSpeed = speed;

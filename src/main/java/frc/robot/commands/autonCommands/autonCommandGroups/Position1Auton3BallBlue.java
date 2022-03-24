@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.commands.autonCommands.*;
@@ -25,14 +26,16 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
-public class Position1Auton3Ball extends SequentialCommandGroup{
+public class Position1Auton3BallBlue extends SequentialCommandGroup{
 
     // In this class, the robot will intake and shoot 2 balls, without using the ball detection grip file or AI.
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Position1Auton3Ball(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
+    public Position1Auton3BallBlue(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
+            new IntakeOutCommand(intakeSubsystem),
+
             new CatapultFireCommand(catapultSubsystem), //shoot first ball
             new WaitCommand(0.5),
             new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
@@ -47,15 +50,20 @@ public class Position1Auton3Ball extends SequentialCommandGroup{
             new CatapultFireCommand(catapultSubsystem), // shoot second ball
             new WaitCommand(0.5),
 
-
-            new TurnToAngleCommand(driveTrain, 100, true),
+            new ParallelRaceGroup(
+                new TurnToAngleCommand(driveTrain, -100, true),
+                new WaitCommand(5)
+            ),
             new WaitCommand(0.5),
             new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75), //suck 3rd ball
             new WaitCommand(0.5),
             // new TurnToHubCommand(driveTrain, 1), //allign to hub
             // new AllignToHubCommand(driveTrain),
             
-            new TurnToAngleCommand(driveTrain, -60, true),
+            new ParallelRaceGroup(
+                new TurnToAngleCommand(driveTrain, 60, true),
+                new WaitCommand(5)
+            ),
 
             new WaitCommand(2), // wait for intake to suck ball
             new CatapultTimeFireCommand(catapultSubsystem), //shoot 3rd ball

@@ -54,8 +54,8 @@ public final class Constants {
     public static final int HIGH_GEAR_SOL_PORT = 7;
 
     //intake
-    public static final int INTAKE_OUT_SOL_PORT = 16; //FIX
-    public static final int INTAKE_IN_SOL_PORT = 17; //FIX
+    public static final int INTAKE_OUT_SOL_PORT = 5; 
+    public static final int INTAKE_IN_SOL_PORT = 6; 
 
     //hang
     public static final int LOWER_HANG_CLAMP_SOL_PORT = 0;
@@ -63,7 +63,7 @@ public final class Constants {
     public static final int HANG_ARM_OUT_SOL_PORT = 2;
     public static final int HANG_ARM_IN_SOL_PORT = 3;
 
-    public static final int RAISE_CATAPULT_STOP_SOL_PORT = 5;
+    // public static final int RAISE_CATAPULT_STOP_SOL_PORT = 5;
 
 	public static final int RING_LIGHT_PORT = 4;
     public static final int YELLOW_LEDS_SOL_PORT = 6;
@@ -85,8 +85,8 @@ public final class Constants {
     public static final int RUNG_ARM_RETRACTED_PHOTO_EYE_PORT = 3;
     public static final int RUNG_ARM_MID_PHOTO_EYE_PORT = 8;
 
-    // public static final int INTAKE_PHOTO_EYE_PORT = 17;
-    public static final int INTAKE_CATAPULT_PHOTO_EYE_PORT = 0;
+     public static final int INTAKE_PHOTO_EYE_PORT = 7;
+    public static final int INTAKE_CATAPULT_PHOTO_EYE_PORT = 10;
 
     // speed values
     public static final double STOP_MOTOR_SPEED = 0;

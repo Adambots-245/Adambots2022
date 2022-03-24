@@ -30,23 +30,28 @@ public class IntakeSubsystem extends SubsystemBase {
   private BaseMotorController intakeMotor;
   private DoubleSolenoid intakeExtend;
   private boolean intakeIsOut;
+  private PhotoEye intakeCatapultPhotoEye;
+  private PhotoEye intakePhotoEye;
+  private double motorSpeed = 0.0;
+  
   // private PhotoEye intakeSwitch;
 
  
 
-  public IntakeSubsystem(BaseMotorController intakeMotor, DoubleSolenoid intakeExtend) {
+  public IntakeSubsystem(BaseMotorController intakeMotor, DoubleSolenoid intakeExtend, PhotoEye intakePhotoEye, PhotoEye intakeCatapultPhotoEye) {
     super();
     
     this.intakeMotor = intakeMotor; 
     this.intakeExtend = intakeExtend;
     this.intakeMotor.setInverted(true);
-
+    this.intakePhotoEye = intakePhotoEye;
+    this.intakeCatapultPhotoEye = intakeCatapultPhotoEye;
     Log.info("Initializing Intake Subsystem");
   }
 
   public void intake(double speed) {
     Log.infoF("Intake - Speed: %f", speed);
-    intakeMotor.set(ControlMode.PercentOutput, speed);
+    motorSpeed = speed;
   }
 
   public void intakeWithColor(double speed) {
@@ -68,17 +73,20 @@ public class IntakeSubsystem extends SubsystemBase {
       }
     }
     
-    intakeMotor.set(ControlMode.PercentOutput, speed * direction);
+    // intakeMotor.set(ControlMode.PercentOutput, speed * direction);
+    motorSpeed = speed * direction;
   }
 
   public void outtake() {
     Log.infoF("Outake - Speed: %f", Constants.OUTTAKE_SPEED);
-    intakeMotor.set(ControlMode.PercentOutput, Constants.OUTTAKE_SPEED);
+    // intakeMotor.set(ControlMode.PercentOutput, Constants.OUTTAKE_SPEED);
+    motorSpeed = Constants.OUTTAKE_SPEED;
   }
 
   public void stop(){
     Log.info("Stopping Intake Motor");
-    intakeMotor.set(ControlMode.PercentOutput, Constants.STOP_MOTOR_SPEED);
+    // intakeMotor.set(ControlMode.PercentOutput, Constants.STOP_MOTOR_SPEED);
+    motorSpeed = Constants.STOP_MOTOR_SPEED;
   }
 
   public void intakeOut(){
@@ -99,10 +107,15 @@ public class IntakeSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // SmartDashboard.putBoolean("intake", intakeSwitch.isDetecting());
-    // if (intakeSwitch.isDetecting() == true){ 
-      //  stop();
-    // } 
-    
+    if (intakePhotoEye.isDetecting() && intakeCatapultPhotoEye.isDetecting() && motorSpeed < 0) {
+      stop();
+    } 
+
+    if (!intakeIsOut){
+      stop();
+    }
+
+    intakeMotor.set(ControlMode.PercentOutput, motorSpeed);    
   }
 }
 

@@ -28,8 +28,11 @@ public class Auton1Ball extends SequentialCommandGroup{
     // It is only using the gyro sensor.
     // The robot will only need to go straight (no turning).
 
-    public Auton1Ball(CatapultSubsystem catapultSubsystem, DriveTrainSubsystem driveTrain) { 
+    public Auton1Ball(CatapultSubsystem catapultSubsystem, DriveTrainSubsystem driveTrain,IntakeSubsystem intakeSubsystem) { 
         super(
+
+          new IntakeOutCommand(intakeSubsystem),
+
           new CatapultFireCommand(catapultSubsystem), //shoot ball
           new WaitCommand(1),
           new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 20, -0.75) // leave tarmac for points

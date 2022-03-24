@@ -6,26 +6,32 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.CatapultSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class DebugCommand extends CommandBase {
+public class IntakeInCommand extends CommandBase {
+  /**
+   * Creates a new IntakeCommand.
+   */
+  private final IntakeSubsystem intakeSubsystem;
+
+  public IntakeInCommand(IntakeSubsystem intakeSubsystem) {
+    this.intakeSubsystem = intakeSubsystem;
+
+    addRequirements(intakeSubsystem);
+    // Use addRequirements() here to declare subsystem dependencies.
+  }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println(" intake in");
+    intakeSubsystem.intakeIn();
   }
 
   // Called once the command ends or is interrupted.

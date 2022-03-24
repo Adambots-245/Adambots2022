@@ -6,33 +6,32 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.CatapultSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class CatapultStopOutCommand extends CommandBase {
+public class IntakeOutCommand extends CommandBase {
   /**
-   * Creates a new Command for testing.
+   * Creates a new IntakeCommand.
    */
+  private final IntakeSubsystem intakeSubsystem;
 
-  private final CatapultSubsystem catapultSubsystem;
+  public IntakeOutCommand(IntakeSubsystem intakeSubsystem) {
+    this.intakeSubsystem = intakeSubsystem;
 
-  public CatapultStopOutCommand(CatapultSubsystem catapultSubsystem) {
-    this.catapultSubsystem = catapultSubsystem;
+    addRequirements(intakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-
-    addRequirements(catapultSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.lowerStop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println(" intake out");
+    intakeSubsystem.intakeOut();
   }
 
   // Called once the command ends or is interrupted.
