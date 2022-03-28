@@ -32,8 +32,8 @@ public class Buttons {
     public static final JoystickButton primaryRightStickButton = new JoystickButton(primaryJoystick, GamepadConstants.BUTTON_RIGHT_STICK);
     
     //primary DPad
-    public static final DPad_JoystickButton primaryDPadN = new DPad_JoystickButton(secondaryJoystick, GamepadConstants.DPAD_N_ANGLE);
-    public static final DPad_JoystickButton primaryDPadNW = new DPad_JoystickButton(secondaryJoystick, GamepadConstants.DPAD_NW_ANGLE);
+   // public static final DPad_JoystickButton primaryDPadN = new DPad_JoystickButton(primaryJoystick, GamepadConstants.DPAD_N_ANGLE);
+   // public static final DPad_JoystickButton primaryDPadNW = new DPad_JoystickButton(primaryJoystick, GamepadConstants.DPAD_NW_ANGLE);
     public static final DPad_JoystickButton primaryDPadW = new DPad_JoystickButton(secondaryJoystick, GamepadConstants.DPAD_W_ANGLE);
     public static final DPad_JoystickButton primaryDPadSW = new DPad_JoystickButton(secondaryJoystick, GamepadConstants.DPAD_SW_ANGLE);
     public static final DPad_JoystickButton primaryDPadS = new DPad_JoystickButton(secondaryJoystick, GamepadConstants.DPAD_S_ANGLE);
@@ -45,7 +45,7 @@ public class Buttons {
     //RIGHT TRIGGER       primaryJoystick.getRightTriggerAxis()
     //LEFT TRIGGER        primaryJoystick.getLeftTriggerAxis()
     //LEFT STICK X AXIS   primaryJoystick.getLeftX()
-    //LEFT STICK Y AXIS   primaryJoystick.getLeftY()
+    //LEFT STICK Y AXIS   primaryJoystick.getLeftY() 
     //RIGHT STICK X AXIS  primaryJoystick.getRightX()
     //RIGHT STICK Y AXIS  primaryJoystick.getRightY()
     

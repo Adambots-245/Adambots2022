@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -33,12 +34,14 @@ public class IntakeSubsystem extends SubsystemBase {
   private PhotoEye intakeCatapultPhotoEye;
   private PhotoEye intakePhotoEye;
   private double motorSpeed = 0.0;
+
+  private DigitalInput chooChooOpticalSensor;
   
   // private PhotoEye intakeSwitch;
 
  
 
-  public IntakeSubsystem(BaseMotorController intakeMotor, DoubleSolenoid intakeExtend, PhotoEye intakePhotoEye, PhotoEye intakeCatapultPhotoEye) {
+  public IntakeSubsystem(BaseMotorController intakeMotor, DoubleSolenoid intakeExtend, PhotoEye intakePhotoEye, PhotoEye intakeCatapultPhotoEye, DigitalInput chooChooOpticalSensor) {
     super();
     
     this.intakeMotor = intakeMotor; 
@@ -46,6 +49,7 @@ public class IntakeSubsystem extends SubsystemBase {
     this.intakeMotor.setInverted(true);
     this.intakePhotoEye = intakePhotoEye;
     this.intakeCatapultPhotoEye = intakeCatapultPhotoEye;
+    this.chooChooOpticalSensor = chooChooOpticalSensor;
     Log.info("Initializing Intake Subsystem");
   }
 
@@ -107,7 +111,7 @@ public class IntakeSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // SmartDashboard.putBoolean("intake", intakeSwitch.isDetecting());
-    if (intakePhotoEye.isDetecting() && intakeCatapultPhotoEye.isDetecting() && motorSpeed < 0) {
+    if (intakePhotoEye.isDetecting() && intakeCatapultPhotoEye.isDetecting() && motorSpeed < 0 && chooChooOpticalSensor.get()) {
       stop();
     } 
 

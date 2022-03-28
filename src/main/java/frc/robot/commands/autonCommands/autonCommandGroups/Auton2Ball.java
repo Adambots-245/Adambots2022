@@ -32,11 +32,12 @@ public class Auton2Ball extends SequentialCommandGroup{
    
             // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 34, -0.75), // Drive until intake second ball
-                new BandMoveCommand(catapultSubsystem, 3.1) //Tension for second ball shot
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75), // Drive until intake second ball  w 32 to 30
+                new BandMoveCommand(catapultSubsystem, 0.45) //Tension for second ball shot chnaged from 0.68 to 0.55 to 0.45
+                //0.32
             ),
     
-            new WaitCommand(4), //Waiting for intake to suck ball into catapult
+            new WaitCommand(4.1), //Waiting for intake to suck ball into catapult
             new StopIntakeOuttakeCommand(intakeSubsystem), //Stopping intake after ball is in the catapult
             new CatapultTimeFireCommand(catapultSubsystem), // shoot second ball
             new WaitCommand(0.3),

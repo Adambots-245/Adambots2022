@@ -50,7 +50,8 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(RobotMap.IntakeMotor,
                                                                         RobotMap.intakeExtend,
                                                                         RobotMap.intakePhotoEye,
-                                                                        RobotMap.intakeCatapultPhotoEye
+                                                                        RobotMap.intakeCatapultPhotoEye,
+                                                                        RobotMap.chooChooOpticalSensor
                                                                       );
   private final CatapultSubsystem catapultSubsystem = new CatapultSubsystem(RobotMap.ChooChooMotor, 
                                                                             RobotMap.chooChooOpticalSensor, 
@@ -100,6 +101,7 @@ public class RobotContainer {
     SmartDashboard.putData("DriveForward",new  DriveForwardDistanceCommand(driveTrainSubsystem, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75));
 
     SmartDashboard.putData("Prime Catapult", new CatapultPrimeCommand(catapultSubsystem));
+
   }
 
   /**
@@ -112,9 +114,9 @@ public class RobotContainer {
     
       // Primary Controls
       Buttons.primaryAButton.whenPressed(new CatapultTimeFireCommand(catapultSubsystem));
-      Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
-      Buttons.primaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
-      Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
+      Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
+      Buttons.secondaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
+      Buttons.secondaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
       Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
       Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
       // Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
@@ -128,8 +130,8 @@ public class RobotContainer {
       Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
       Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
-      Buttons.secondaryDPadN.whenPressed(new IntakeOutCommand(intakeSubsystem));
-      Buttons.secondaryDPadS.whenPressed(new IntakeInCommand(intakeSubsystem));
+      Buttons.secondaryBackButton.whenPressed(new IntakeOutCommand(intakeSubsystem));
+      Buttons.secondaryStartButton.whenPressed(new IntakeInCommand(intakeSubsystem));
 
       // buttons for vision
       Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
@@ -160,10 +162,10 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
     
-    // catapultSubsystem.setDefaultCommand(
-    //   new RunBandCommand(catapultSubsystem,  
-    //   () -> deaden(Buttons.secondaryJoystick.getLeftY()))
-    // );
+    //  catapultSubsystem.setDefaultCommand(
+    //    new RunBandCommand(catapultSubsystem, 1),
+    //    () -> deaden(Buttons.secondaryJoystick.getLeftY())
+    //  );
   }
 
   // deadzoning
@@ -178,14 +180,17 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // if (autoChooser.getSelected() != null)
-    //   Log.info("Chosen Auton Command: ", autoChooser.getSelected().toString());
-    // else
-    //   Log.info("Chosen Auton Command: None");
+     if (autoChooser.getSelected() != null){
+      Log.info("Chosen Auton Command: ", autoChooser.getSelected().toString());
+    } else{
+      Log.info("Chosen Auton Command: None");
+      return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+     }
+     
       
     // return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
 
-     System.out.println(autoChooser.getSelected().toString());
+     //System.out.println(autoChooser.getSelected().toString());
      return autoChooser.getSelected();
   }
 }

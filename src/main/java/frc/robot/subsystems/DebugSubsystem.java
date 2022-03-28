@@ -33,6 +33,7 @@ public class DebugSubsystem extends SubsystemBase{
   }
   
   public void initialize() {
+    debugTab.add("Band Limit - Port " + Constants.BAND_HOME_LIMIT_SWITCH_PORT, RobotMap.bandHomeSwitch).withSize(2, 1);
 
     // debugTab.add("Catapult Stop" + Constants.RAISE_CATAPULT_STOP_SOL_PORT, RobotMap.CatapultStop);
     debugTab.add("ChooChoo Motor - Port " + Constants.CHOO_CHOO_MOTOR_PORT, RobotMap.ChooChooMotor).withSize(2, 1);
