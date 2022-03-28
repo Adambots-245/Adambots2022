@@ -36,6 +36,9 @@ public class IntakeSubsystem extends SubsystemBase {
   private double motorSpeed = 0.0;
 
   private DigitalInput chooChooOpticalSensor;
+
+  private boolean intakeCatapultBool;
+  private boolean intakeBool;
   
   // private PhotoEye intakeSwitch;
 
@@ -108,10 +111,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    intakeCatapultBool = !intakeCatapultPhotoEye.isDetecting();
+    intakeBool = !intakePhotoEye.isDetecting();
+
     // This method will be called once per scheduler run
 
     // SmartDashboard.putBoolean("intake", intakeSwitch.isDetecting());
-    if (intakePhotoEye.isDetecting() && intakeCatapultPhotoEye.isDetecting() && motorSpeed < 0 && chooChooOpticalSensor.get()) {
+    if (intakeBool && intakeCatapultBool && motorSpeed < 0 && chooChooOpticalSensor.get()) {
       stop();
     } 
 

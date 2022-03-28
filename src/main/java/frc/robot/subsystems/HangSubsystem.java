@@ -31,6 +31,9 @@ public class HangSubsystem extends SubsystemBase {
     private PhotoEye rungArmRetractedSwitch;
     private PhotoEye rungArmMidSwitch;
     private double winchSpeed = 0;
+    private boolean rungAdvancedSensing;
+    private boolean rungRetractedSensing;
+    private boolean rungMidSensing;
 
     public HangSubsystem(BaseMotorController winchMotor1, BaseMotorController winchMotor2, DigitalInput leftRungSwitch, 
         DigitalInput rightRungSwitch, PhotoEye rungArmRetractedSwitch, PhotoEye rungArmMidSwitch, PhotoEye rungArmAdvancedSwitch, 
@@ -68,7 +71,7 @@ public class HangSubsystem extends SubsystemBase {
 
     public void winchDown() { //Goes Up
         Log.infoF("Winch going up - Speed: %f", Constants.WINCH_SPEED);
-        if (!rungArmAdvancedSwitch.isDetecting()) {
+        if (!rungAdvancedSensing) {
             winchSpeed = Constants.WINCH_SPEED;
         }
         else
@@ -76,15 +79,12 @@ public class HangSubsystem extends SubsystemBase {
     }
 
     public void winchUp() { //Pulls Down
-        Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);
-
-        
-        if (!rungArmRetractedSwitch.isDetecting()) {
+        Log.infoF("Winch going down - Speed: %f", Constants.WINCH_SPEED);        
+        if (!rungRetractedSensing) {
             winchSpeed = -Constants.WINCH_SPEED;
         }
         else
             winchSpeed = 0;
-            
     }    
 
     public void winchOff() {
@@ -120,21 +120,24 @@ public class HangSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        rungAdvancedSensing = !rungArmAdvancedSwitch.isDetecting();
+        rungRetractedSensing = !rungArmRetractedSwitch.isDetecting();
+        rungMidSensing  = !rungArmMidSwitch.isDetecting();
 
-        SmartDashboard.putBoolean("Retracted Switch", rungArmRetractedSwitch.isDetecting());
-        SmartDashboard.putBoolean("Mid Switch", rungArmMidSwitch.isDetecting());
-        SmartDashboard.putBoolean("Adv Switch", rungArmAdvancedSwitch.isDetecting());
+        SmartDashboard.putBoolean("Retracted Switch", rungRetractedSensing);
+        SmartDashboard.putBoolean("Mid Switch", rungMidSensing);
+        SmartDashboard.putBoolean("Adv Switch", rungAdvancedSensing);
 
         
-        if(winchSpeed < 0 && rungArmRetractedSwitch.isDetecting() == true){
+        if(winchSpeed < 0 && rungRetractedSensing == true){
             Log.info("Going down and arm retracted. Slowing Winch Motors");
             winchSpeed = -0.25;
         }
-        if(winchSpeed > 0 && hangIsOut == false && rungArmMidSwitch.isDetecting() == true){
+        if(winchSpeed > 0 && hangIsOut == false && rungMidSensing == true){
             Log.info("Going up, hang In and arm at mid point. Stopping Winch Motors");
             winchOff();
         }
-        if(winchSpeed > 0 && rungArmAdvancedSwitch.isDetecting() == true){
+        if(winchSpeed > 0 && rungAdvancedSensing == true){
             Log.info("Going up, arm at advanced point. Stopping Winch Motors");
             winchOff();
         }
