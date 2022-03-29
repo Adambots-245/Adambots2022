@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -54,6 +55,8 @@ public class IntakeSubsystem extends SubsystemBase {
     this.intakeCatapultPhotoEye = intakeCatapultPhotoEye;
     this.chooChooOpticalSensor = chooChooOpticalSensor;
     Log.info("Initializing Intake Subsystem");
+
+    intakeMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   public void intake(double speed) {
@@ -118,7 +121,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     // SmartDashboard.putBoolean("intake", intakeSwitch.isDetecting());
     if (intakeBool && intakeCatapultBool && motorSpeed < 0 && chooChooOpticalSensor.get()) {
-      stop();
+      motorSpeed = 0.1;
     } 
 
     if (!intakeIsOut){

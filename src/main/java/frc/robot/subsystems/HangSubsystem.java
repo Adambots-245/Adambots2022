@@ -34,6 +34,7 @@ public class HangSubsystem extends SubsystemBase {
     private boolean rungAdvancedSensing;
     private boolean rungRetractedSensing;
     private boolean rungMidSensing;
+    private boolean suppressClamping;
 
     public HangSubsystem(BaseMotorController winchMotor1, BaseMotorController winchMotor2, DigitalInput leftRungSwitch, 
         DigitalInput rightRungSwitch, PhotoEye rungArmRetractedSwitch, PhotoEye rungArmMidSwitch, PhotoEye rungArmAdvancedSwitch, 
@@ -118,6 +119,14 @@ public class HangSubsystem extends SubsystemBase {
         return hangIsOut;
     }
 
+    public void suppressClamp(){
+        suppressClamping = true;
+    }
+
+    public void unsuppressClamp(){
+        suppressClamping = false;
+    }
+
     @Override
     public void periodic() {
         rungAdvancedSensing = !rungArmAdvancedSwitch.isDetecting();
@@ -143,13 +152,11 @@ public class HangSubsystem extends SubsystemBase {
         }
 
         //clamp if the rung is in place on both sides 
-        Boolean clampedDown = (rightRungSwitch.get() || leftRungSwitch.get());
-        if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {
-    //         grabRung();
-    //         Log.info("Clamping");
-    // System.out.println("Clamping?");
-
-
+        Boolean clampedDown = (leftRungSwitch.get() || rightRungSwitch.get());
+        if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown && !suppressClamping) {
+            ungrabRung();
+            Log.info("Clamping");
+            System.out.println("Clamping");
         }
 
         winchMotor2.set(ControlMode.PercentOutput, winchSpeed);
