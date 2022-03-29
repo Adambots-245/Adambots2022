@@ -7,6 +7,9 @@
 
 package frc.robot.commands.autonCommands;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.sensors.Gyro;
@@ -24,8 +27,7 @@ public class TurnToAngleCommand extends CommandBase {
   private double targetAngle;
   private boolean resetGyro = true;
 
-  public 
-  TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
+  public TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
       double targetAngle, boolean resetGyro) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveTrain = inpuDriveTrain;
@@ -39,15 +41,13 @@ public class TurnToAngleCommand extends CommandBase {
 
     gyroPIDSubsystem.getController().enableContinuousInput(-180, 180);
 
-
     addRequirements(driveTrain);
-
   }
 
-  TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
-      double targetAngle) {
-    this(inpuDriveTrain, inputSpeed, targetAngle, true);
-  }
+  // TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
+  //     double targetAngle) {
+  //   this(inpuDriveTrain, inputSpeed, targetAngle, true);
+  // }
 
   // Called when the command is initially scheduled.
   @Override
@@ -65,16 +65,13 @@ public class TurnToAngleCommand extends CommandBase {
     System.out.println("executing turn to angle");
     System.out.println("yaw:" + gyro.getYaw());
     SmartDashboard.putNumber("yaw", gyro.getYaw());
-    // SmartDashboard.putNumber("yaw",gyroPIDSubsystem.getGyroSubsystem().getYaw());
     SmartDashboard.putNumber("gyroPIDSubsystem.getMeasurement()", gyroPIDSubsystem.getMeasurement());
 
     System.out.println("turnSpeed" + turnSpeed);
     SmartDashboard.putNumber("leftSpeed", driveTrain.getLeftDriveEncoderVelocity());
     SmartDashboard.putNumber("rightSpeed", driveTrain.getRightDriveEncoderVelocity());
 
-    // driveTrain.arcadeDrive(speed, turnSpeed/Math.abs(turnSpeed));
     driveTrain.arcadeDrive(speed, turnSpeed);
-    // driveTrain.driveDistance(distance);
   }
 
   // Called once the command ends or is interrupted.
@@ -89,8 +86,6 @@ public class TurnToAngleCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return false;
-
     return gyroPIDSubsystem.getController().atSetpoint();
   }
 }
