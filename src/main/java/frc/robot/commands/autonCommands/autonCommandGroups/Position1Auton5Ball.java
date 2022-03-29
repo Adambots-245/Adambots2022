@@ -60,7 +60,7 @@ public class Position1Auton5Ball extends SequentialCommandGroup{
             new CatapultFireCommand(catapultSubsystem),
             new WaitCommand(3),
             new CatapultFireCommand(catapultSubsystem),
-            new StopIntakeOuttakeCommand(intakeSubsystem)
+            new StopIntakeCommand(intakeSubsystem)
         );  
     }
 }

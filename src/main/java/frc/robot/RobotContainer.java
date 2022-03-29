@@ -126,8 +126,8 @@ public class RobotContainer {
       // Secondary Controls
       Buttons.secondaryRB.whileHeld(new WinchCommand(hangSubsystem));
       Buttons.secondaryLB.whileHeld(new UnwinchCommand(hangSubsystem));
-      Buttons.secondaryAButton.whenPressed(new ClampRungCommand(hangSubsystem));
-      Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
+      Buttons.secondaryAButton.whenPressed(new UnclampRungCommand(hangSubsystem));
+      Buttons.secondaryYButton.whenPressed(new ClampRungCommand(hangSubsystem));
       Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
       Buttons.secondaryBackButton.whenPressed(new IntakeOutCommand(intakeSubsystem));

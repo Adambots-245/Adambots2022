@@ -46,7 +46,7 @@ public class Position2Auton4Ball extends SequentialCommandGroup{
             //allign to hub
             new TurnToAngleCommand(driveTrain, -20 * (DriverStation.getAlliance() == Alliance.Red?1:-1), true),
             new CatapultFireCommand(catapultSubsystem),
-            new StopIntakeOuttakeCommand(intake)
+            new StopIntakeCommand(intake)
         );
 
     

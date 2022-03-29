@@ -26,23 +26,25 @@ public class UnclampRungCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    hangSubsystem.suppressClamp();
+    hangSubsystem.ungrabRung();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     Log.info("Unclamp Rung");
-    hangSubsystem.ungrabRung();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    hangSubsystem.unsuppressClamp();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return !hangSubsystem.getClamped(); //End when we are no longer clamped on the bar
   }
 }

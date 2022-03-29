@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -40,10 +38,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private boolean intakeCatapultBool;
   private boolean intakeBool;
-  
-  // private PhotoEye intakeSwitch;
-
- 
 
   public IntakeSubsystem(BaseMotorController intakeMotor, DoubleSolenoid intakeExtend, PhotoEye intakePhotoEye, PhotoEye intakeCatapultPhotoEye, DigitalInput chooChooOpticalSensor) {
     super();
@@ -87,12 +81,6 @@ public class IntakeSubsystem extends SubsystemBase {
     motorSpeed = speed * direction;
   }
 
-  public void outtake() {
-    Log.infoF("Outake - Speed: %f", Constants.OUTTAKE_SPEED);
-    // intakeMotor.set(ControlMode.PercentOutput, Constants.OUTTAKE_SPEED);
-    motorSpeed = Constants.OUTTAKE_SPEED;
-  }
-
   public void stop(){
     Log.info("Stopping Intake Motor");
     // intakeMotor.set(ControlMode.PercentOutput, Constants.STOP_MOTOR_SPEED);
@@ -121,7 +109,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     // SmartDashboard.putBoolean("intake", intakeSwitch.isDetecting());
     if (intakeBool && intakeCatapultBool && motorSpeed < 0 && chooChooOpticalSensor.get()) {
-      motorSpeed = 0.1;
+      motorSpeed = 0.1; //Reverse the intake slightly to stop it in time
     } 
 
     if (!intakeIsOut){

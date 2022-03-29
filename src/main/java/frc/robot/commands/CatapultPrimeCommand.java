@@ -27,13 +27,12 @@ public class CatapultPrimeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.runCatapult(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // System.out.println("Running");
+    catapultSubsystem.runCatapult(0.5);
   }
 
   // Called once the command ends or is interrupted.

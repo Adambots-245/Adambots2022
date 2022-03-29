@@ -67,7 +67,7 @@ public class Position1Auton3BallRed extends SequentialCommandGroup{
 
             new WaitCommand(2), // wait for intake to suck ball
             new CatapultTimeFireCommand(catapultSubsystem), //shoot 3rd ball
-            new StopIntakeOuttakeCommand(intakeSubsystem),
+            new StopIntakeCommand(intakeSubsystem),
             new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION)
 
         );  

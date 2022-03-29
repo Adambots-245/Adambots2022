@@ -38,7 +38,7 @@ public class Auton2Ball extends SequentialCommandGroup{
             ),
     
             new WaitCommand(4.1), //Waiting for intake to suck ball into catapult
-            new StopIntakeOuttakeCommand(intakeSubsystem), //Stopping intake after ball is in the catapult
+            new StopIntakeCommand(intakeSubsystem), //Stopping intake after ball is in the catapult
             new CatapultTimeFireCommand(catapultSubsystem), // shoot second ball
             new WaitCommand(0.3),
             new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION) // reset the band tension
