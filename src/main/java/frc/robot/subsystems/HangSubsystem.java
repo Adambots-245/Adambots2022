@@ -127,8 +127,8 @@ public class HangSubsystem extends SubsystemBase {
 
         
         if(winchSpeed < 0 && rungArmRetractedSwitch.isDetecting() == true){
-            Log.info("Going down and arm retracted. Stopping Winch Motors");
-            winchOff();
+            Log.info("Going down and arm retracted. Slowing Winch Motors");
+            winchSpeed = -0.25;
         }
         if(winchSpeed > 0 && hangIsOut == false && rungArmMidSwitch.isDetecting() == true){
             Log.info("Going up, hang In and arm at mid point. Stopping Winch Motors");
@@ -138,6 +138,7 @@ public class HangSubsystem extends SubsystemBase {
             Log.info("Going up, arm at advanced point. Stopping Winch Motors");
             winchOff();
         }
+
         //clamp if the rung is in place on both sides 
         Boolean clampedDown = (rightRungSwitch.get() || leftRungSwitch.get());
         if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown) {

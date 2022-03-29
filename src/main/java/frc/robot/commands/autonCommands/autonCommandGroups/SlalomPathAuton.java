@@ -103,7 +103,7 @@ public class SlalomPathAuton extends SequentialCommandGroup {
   }
 
   public static TurnToAngleCommand turn(DriveTrainSubsystem driveTrainSubsystem, double angle) {
-    return new TurnToAngleCommand(driveTrainSubsystem, 0.35, angle, false);
+    return new TurnToAngleCommand(driveTrainSubsystem, angle, false);
   }
 
   public static WaitCommand shortPause() {

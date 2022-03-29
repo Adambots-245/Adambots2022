@@ -30,7 +30,7 @@ import frc.robot.sensors.PhotoEye;
  * Add your docs here.
  */
 public class RobotMap {
-    public static final Solenoid CatapultStop = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_CATAPULT_STOP_SOL_PORT);
+    // public static final Solenoid CatapultStop = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_CATAPULT_STOP_SOL_PORT);
 
     // public static final WPI_TalonFX BlasterMotor = new WPI_TalonFX(Constants.BLASTER_MOTOR_PORT);
     // public static final Solenoid BlasterHood = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_BLASTER_HOOD_SOL_PORT);
@@ -56,6 +56,7 @@ public class RobotMap {
 
     // public static final WPI_VictorSPX ConveyorMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_MOTOR_PORT);
     // public static final WPI_VictorSPX AlignmentBeltMotor = new WPI_VictorSPX(Constants.INFEED_CONVEYOR_INDEXER_MOTOR_PORT);
+    public static final DoubleSolenoid intakeExtend = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_OUT_SOL_PORT, Constants.INTAKE_IN_SOL_PORT);
 
     // public static final WPI_VictorSPX GondolaMotor = new WPI_VictorSPX(Constants.CLIMBING_GONDOLA_ADJUSTMENT_MOTOR_PORT);
 
@@ -66,13 +67,18 @@ public class RobotMap {
 
     public static final DigitalInput chooChooOpticalSensor = new DigitalInput(Constants.CHOO_CHOO_OPTICAL_SENSOR_PORT);
     public static final DigitalInput bandHomeSwitch = new DigitalInput(Constants.BAND_HOME_LIMIT_SWITCH_PORT);
-    public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
-    public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_HANG_RUNG_IN_LIMIT_SWITCH_PORT);
-    public static final DigitalInput leftClampedSwitch = new DigitalInput(Constants.LEFT_RUNG_CLAMPED_LIMIT_SWITCH_PORT);
-    public static final DigitalInput rightClampedSwitch = new DigitalInput(Constants.RIGHT_RUNG_CLAMPED_LIMIT_SWITCH_PORT);
+    public static final DigitalInput leftClampSwitch = new DigitalInput(Constants.LEFT_CLAMP_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rightClampSwitch = new DigitalInput(Constants.RIGHT_CLAMP_LIMIT_SWITCH_PORT);
+    public static final DigitalInput leftRungSwitch = new DigitalInput(Constants.LEFT_RUNG_LIMIT_SWITCH_PORT);
+    public static final DigitalInput rightRungSwitch = new DigitalInput(Constants.RIGHT_RUNG_LIMIT_SWITCH_PORT);
     public static final PhotoEye rungArmAdvancedSwitch = new PhotoEye(Constants.RUNG_ARM_ADVANCED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmRetractedSwitch = new PhotoEye(Constants.RUNG_ARM_RETRACTED_PHOTO_EYE_PORT);
     public static final PhotoEye rungArmMidSwitch = new PhotoEye(Constants.RUNG_ARM_MID_PHOTO_EYE_PORT);
+
+    public static final PhotoEye intakePhotoEye = new PhotoEye(Constants.INTAKE_PHOTO_EYE_PORT);
+    public static final PhotoEye intakeCatapultPhotoEye = new PhotoEye(Constants.INTAKE_CATAPULT_PHOTO_EYE_PORT);
+
+    //public static final PhotoEye intakeBallSwitch = new PhotoEye(Constants.INTAKE_PHOTO_EYE_PORT);
     
 
     // public static final DoubleSolenoid ArmMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.RAISE_POWER_CELL_INTAKE_SOL_PORT, Constants.LOWER_POWER_CELL_INTAKE_SOL_PORT); // raise = kforward lower = kreverse
@@ -86,7 +92,7 @@ public class RobotMap {
 	//public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
-    public static final Solenoid YellowLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.YELLOW_LEDS_SOL_PORT);
+    // public static final Solenoid YellowLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.YELLOW_LEDS_SOL_PORT);
 
 
     // public static final PhotoEye IntakePhotoEye = new PhotoEye(7);

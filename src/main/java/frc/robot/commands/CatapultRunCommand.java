@@ -10,15 +10,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CatapultSubsystem;
 
-public class CatapultStopOutCommand extends CommandBase {
+public class CatapultRunCommand extends CommandBase {
   /**
    * Creates a new Command for testing.
    */
 
   private final CatapultSubsystem catapultSubsystem;
+  private double speed;
 
-  public CatapultStopOutCommand(CatapultSubsystem catapultSubsystem) {
+  public CatapultRunCommand(CatapultSubsystem catapultSubsystem, double speed) {
     this.catapultSubsystem = catapultSubsystem;
+    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(catapultSubsystem);
@@ -27,7 +29,7 @@ public class CatapultStopOutCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    catapultSubsystem.lowerStop();
+    catapultSubsystem.runCatapult(speed); //Run the catapult every cycle until we fire
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,6 +45,6 @@ public class CatapultStopOutCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return true; //Return true once we have fired
   }
 }

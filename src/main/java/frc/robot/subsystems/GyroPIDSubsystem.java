@@ -35,6 +35,8 @@ public class GyroPIDSubsystem extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double targetAngle) {
+    System.out.println("P: " + getController().getP() + " | I: " + getController().getI() + " | D: " + getController().getD());
+
     setSetpoint(targetAngle);
 
     // Use the output here

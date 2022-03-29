@@ -10,6 +10,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,7 +31,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private DigitalInput chooChooLimitSwitch;
   private DigitalInput bandHomeLimitSwitch;
   private DigitalInput chooChooOpticalSensor;
-  private Solenoid catapultStop;
+  // private Solenoid catapultStop;
 
   private Boolean ChooChooLimitSwitchState = false;
   private Boolean prevChooChooLimitSwitchState = false;
@@ -42,7 +46,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private int accumulate = 0;
   private double bandSpeed = 0;
 
-  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandHomeLimitSwitch, BaseMotorController bandMotor, Solenoid catapultStop) {
+  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandHomeLimitSwitch, BaseMotorController bandMotor) {
     super();
 
     this.catapultMotor = catapultMotor;
@@ -50,7 +54,7 @@ public class CatapultSubsystem extends SubsystemBase {
     //this.chooChooLimitSwitch = chooChooLimitSwitch;
     this.chooChooOpticalSensor = chooChooLimitSwitch;
     this.bandHomeLimitSwitch = bandHomeLimitSwitch;
-    this.catapultStop = catapultStop;
+    // this.catapultStop = catapultStop;
 
     Log.info("Initializing Catapult");
     initialize();
@@ -64,6 +68,8 @@ public class CatapultSubsystem extends SubsystemBase {
     bandMotor.setNeutralMode(NeutralMode.Brake);
     bandMotor.setSelectedSensorPosition(-Constants.HOME_TENSION*4096*20);
     encoderMode = false;
+
+    NetworkTableInstance instance = NetworkTableInstance.getDefault();
   }
 
   public double getError () {
@@ -94,7 +100,7 @@ public class CatapultSubsystem extends SubsystemBase {
 
   public void bandMotor() {
     error = (bandTarget+bandMotor.getSelectedSensorPosition());
-    System.out.println(error);
+    // System.out.println(error);
     double motorCommand = 0;
     if (Math.abs(error) > Constants.ACCEPTABLE_BAND_ERROR) {
       if (error < 0) {
@@ -107,13 +113,13 @@ public class CatapultSubsystem extends SubsystemBase {
     bandSpeed = motorCommand;
   }
 
-  public void raiseStop() {
-    catapultStop.set(true);
-  }
+  // public void raiseStop() {
+    // catapultStop.set(true);
+  // }
 
-  public void lowerStop(){
-    catapultStop.set(false);
-  }
+  // public void lowerStop(){
+  //   catapultStop.set(false);
+  // }
 
   public void runBandMotor(double speed){
     bandSpeed = speed;
@@ -153,7 +159,6 @@ public class CatapultSubsystem extends SubsystemBase {
 
     // prevChooChooLimitSwitchState = ChooChooLimitSwitchState;
     prevChooChooOpticalSensorState = chooChooOpticalSensorState;
-
     //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
     // System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
   }
