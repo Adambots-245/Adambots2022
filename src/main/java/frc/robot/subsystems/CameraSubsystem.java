@@ -30,20 +30,24 @@ public class CameraSubsystem extends SubsystemBase {
 
     public void init() {
 
-        ringLight.set(false);
-        hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
-        ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
+        try {
+            ringLight.set(false);
+            hubDetectionCamera = CameraServer.startAutomaticCapture(Constants.HUB_CAM_NUMBER);
+            ballDetectionCamera = CameraServer.startAutomaticCapture(Constants.BALL_CAM_NUMBER);
 
 
-        hubCvSink = CameraServer.getVideo(hubDetectionCamera);
-        ballCvSink = CameraServer.getVideo(ballDetectionCamera);
-        hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, Constants.PROCESSING_FPS);
-        ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, Constants.PROCESSING_FPS);
-        // hubMat = new Mat();
+            hubCvSink = CameraServer.getVideo(hubDetectionCamera);
+            ballCvSink = CameraServer.getVideo(ballDetectionCamera);
+            hubDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, Constants.PROCESSING_FPS);
+            ballDetectionCamera.setVideoMode(VideoMode.PixelFormat.kYUYV, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, Constants.PROCESSING_FPS);
+            // hubMat = new Mat();
 
-        visionThread = new Thread(() -> {
-            run();
-        });
+            visionThread = new Thread(() -> {
+                run();
+            });
+        } catch (Exception e) {
+            System.out.println("Video Camera Error: " + e.getMessage());
+        }
     }
 
     public void run() {

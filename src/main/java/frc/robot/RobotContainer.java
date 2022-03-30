@@ -10,22 +10,38 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Gamepad.Buttons;
 import frc.robot.Gamepad.GamepadConstants;
-
-import frc.robot.commands.*;
-import frc.robot.commands.autonCommands.*;
+import frc.robot.commands.BandHomeCommand;
+import frc.robot.commands.BandMoveCommand;
+import frc.robot.commands.CatapultPrimeCommand;
+import frc.robot.commands.CatapultTimeFireCommand;
+import frc.robot.commands.ClampRungCommand;
+import frc.robot.commands.DriveCommand;
+import frc.robot.commands.IntakeInCommand;
+import frc.robot.commands.IntakeOutCommand;
+import frc.robot.commands.MoveHangInCommand;
+import frc.robot.commands.MoveHangOutCommand;
+import frc.robot.commands.RunBandCommand;
+import frc.robot.commands.StartIntakeCommand;
+import frc.robot.commands.UnclampRungCommand;
+import frc.robot.commands.UnwinchCommand;
+import frc.robot.commands.WinchCommand;
+import frc.robot.commands.autonCommands.AllignToHubCommand;
+import frc.robot.commands.autonCommands.DriveForwardDistanceCommand;
+import frc.robot.commands.autonCommands.TurnToAngleCommand;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallBlue;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallRed;
-import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton5Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Position2Auton4Ball;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.CatapultSubsystem;
+import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.HangSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.utils.DebugBoard;
 //import frc.robot.utils.Log;
 import frc.robot.utils.Log;
 
@@ -70,20 +86,14 @@ public class RobotContainer {
                                                                 RobotMap.leftRungSwitch,
                                                                 RobotMap.rightRungSwitch);
 
-  private final DebugSubsystem debugSubsystem = new DebugSubsystem();
-  
-  // commands
-  private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
-  private TurnToAngleCommand autonTurn90DegreeCommand;
-  private GyroDriveForDistCommand autonGyroDriveForwardDistanceCommand;
-  // private SequentialCommandGroup autonDriveForwardGyroDistanceCommand;
-  
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
+    DebugBoard.setUpTab();
 
     setupDefaultCommands();
 
@@ -102,6 +112,10 @@ public class RobotContainer {
 
     SmartDashboard.putData("Prime Catapult", new CatapultPrimeCommand(catapultSubsystem));
 
+    SmartDashboard.putData("Home Tension", new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
+    SmartDashboard.putData("Second Ball Auton Tension", new BandHomeCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION));
+    SmartDashboard.putData("Tarmac Tension", new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
+    SmartDashboard.putData("Safe Zone Tension", new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
   }
 
   /**
@@ -140,9 +154,9 @@ public class RobotContainer {
   }
 
   private void dash(){
-    autoChooser.setDefaultOption("None", null);
+    // autoChooser.setDefaultOption("None", null);
+    autoChooser.setDefaultOption("Auton2Ball", new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
     autoChooser.addOption("Auton1Ball", new Auton1Ball(catapultSubsystem, driveTrainSubsystem, intakeSubsystem));
-    autoChooser.addOption("Auton2Ball", new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
     autoChooser.addOption("RedPosition1Auton3Ball", new Position1Auton3BallRed(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
     autoChooser.addOption("BluePosition1Auton3Ball", new Position1Auton3BallBlue(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
     // autoChooser.addOption("Position1Auton5Ball", new Position1Auton5Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));

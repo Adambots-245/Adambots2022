@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    RobotController.setBrownoutVoltage(6.3); //Will only work with RoboRIO 2
+    // RobotController.setBrownoutVoltage(6.3); //Will only work with RoboRIO 2
 
     Log.instance();
     Log.setFilter(Level.OFF);
@@ -61,13 +61,14 @@ public class Robot extends TimedRobot {
       // visionThread = vision.getVisionThread();
       // visionThread.setDaemon(true);
       // visionThread.start();
+        visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
+        
+        if (visionThread != null)
+          visionThread.start();
+        
+          RobotMap.RingLight.set(true);
     }
-    // else{
-      visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
-      visionThread.start();
-    // }
 
-    RobotMap.RingLight.set(true);
     // RobotMap.YellowLight.set(true);
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
