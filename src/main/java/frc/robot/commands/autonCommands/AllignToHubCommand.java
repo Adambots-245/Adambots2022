@@ -69,6 +69,7 @@ public class AllignToHubCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     gyro.reset();
+    driveTrain.arcadeDrive(0, 0);
   }
 
   // Returns true when the command should end.

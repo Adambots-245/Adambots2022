@@ -43,7 +43,7 @@ public class Position1Auton3BallRed extends SequentialCommandGroup{
             // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
                 new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75), // Drive until intake second ball
-                new BandMoveCommand(catapultSubsystem, 3.1) //Tension for second ball shot
+                new BandMoveCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION) //Tension for second ball shot
             ),
     
             new WaitCommand(3), //Waiting for intake to suck ball into catapult

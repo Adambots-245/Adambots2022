@@ -115,8 +115,7 @@ public class RobotContainer {
       // Primary Controls
       Buttons.primaryAButton.whenPressed(new CatapultTimeFireCommand(catapultSubsystem));
       Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
-      Buttons.secondaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
-      Buttons.secondaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
+      Buttons.primaryLB.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION));
       Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
       Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
       // Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
@@ -132,6 +131,8 @@ public class RobotContainer {
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
       Buttons.secondaryBackButton.whenPressed(new IntakeOutCommand(intakeSubsystem));
       Buttons.secondaryStartButton.whenPressed(new IntakeInCommand(intakeSubsystem));
+      Buttons.secondaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
+      Buttons.secondaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
 
       // buttons for vision
       Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));

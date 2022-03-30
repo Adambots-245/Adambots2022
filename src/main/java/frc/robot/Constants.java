@@ -29,10 +29,11 @@ import com.revrobotics.ColorMatch;
 public final class Constants {
 
     public static ShuffleboardTab debugTab;
-// should any of the deafult tensions be changed?
-    public static final double HOME_TENSION = 2.8;
-    public static final double TARMAC_TENSION = 1.4;
-    public static final double SAFE_ZONE_TENSION = 1.1;
+
+    public static final double HOME_TENSION = 6.3; //Tensions are good with double bands
+    public static final double TARMAC_TENSION = 5.3;
+    public static final double SAFE_ZONE_TENSION = 2.85;
+    public static final double SECOND_BALL_AUTON_TENSION = 4.8;
     // motor IDs
     public static final int FL_TALON = 12;
     public static final int BL_TALON = 13;
