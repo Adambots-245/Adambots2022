@@ -23,6 +23,7 @@ public class AllignToHubCommand extends CommandBase {
   NetworkTableEntry hubAngleEntry;
   private GyroPIDSubsystem gyroPIDSubsystem;
   private double targetAngle;
+  private double gyroAngle;
   private Gyro gyro;
 
   public AllignToHubCommand(DriveTrainSubsystem inpuDriveTrain) {
@@ -46,22 +47,31 @@ public class AllignToHubCommand extends CommandBase {
     //Gets the nework table
     NetworkTableInstance instance = NetworkTableInstance.getDefault();
     table = instance.getTable(Constants.VISION_TABLE_NAME);
+    hubAngleEntry = table.getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
+    targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);
+
+    if (targetAngle == Constants.ANGLE_NOT_DETECTED){
+      atSetPoint = true;
+    } else {
+      gyroAngle = 0;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hubAngleEntry = table.getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
-    targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);
     
+    gyroAngle = Math.abs(gyro.getYaw());
+
     if (targetAngle > 0){
         driveTrain.arcadeDrive(0, 0.4);
     }else{
         driveTrain.arcadeDrive(0, -0.4);
     }
         
-    if (targetAngle < Constants.ANGLE_RANGE && targetAngle > -(Constants.ANGLE_RANGE)) {
+    if (Math.abs(gyroAngle - targetAngle) == Constants.ANGLE_RANGE) {
       atSetPoint = true;
+      // driveTrain.arcadeDrive(0, 0);
     }
   }
       

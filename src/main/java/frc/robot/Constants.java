@@ -30,10 +30,10 @@ public final class Constants {
 
     public static ShuffleboardTab debugTab;
 
-    public static final double HOME_TENSION = 6.3; //Tensions are good with double bands
-    public static final double TARMAC_TENSION = 5.3;
-    public static final double SAFE_ZONE_TENSION = 2.85;
-    public static final double SECOND_BALL_AUTON_TENSION = 4.8;
+    public static final double HOME_TENSION = 6.9; //Tensions are good with double bands
+    public static final double TARMAC_TENSION = 6.2;
+    public static final double SAFE_ZONE_TENSION = 3.00;
+    public static final double SECOND_BALL_AUTON_TENSION = 5.2;
     // motor IDs
     public static final int FL_TALON = 12;
     public static final int BL_TALON = 13;
@@ -123,11 +123,11 @@ public final class Constants {
     public static final int DRIVER_STATION_FPS = 6;
     public static final int PROCESSING_FPS = 30; // DON'T CHANGE
     public static final int ANGLE_NOT_DETECTED = 600;
-    public static final int ANGLE_RANGE = 1;
+    public static final int ANGLE_RANGE = 5;
     public static final double HUB_TURN_SPEED = 0.3;
     public static final String VISION_TABLE_NAME = "Vision";
-    public static final String HUB_ANGLE_ENTRY_NAME = "hubAngle";
-    public static final String HUB_DISTANCE_ENTRY_NAME = "hubDistance";
+    public static final String HUB_ANGLE_ENTRY_NAME = "hubangle";
+    public static final String HUB_DISTANCE_ENTRY_NAME = "hubdistance";
     public static final int HUB_CAMERA_EXPOSURE = 22;
     public static final double CAMERA_DIAGONAL_FOV = 68.5;
     
@@ -192,4 +192,6 @@ public final class Constants {
 	public static final double AUTON_TARGET_CENTER_LINE_CONSTANT_VELOCITY = 10343;
 	public static final double TRENCH_SHOOTER_VELOCITY = 10343;
     public static final boolean BALL_COLOR_DETECTION = false;
+
+    public static final int RELAY_PORT = 0;
 }

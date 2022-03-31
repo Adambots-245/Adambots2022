@@ -16,9 +16,12 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.utils.Log;
 
 public class CatapultSubsystem extends SubsystemBase {
@@ -135,6 +138,26 @@ public class CatapultSubsystem extends SubsystemBase {
     // ChooChooLimitSwitchState = (accumulate >= 3);
   }
 
+  // Only a test - Relay needs to be passed in
+  public void lightUpAlignment(){
+    NetworkTableInstance instance = NetworkTableInstance.getDefault();
+    NetworkTable table = instance.getTable(Constants.VISION_TABLE_NAME);
+    NetworkTableEntry hubAngleEntry = table.getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
+    double targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);
+  
+    RobotMap.AlignLight.set(Value.kOff);
+
+    System.out.println("Light Up: " + targetAngle);
+
+    if (targetAngle != Constants.ANGLE_NOT_DETECTED){
+      if (Math.abs(targetAngle) > 0 && Math.abs(targetAngle) <= Constants.ANGLE_RANGE){
+        RobotMap.AlignLight.set(Value.kOn);
+      }
+    } else {
+      RobotMap.AlignLight.set(Value.kOff);
+    }
+  }
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Band Encoder In", bandMotor.getSelectedSensorPosition()/4096/20);
@@ -161,5 +184,7 @@ public class CatapultSubsystem extends SubsystemBase {
     prevChooChooOpticalSensorState = chooChooOpticalSensorState;
     //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
     // System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
+
+    lightUpAlignment();
   }
 }

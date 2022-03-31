@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import frc.robot.sensors.ColorSensor;
@@ -92,6 +93,7 @@ public class RobotMap {
 	//public static final DigitalInput ChooChooLimitSwitch = new DigitalInput(Constants.CHOO_CHOO_DIO);
 
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
+    public static final Relay AlignLight = new Relay(Constants.RELAY_PORT);
     // public static final Solenoid YellowLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.YELLOW_LEDS_SOL_PORT);
 
 
