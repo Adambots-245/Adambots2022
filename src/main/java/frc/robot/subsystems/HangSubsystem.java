@@ -153,11 +153,11 @@ public class HangSubsystem extends SubsystemBase {
         }
 
         //clamp if the rung is in place on both sides and were not already clamped
-        clampedDown = (leftRungSwitch.get() || rightRungSwitch.get());
-        if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown && !suppressClamping) {
-            grabRung();
-            Log.info("Clamping");
-        }
+        // clampedDown = (leftRungSwitch.get() || rightRungSwitch.get());
+        // if (leftClampedSwitch.get() && rightClampedSwitch.get() && !clampedDown && !suppressClamping) {
+        //     grabRung();
+        //     Log.info("Clamping");
+        // }
 
         winchMotor2.set(ControlMode.PercentOutput, winchSpeed);
         winchMotor1.set(ControlMode.PercentOutput, winchSpeed);
