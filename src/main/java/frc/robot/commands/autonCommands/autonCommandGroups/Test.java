@@ -31,17 +31,19 @@ public class Test extends SequentialCommandGroup{
 
     public Test(DriveTrainSubsystem driveTrain, IntakeSubsystem intakeSubsystem, CatapultSubsystem catapultSubsystem) { 
         super(
-            new BandMoveCommand(catapultSubsystem, 5)
-            // new TurnToAngleCommand(driveTrain, 0.2, 90, true)
-            // new TurnToHubCommand(driveTrain, 1),
-            // new AllignToHubCommand(driveTrain)
-            //new DriveForwardDistanceCommand(driveTrain, 20 * Constants.ENCODER_TICKS_PER_INCH, 0.5)
+            new ParallelRaceGroup(
+                new TurnToAngleCommand(driveTrain, -100, true),
+                //-100 or 260
+                new WaitCommand(3)
+            ),
 
-            // new ParallelRaceGroup(
-                // new WaitCommand(7), 
-               // new AllignToHubCommand(driveTrain)
-            // )
-            
+            new WaitCommand(3),
+
+            new ParallelRaceGroup(
+                new TurnToAngleCommand(driveTrain, 60, true),
+                //60 or -300
+                new WaitCommand(3)
+            )
         );  
     }
 }

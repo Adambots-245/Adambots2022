@@ -30,7 +30,7 @@ public final class Constants {
 
     public static ShuffleboardTab debugTab;
 
-    public static final double HOME_TENSION = 6.9; //Tensions are good with double bands
+    public static final double HOME_TENSION = 6.4; //Tensions are good with double bands
     public static final double TARMAC_TENSION = 5.7;
     public static final double SAFE_ZONE_TENSION = 3.00;
     public static final double SECOND_BALL_AUTON_TENSION = 5.2;

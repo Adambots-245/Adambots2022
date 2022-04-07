@@ -109,7 +109,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     // SmartDashboard.putBoolean("intake", intakeSwitch.isDetecting());
     if (intakeBool && intakeCatapultBool && motorSpeed < 0 && chooChooOpticalSensor.get()) {
-      motorSpeed = 0.1; //Reverse the intake slightly to stop it in time
+      motorSpeed = 0.2; //Reverse the intake slightly to stop it in time
     } 
 
     if (!intakeIsOut){

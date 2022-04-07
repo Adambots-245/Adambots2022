@@ -153,7 +153,7 @@ public class CatapultSubsystem extends SubsystemBase {
       if (Math.abs(targetAngle) > 0 && Math.abs(targetAngle) <= Constants.ANGLE_RANGE){
         // RobotMap.AlignLight.set(Value.kOn);
       }
-    } else {
+    } else { 
       RobotMap.AlignLight.set(Value.kOff);
     }
   }

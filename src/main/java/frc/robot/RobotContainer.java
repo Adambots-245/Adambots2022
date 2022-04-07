@@ -37,6 +37,7 @@ import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallBlue;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallRed;
+import frc.robot.commands.autonCommands.autonCommandGroups.Test;
 import frc.robot.subsystems.CatapultSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.HangSubsystem;
@@ -159,6 +160,7 @@ public class RobotContainer {
     autoChooser.addOption("Auton1Ball", new Auton1Ball(catapultSubsystem, driveTrainSubsystem, intakeSubsystem));
     autoChooser.addOption("RedPosition1Auton3Ball", new Position1Auton3BallRed(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
     autoChooser.addOption("BluePosition1Auton3Ball", new Position1Auton3BallBlue(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.addOption("Testing", new Test(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
     // autoChooser.addOption("Position1Auton5Ball", new Position1Auton5Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
     // autoChooser.addOption("Position2Auton4Ball", new Position2Auton4Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
    

@@ -37,7 +37,7 @@ public class Auton2Ball extends SequentialCommandGroup{
                 //0.32
             ),
     
-            new WaitCommand(4.1), //Waiting for intake to suck ball into catapult
+            new WaitCommand(4.7), //Waiting for intake to suck ball into catapult
             new StopIntakeCommand(intakeSubsystem), //Stopping intake after ball is in the catapult
             new CatapultTimeFireCommand(catapultSubsystem), // shoot second ball
             new WaitCommand(0.3),
