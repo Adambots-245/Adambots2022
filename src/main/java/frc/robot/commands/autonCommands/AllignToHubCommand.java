@@ -60,19 +60,19 @@ public class AllignToHubCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    gyroAngle = Math.abs(gyro.getYaw());
+    new TurnToAngleCommand(driveTrain, Math.abs(gyroAngle - targetAngle), true);
+    // gyroAngle = Math.abs(gyro.getYaw());
 
-    if (targetAngle > 0){
-        driveTrain.arcadeDrive(0, 0.4);
-    }else{
-        driveTrain.arcadeDrive(0, -0.4);
-    }
+    // if (targetAngle > 0){
+    //     driveTrain.arcadeDrive(0, 0.4);
+    // }else{
+    //     driveTrain.arcadeDrive(0, -0.4);
+    // }
         
-    if (Math.abs(gyroAngle - targetAngle) == Constants.ANGLE_RANGE) {
-      atSetPoint = true;
-      // driveTrain.arcadeDrive(0, 0);
-    }
+    // if (Math.abs(gyroAngle - targetAngle) == Constants.ANGLE_RANGE) {
+    //   atSetPoint = true;
+    //   // driveTrain.arcadeDrive(0, 0);
+    // }
   }
       
   // Called once the command ends or is interrupted.
