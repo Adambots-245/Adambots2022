@@ -31,9 +31,15 @@ public final class Constants {
     public static ShuffleboardTab debugTab;
 
     public static final double HOME_TENSION = 6.9; //Tensions are good with double bands
+<<<<<<< HEAD
     public static final double TARMAC_TENSION = 6.2;
     public static final double SAFE_ZONE_TENSION = 3.37; //3.00
     public static final double SECOND_BALL_AUTON_TENSION = 4.77; //5.2
+=======
+    public static final double TARMAC_TENSION = 5.7;
+    public static final double SAFE_ZONE_TENSION = 3.00;
+    public static final double SECOND_BALL_AUTON_TENSION = 5.2;
+>>>>>>> 5592bc87907423cebbea85f4f896130acb8f0649
     // motor IDs
     public static final int FL_TALON = 12;
     public static final int BL_TALON = 13;

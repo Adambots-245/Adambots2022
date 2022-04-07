@@ -42,7 +42,7 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     // drivetrain.getAverageDriveEncoderValue();
     drivetrain.arcadeDrive(forwardBackwardInput.getAsDouble(), rotationInput.getAsDouble());
-    SmartDashboard.putNumber("driveencoder", drivetrain.getAverageDriveEncoderValue());
+    // SmartDashboard.putNumber("driveencoder", drivetrain.getAverageDriveEncoderValue());
   }
 
   // Called once the command ends or is interrupted.

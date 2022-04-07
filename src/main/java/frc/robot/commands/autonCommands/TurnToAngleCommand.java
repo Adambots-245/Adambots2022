@@ -65,13 +65,13 @@ public class TurnToAngleCommand extends CommandBase {
     double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
     System.out.println("executing turn to angle");
     System.out.println("yaw:" + gyro.getYaw());
-    SmartDashboard.putNumber("yaw", gyro.getYaw());
+    // SmartDashboard.putNumber("yaw", gyro.getYaw());
     // SmartDashboard.putNumber("yaw",gyroPIDSubsystem.getGyroSubsystem().getYaw());
-    SmartDashboard.putNumber("gyroPIDSubsystem.getMeasurement()", gyroPIDSubsystem.getMeasurement());
+    // SmartDashboard.putNumber("gyroPIDSubsystem.getMeasurement()", gyroPIDSubsystem.getMeasurement());
 
     System.out.println("turnSpeed" + turnSpeed);
-    SmartDashboard.putNumber("leftSpeed", driveTrain.getLeftDriveEncoderVelocity());
-    SmartDashboard.putNumber("rightSpeed", driveTrain.getRightDriveEncoderVelocity());
+    // SmartDashboard.putNumber("leftSpeed", driveTrain.getLeftDriveEncoderVelocity());
+    // SmartDashboard.putNumber("rightSpeed", driveTrain.getRightDriveEncoderVelocity());
 
     // driveTrain.arcadeDrive(speed, turnSpeed/Math.abs(turnSpeed));
     

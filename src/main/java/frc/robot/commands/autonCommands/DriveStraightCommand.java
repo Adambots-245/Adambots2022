@@ -38,7 +38,7 @@ public class DriveStraightCommand extends PIDCommand {
 
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    SmartDashboard.putData("Straight PID Controller", getController());
+    // SmartDashboard.putData("Straight PID Controller", getController());
     // Set the controller input to be continuous (because it is an angle controller
     // and getYaw returns values from -180 to 180)
     getController().enableContinuousInput(-180, 180);

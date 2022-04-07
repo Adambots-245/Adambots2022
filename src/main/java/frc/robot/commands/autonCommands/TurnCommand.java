@@ -59,7 +59,7 @@ public class TurnCommand extends PIDCommand {
     this.driveTrain = driveTrain;
     this.targetAngle = targetAngleDegrees;
 
-    SmartDashboard.putData("Turn PID Controller", getController());
+    // SmartDashboard.putData("Turn PID Controller", getController());
     // Set the controller input to be continuous (because it is an angle controller and getYaw returns values from -180 to 180)
     getController().enableContinuousInput(-180, 180);
 

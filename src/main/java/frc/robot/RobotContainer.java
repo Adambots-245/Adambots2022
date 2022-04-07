@@ -106,11 +106,11 @@ public class RobotContainer {
     dash();
 
     // Set up button on smartdashboard to test commands
-    SmartDashboard.putData("Turn -45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, -45, true));
-    SmartDashboard.putData("Turn 45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, 45, true));
-    SmartDashboard.putData("DriveForward",new  DriveForwardDistanceCommand(driveTrainSubsystem, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75));
+    // SmartDashboard.putData("Turn -45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, -45, true));
+    // SmartDashboard.putData("Turn 45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, 45, true));
+    // SmartDashboard.putData("DriveForward",new  DriveForwardDistanceCommand(driveTrainSubsystem, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75));
 
-    SmartDashboard.putData("Prime Catapult", new CatapultPrimeCommand(catapultSubsystem));
+    // SmartDashboard.putData("Prime Catapult", new CatapultPrimeCommand(catapultSubsystem));
 
     SmartDashboard.putData("Home Tension", new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
     SmartDashboard.putData("Second Ball Auton Tension", new BandHomeCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION));
@@ -129,7 +129,7 @@ public class RobotContainer {
       // Primary Controls
       Buttons.primaryAButton.whenPressed(new CatapultTimeFireCommand(catapultSubsystem));
       Buttons.primaryRB.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
-      Buttons.primaryLB.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION));
+      // Buttons.primaryLB.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION));
       Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
       Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
       // Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));

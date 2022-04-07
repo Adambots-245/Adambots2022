@@ -172,8 +172,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    SmartDashboard.putBoolean("Color Sensor", RobotMap.ColorSensor.matchClosestColor(RobotMap.ColorSensor.getColor()) == Color.kBlue);
-    SmartDashboard.putNumber("Color Proximity", RobotMap.ColorSensor.getProximity());
+    // SmartDashboard.putBoolean("Color Sensor", RobotMap.ColorSensor.matchClosestColor(RobotMap.ColorSensor.getColor()) == Color.kBlue);
+    // SmartDashboard.putNumber("Color Proximity", RobotMap.ColorSensor.getProximity());
     // RobotMap.ColorSensor.
   }
 
