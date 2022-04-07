@@ -27,6 +27,7 @@ import com.revrobotics.ColorMatch;
  */
 
 public final class Constants {
+    public static int CANDLE_ID = 0;
 
     public static ShuffleboardTab debugTab;
 

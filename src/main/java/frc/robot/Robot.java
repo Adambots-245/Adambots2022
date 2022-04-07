@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import frc.robot.commands.CANdleChangeColor;
+import frc.robot.commands.CANdleConfigCommands;
 import frc.robot.sensors.Gyro;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Log;
@@ -42,6 +44,7 @@ public class Robot extends TimedRobot {
 
   private VisionProcessorSubsystem vision;
   private Thread visionThread;
+  private final CANdleSubsystem m_candleSubsystem = new CANdleSubsystem();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -53,8 +56,9 @@ public class Robot extends TimedRobot {
 
     Log.instance();
     Log.setFilter(Level.OFF);
+    new CANdleChangeColor(m_candleSubsystem);
     
-    if (Robot.isReal()) {
+    if (Robot.isReal() && false) {
       // Starts vision thread only if not running in simulation mode
     // Vision System calculates the angle to the target and posts it to the NetworkTable
       // vision = new VisionProcessorSubsystem(RobotMap.RingLight, new HubGripPipeline());
@@ -73,7 +77,7 @@ public class Robot extends TimedRobot {
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    // m_robotContainer = new RobotContainer();
 
     //Constants.debugTab = Shuffleboard.getTab("Debug");
   }
@@ -104,10 +108,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Coast);
-    RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Coast);
-    RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Coast);
-    RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Coast);
+    // RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Coast);
+    // RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Coast);
+    // RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Coast);
+    // RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Coast);
   }
 
   @Override
@@ -134,10 +138,10 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
     
-    RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
+    // RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    // RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
+    // RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
+    // RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   /**
@@ -160,10 +164,10 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     
-    RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Coast);
-    RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Coast);
-    RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Coast);
-    RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Coast);
+    // RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Coast);
+    // RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Coast);
+    // RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Coast);
+    // RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Coast);
   }
 
   /**
@@ -192,10 +196,10 @@ public class Robot extends TimedRobot {
     }
     
     
-    RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
-    RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
+    // RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    // RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Brake);
+    // RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Brake);
+    // RobotMap.BackRightMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   /**
