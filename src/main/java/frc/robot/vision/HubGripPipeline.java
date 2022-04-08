@@ -40,9 +40,9 @@ public class HubGripPipeline {
 	public void process(Mat source0) {
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = source0;
-		double[] hsvThresholdHue = {61.510791366906474, 104.24242424242422};
-		double[] hsvThresholdSaturation = {100.89928057553955, 255.0};
-		double[] hsvThresholdValue = {41.2769784172662, 255.0};
+		double[] hsvThresholdHue = {61.510791366906474, 99.63491571000101};
+		double[] hsvThresholdSaturation = {133.00359712230212, 255.0};
+		double[] hsvThresholdValue = {121.53776978417267, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step CV_erode0:

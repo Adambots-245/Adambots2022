@@ -26,7 +26,7 @@ public class Auton2Ball extends SequentialCommandGroup{
             new IntakeOutCommand(intakeSubsystem),
 
             new WaitCommand(2),
-            new CatapultFireCommand(catapultSubsystem), //shoot first ball
+            new CatapultTimeFireCommand(catapultSubsystem), //shoot first ball
             new WaitCommand(0.5),
             new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
    

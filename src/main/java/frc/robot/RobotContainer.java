@@ -33,6 +33,7 @@ import frc.robot.commands.WinchCommand;
 import frc.robot.commands.autonCommands.AllignToHubCommand;
 import frc.robot.commands.autonCommands.DriveForwardDistanceCommand;
 import frc.robot.commands.autonCommands.TurnToAngleCommand;
+import frc.robot.commands.autonCommands.TurnToHubCommand;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallBlue;
@@ -106,8 +107,8 @@ public class RobotContainer {
     dash();
 
     // Set up button on smartdashboard to test commands
-    // SmartDashboard.putData("Turn -45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, -45, true));
-    // SmartDashboard.putData("Turn 45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, 45, true));
+    SmartDashboard.putData("Turn -45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, -45, true));
+    SmartDashboard.putData("Turn 45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, 45, true));
     // SmartDashboard.putData("DriveForward",new  DriveForwardDistanceCommand(driveTrainSubsystem, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75));
 
     // SmartDashboard.putData("Prime Catapult", new CatapultPrimeCommand(catapultSubsystem));
@@ -116,6 +117,7 @@ public class RobotContainer {
     SmartDashboard.putData("Second Ball Auton Tension", new BandHomeCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION));
     SmartDashboard.putData("Tarmac Tension", new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
     SmartDashboard.putData("Safe Zone Tension", new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
+    SmartDashboard.putData("Turn To Hub ", new TurnToHubCommand(driveTrainSubsystem, 1));
   }
 
   /**
