@@ -24,6 +24,7 @@ public class TurnToAngleCommand extends CommandBase {
   private Gyro gyro;
   private double targetAngle;
   private boolean resetGyro = true;
+  private double pidValue;
 
   public 
   TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double targetAngle, boolean resetGyro) {
@@ -62,14 +63,28 @@ public class TurnToAngleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double turnSpeed = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
-    System.out.println("executing turn to angle");
-    System.out.println("yaw:" + gyro.getYaw());
-    // SmartDashboard.putNumber("yaw", gyro.getYaw());
+    pidValue = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
+
+    double turnSpeed = pidValue;
+    double upperLimit = 0.45;
+    double lowerLimit = 0.03;
+    if (pidValue < upperLimit && pidValue > lowerLimit){
+      turnSpeed = upperLimit;
+    }
+    if (pidValue > -upperLimit && pidValue < -lowerLimit){
+      turnSpeed = -upperLimit;
+    }
+    if (pidValue < lowerLimit && pidValue > -lowerLimit){
+      turnSpeed = 0;
+    }
+    System.out.println("Turnspeed: " + turnSpeed);
+    
+    // System.out.println("executing turn to angle");
+    // System.out.println("yaw:" + gyro.getYaw());
+    SmartDashboard.putNumber("yaw", gyro.getYaw());
     // SmartDashboard.putNumber("yaw",gyroPIDSubsystem.getGyroSubsystem().getYaw());
     // SmartDashboard.putNumber("gyroPIDSubsystem.getMeasurement()", gyroPIDSubsystem.getMeasurement());
 
-    System.out.println("turnSpeed" + turnSpeed);
     // SmartDashboard.putNumber("leftSpeed", driveTrain.getLeftDriveEncoderVelocity());
     // SmartDashboard.putNumber("rightSpeed", driveTrain.getRightDriveEncoderVelocity());
 
@@ -90,7 +105,7 @@ public class TurnToAngleCommand extends CommandBase {
     if (interrupted) {
       System.out.println("turn to angle interrupted");
     }
-    gyro.reset();
+    // gyro.reset();
   }
 
   // Returns true when the command should end.
@@ -98,6 +113,6 @@ public class TurnToAngleCommand extends CommandBase {
   public boolean isFinished() {
     // return false;
 
-    return gyroPIDSubsystem.getController().atSetpoint();
+    return gyroPIDSubsystem.getController().atSetpoint() && Math.abs(pidValue) < 0.3;
   }
 }

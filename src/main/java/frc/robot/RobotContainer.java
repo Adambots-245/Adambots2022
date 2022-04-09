@@ -8,6 +8,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -37,8 +38,7 @@ import frc.robot.commands.autonCommands.TurnToAngleCommand;
 import frc.robot.commands.autonCommands.TurnToHubCommand;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
-import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallBlue;
-import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallRed;
+import frc.robot.commands.autonCommands.autonCommandGroups.Auton3Ball;
 import frc.robot.subsystems.CANdleSubsystem;
 import frc.robot.subsystems.CatapultSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -157,14 +157,14 @@ public class RobotContainer {
       // buttons for vision
       Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
       //Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
+      SmartDashboard.putData("Turn to Angle", new TurnToAngleCommand(driveTrainSubsystem, 90, true));
   }
 
   private void dash(){
     // autoChooser.setDefaultOption("None", null);
     autoChooser.setDefaultOption("Auton2Ball", new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
-    autoChooser.addOption("Auton1Ball", new Auton1Ball(catapultSubsystem, driveTrainSubsystem, intakeSubsystem));
-    autoChooser.addOption("RedPosition1Auton3Ball", new Position1Auton3BallRed(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
-    autoChooser.addOption("BluePosition1Auton3Ball", new Position1Auton3BallBlue(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    // autoChooser.addOption("Auton2Ball", new Auton1Ball(catapultSubsystem, driveTrainSubsystem, intakeSubsystem));
+    autoChooser.addOption("Auton3Ball", new Auton3Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem, hangSubsystem));
     // autoChooser.addOption("Position1Auton5Ball", new Position1Auton5Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
     // autoChooser.addOption("Position2Auton4Ball", new Position2Auton4Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
    
@@ -174,7 +174,7 @@ public class RobotContainer {
   private void setupDefaultCommands(){
     driveTrainSubsystem.setDefaultCommand(
        new DriveCommand(driveTrainSubsystem, 
-       () -> deaden(-Buttons.primaryJoystick.getLeftY()),
+       () -> deaden(MathUtil.clamp(-Buttons.primaryJoystick.getLeftY(), -1, 0.8)),
         () -> Buttons.primaryJoystick.getRightX())
         );  
 

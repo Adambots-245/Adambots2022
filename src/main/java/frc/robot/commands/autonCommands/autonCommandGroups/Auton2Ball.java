@@ -25,23 +25,21 @@ public class Auton2Ball extends SequentialCommandGroup{
         super(
             new IntakeOutCommand(intakeSubsystem),
 
-            new WaitCommand(2),
             new CatapultTimeFireCommand(catapultSubsystem), //shoot first ball
-            new WaitCommand(0.5),
+            new WaitCommand(0.1),
             new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
    
             // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 30, -0.75), // Drive until intake second ball  w 32 to 30
-                new BandMoveCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION) //Tension for second ball shot chnaged from 0.68 to 0.55 to 0.45
-                //0.32
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 25, -0.75), // Drive until intake second ball
+                new BandMoveCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION) //Tension for second ball shot
             ),
     
-            new WaitCommand(4.1), //Waiting for intake to suck ball into catapult
-            new StopIntakeCommand(intakeSubsystem), //Stopping intake after ball is in the catapult
+            new AutonSmartIntakeCommand(intakeSubsystem, -1.0), //Waiting for intake to suck ball into catapult
+            new WaitCommand(0.5),
             new CatapultTimeFireCommand(catapultSubsystem), // shoot second ball
-            new WaitCommand(0.3),
-            new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION) // reset the band tension
+            new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION),
+            new StopIntakeCommand(intakeSubsystem)
         );  
     }
 

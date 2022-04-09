@@ -81,6 +81,10 @@ public class IntakeSubsystem extends SubsystemBase {
     motorSpeed = speed * direction;
   }
 
+  public boolean getIntakeCatapultPhotoEye () {
+    return intakeCatapultBool;
+  }
+
   public void stop(){
     Log.info("Stopping Intake Motor");
     // intakeMotor.set(ControlMode.PercentOutput, Constants.STOP_MOTOR_SPEED);

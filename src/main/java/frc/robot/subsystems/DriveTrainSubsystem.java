@@ -121,6 +121,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double straightSpeed = frontRobotDirection * speed * speedModifier;
     // SmartDashboard.putNumber("Yaw", gyro.getYaw());
 
+    drive.setDeadband(0.001);
     // Log.infoF("Arcade Drive - Straight Speed = %f - Turn Speed = %f - Gyro Angle = %f", straightSpeed, turnSpeed * speedModifier, gyro.getAngle());
     drive.arcadeDrive(straightSpeed, turnSpeed * speedModifier);
   }
