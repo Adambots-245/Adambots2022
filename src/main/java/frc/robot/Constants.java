@@ -30,12 +30,10 @@ public final class Constants {
 
     public static ShuffleboardTab debugTab;
 
-    public static final double HOME_TENSION = 6.33; //Tensions are good with double bands
-
-    public static final double TARMAC_TENSION = 5.4;
-    public static final double SAFE_ZONE_TENSION = 3.37; //3.00
-    public static final double SECOND_BALL_AUTON_TENSION = 4.77; //5.2
-
+    public static final double HOME_TENSION = 6.9; //Tensions are good with double bands
+    public static final double TARMAC_TENSION = 5.7;
+    public static final double SAFE_ZONE_TENSION = 3.00;
+    public static final double SECOND_BALL_AUTON_TENSION = 5.2;
     // motor IDs
     public static final int FL_TALON = 12;
     public static final int BL_TALON = 13;
@@ -70,6 +68,7 @@ public final class Constants {
 
 	public static final int RING_LIGHT_PORT = 4;
     public static final int YELLOW_LEDS_SOL_PORT = 6;
+    public static final int CANDLE_CAN_PORT = 1;
 
     // sensor IDs
     public static final int LIDAR_DIO = 5; //Not used
@@ -196,4 +195,8 @@ public final class Constants {
     public static final boolean BALL_COLOR_DETECTION = false;
 
     public static final int RELAY_PORT = 0;
+
+    public static final Color LED_COLOR = new Color(255, 255, 0); //Yellow
+
+    public static final int LEDS_IN_STRIP = 300;
 }

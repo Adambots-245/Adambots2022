@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -95,6 +96,7 @@ public class RobotMap {
     public static final Solenoid RingLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RING_LIGHT_PORT);
     public static final Relay AlignLight = new Relay(Constants.RELAY_PORT);
     // public static final Solenoid YellowLight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.YELLOW_LEDS_SOL_PORT);
+    public static final CANdle candleLEDs = new CANdle(Constants.CANDLE_CAN_PORT);
 
 
     // public static final PhotoEye IntakePhotoEye = new PhotoEye(7);

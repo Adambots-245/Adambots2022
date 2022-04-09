@@ -23,6 +23,7 @@ import frc.robot.commands.ClampRungCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeInCommand;
 import frc.robot.commands.IntakeOutCommand;
+import frc.robot.commands.LightUpLEDsCommand;
 import frc.robot.commands.MoveHangInCommand;
 import frc.robot.commands.MoveHangOutCommand;
 import frc.robot.commands.RunBandCommand;
@@ -38,6 +39,7 @@ import frc.robot.commands.autonCommands.autonCommandGroups.Auton1Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Auton2Ball;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallBlue;
 import frc.robot.commands.autonCommands.autonCommandGroups.Position1Auton3BallRed;
+import frc.robot.subsystems.CANdleSubsystem;
 import frc.robot.subsystems.CatapultSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.HangSubsystem;
@@ -86,6 +88,8 @@ public class RobotContainer {
                                                                 RobotMap.hangClamp,
                                                                 RobotMap.leftRungSwitch,
                                                                 RobotMap.rightRungSwitch);
+  
+  private final CANdleSubsystem candleSubsystem = new CANdleSubsystem(RobotMap.candleLEDs);
 
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -178,6 +182,9 @@ public class RobotContainer {
         new StartIntakeCommand(intakeSubsystem, 
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
+
+    LightUpLEDsCommand lightUp = new LightUpLEDsCommand(candleSubsystem);
+    // candleSubsystem.setDefaultCommand(lightUp);
     
     //  catapultSubsystem.setDefaultCommand(
     //    new RunBandCommand(catapultSubsystem, 1),

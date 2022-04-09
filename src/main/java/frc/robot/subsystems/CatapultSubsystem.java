@@ -185,6 +185,6 @@ public class CatapultSubsystem extends SubsystemBase {
     //System.out.println("Current Pos: " + bandMotor.getSelectedSensorPosition() + " | Error: " + error);
     // System.out.println("Band Limit Switch: " + bandHomeLimitSwitch.get());
 
-    lightUpAlignment();
+    // lightUpAlignment();
   }
 }
