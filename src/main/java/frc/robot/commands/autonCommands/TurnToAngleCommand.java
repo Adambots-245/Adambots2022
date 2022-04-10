@@ -26,8 +26,7 @@ public class TurnToAngleCommand extends CommandBase {
   private boolean resetGyro = true;
   private double pidValue;
 
-  public 
-  TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double targetAngle, boolean resetGyro) {
+  public TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double targetAngle, boolean resetGyro) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveTrain = inpuDriveTrain;
     // speed = inputSpeed;
@@ -44,10 +43,10 @@ public class TurnToAngleCommand extends CommandBase {
 
   }
 
-  TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
-      double targetAngle) {
-    this(inpuDriveTrain, targetAngle, true);
-  }
+  // TurnToAngleCommand(DriveTrainSubsystem inpuDriveTrain, double inputSpeed,
+  //     double targetAngle) {
+  //   this(inpuDriveTrain, targetAngle, true);
+  // }
 
   // Called when the command is initially scheduled.
   @Override
@@ -56,7 +55,6 @@ public class TurnToAngleCommand extends CommandBase {
       gyro.reset();
     }
 
-    
     driveTrain.resetEncoders();
   }
 
@@ -95,7 +93,7 @@ public class TurnToAngleCommand extends CommandBase {
 
     // turnSpeed = Math.max(turnSpeed, 0.35 * Integer.signum((int)turnSpeed));
     // turnSpeed = MathUtil.clamp(turnSpeed, 0.35, 1)
-    driveTrain.arcadeDrive(speed, turnSpeed);
+    driveTrain.arcadeDrive(speed, turnSpeed, false);
     // driveTrain.driveDistance(distance);
   }
 

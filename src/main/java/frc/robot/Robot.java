@@ -161,7 +161,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    
+
     RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Coast);
     RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Coast);
     RobotMap.FrontRightMotor.setNeutralMode(NeutralMode.Coast);

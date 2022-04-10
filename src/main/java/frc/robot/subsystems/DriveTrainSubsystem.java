@@ -71,6 +71,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     backRightMotor.setNeutralMode(NeutralMode.Brake);
 
     drive = new DifferentialDrive(frontLeftMotor, frontRightMotor);
+    drive.setDeadband(0.001);
 
     Log.info("Initializing Drive Subsystem");
   }
@@ -119,11 +120,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void arcadeDrive(double speed, double turnSpeed) {
     int frontRobotDirection = -1;
     double straightSpeed = frontRobotDirection * speed * speedModifier;
-    // SmartDashboard.putNumber("Yaw", gyro.getYaw());
-
-    drive.setDeadband(0.001);
+    
     // Log.infoF("Arcade Drive - Straight Speed = %f - Turn Speed = %f - Gyro Angle = %f", straightSpeed, turnSpeed * speedModifier, gyro.getAngle());
     drive.arcadeDrive(straightSpeed, turnSpeed * speedModifier);
+  }
+
+  public void arcadeDrive(double speed, double turnSpeed, boolean squareInputs) {
+    int frontRobotDirection = -1;
+    double straightSpeed = frontRobotDirection * speed * speedModifier;
+    
+    drive.arcadeDrive(straightSpeed, turnSpeed * speedModifier, squareInputs);
   }
 
   public void shiftHighGear() {
