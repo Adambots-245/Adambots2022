@@ -30,10 +30,10 @@ public final class Constants {
 
     public static ShuffleboardTab debugTab;
 
-    public static final double HOME_TENSION = 6.5; //Tensions are good with double bands
+    public static final double HOME_TENSION = 6.3; //Tensions are good with double bands
     public static final double TARMAC_TENSION = 5.7;
-    public static final double SAFE_ZONE_TENSION = 3.00;
-    public static final double SECOND_BALL_AUTON_TENSION = 5.2;
+    public static final double SAFE_ZONE_TENSION = 1.66; //3
+    public static final double SECOND_BALL_AUTON_TENSION = 4.4;
     // motor IDs
     public static final int FL_TALON = 12;
     public static final int BL_TALON = 13;
@@ -145,19 +145,19 @@ public final class Constants {
     public static final double ACCEPTABLE_BAND_ERROR = 1500;
 
     // blaster PID constants
-    public static final double BLASTER_KF = .054;
-	public static final double BLASTER_KP = 1.1367;
-	public static final double BLASTER_KI = 0;
-    public static final double BLASTER_KD = 45.4667;
+    // public static final double BLASTER_KF = .054;
+	// public static final double BLASTER_KP = 1.1367;
+	// public static final double BLASTER_KI = 0;
+    // public static final double BLASTER_KD = 45.4667;
 
     private static final double KNOWN_LIDAR_DISTANCE_TO_TARGET = 120;
     private static final double KNOWN_OFFSET_ANGLE = Math.toRadians(4.45);
     public static final double SHOOTER_OFFSET_DISTANCE = Constants.KNOWN_LIDAR_DISTANCE_TO_TARGET*Math.tan(Constants.KNOWN_OFFSET_ANGLE);
 	
     //gyro PID constants
-	public static final double GYRO_kP = 0.02; //0.0492
+	public static final double GYRO_kP = 0.0125; //0.0492
 	public static final double GYRO_kI = 0.0; //0.001
-	public static final double GYRO_kD = 0.002; // 0.01371
+	public static final double GYRO_kD = 0.0011; // 0.01371
 	public static final double GYRO_TOLERANCE = 1; //degrees tolerance for measurement
 	public static final double GYRO_RATE_TOLERANCE_DEG_PER_SEC = 10; // degrees per second
     public static final float GYRO_TARGET_ANGLE = 0;

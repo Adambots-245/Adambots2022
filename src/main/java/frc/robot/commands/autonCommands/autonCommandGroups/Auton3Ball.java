@@ -46,11 +46,14 @@ public class Auton3Ball extends SequentialCommandGroup{
    
             // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
             new ParallelCommandGroup(
-                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 25, -0.75), // Drive until intake second ball
+                new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 16.5, -0.75), // Drive until intake second ball
                 new BandMoveCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION) //Tension for second ball shot
             ),
     
-            new AutonSmartIntakeCommand(intakeSubsystem, -1.0), //Waiting for intake to suck ball into catapult TODO: Add dealine group
+            new ParallelDeadlineGroup(
+                new AutonSmartIntakeCommand(intakeSubsystem, -1.0), //Waiting for intake to suck ball into catapult TODO: Add dealine group
+                new WaitCommand(5)
+            ),
             new WaitCommand(0.5),
             new ParallelDeadlineGroup(
                 new CatapultTimeFireCommand(catapultSubsystem), //shoot first ball
@@ -59,7 +62,7 @@ public class Auton3Ball extends SequentialCommandGroup{
 
             new ParallelRaceGroup(
                 new TurnToAngleCommand(driveTrain, 119, true),
-                new WaitCommand(5)
+                new WaitCommand(1.25)
             ),
             new WaitCommand(0.3),
             new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 50, -0.75), //suck 3rd ball
@@ -69,7 +72,7 @@ public class Auton3Ball extends SequentialCommandGroup{
             
             new ParallelRaceGroup(
                 new TurnToAngleCommand(driveTrain, -62, true),
-                new WaitCommand(5)
+                new WaitCommand(1.25)
             ),
 
             new AutonSmartIntakeCommand(intakeSubsystem, -1.0), //Waiting for intake to suck ball into catapult
