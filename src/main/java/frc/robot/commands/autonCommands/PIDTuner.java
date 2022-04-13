@@ -35,7 +35,7 @@ public class PIDTuner extends PIDCommand {
         output -> {
 
           // use pidtuner.com. The output of the controller is the input for Pidtuner.com
-          drive.arcadeDrive(0, feed);
+          drive.arcadeDrive(0, feed, false);
 
           endTime = System.currentTimeMillis();
 

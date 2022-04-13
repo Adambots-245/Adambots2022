@@ -97,8 +97,8 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public boolean getCatapultSwitch () {
-    // return ChooChooLimitSwitchState;
-    return chooChooOpticalSensorState;
+    // return chooChooOpticalSensorState;
+    return chooChooOpticalSensor.get();
   }
 
   public void bandMotor() {
@@ -139,24 +139,24 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   // Only a test - Relay needs to be passed in
-  public void lightUpAlignment(){
-    NetworkTableInstance instance = NetworkTableInstance.getDefault();
-    NetworkTable table = instance.getTable(Constants.VISION_TABLE_NAME);
-    NetworkTableEntry hubAngleEntry = table.getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
-    double targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);
+  // public void lightUpAlignment(){
+  //   NetworkTableInstance instance = NetworkTableInstance.getDefault();
+  //   NetworkTable table = instance.getTable(Constants.VISION_TABLE_NAME);
+  //   NetworkTableEntry hubAngleEntry = table.getEntry(Constants.HUB_ANGLE_ENTRY_NAME);
+  //   double targetAngle = hubAngleEntry.getDouble(Constants.ANGLE_NOT_DETECTED);
   
-    RobotMap.AlignLight.set(Value.kOff);
+  //   RobotMap.AlignLight.set(Value.kOff);
 
-    System.out.println("Light Up: " + targetAngle);
+  //   System.out.println("Light Up: " + targetAngle);
 
-    if (targetAngle != Constants.ANGLE_NOT_DETECTED){
-      if (Math.abs(targetAngle) > 0 && Math.abs(targetAngle) <= Constants.ANGLE_RANGE){
-        RobotMap.AlignLight.set(Value.kOn);
-      }
-    } else {
-      RobotMap.AlignLight.set(Value.kOff);
-    }
-  }
+  //   if (targetAngle != Constants.ANGLE_NOT_DETECTED){
+  //     if (Math.abs(targetAngle) > 0 && Math.abs(targetAngle) <= Constants.ANGLE_RANGE){
+  //       RobotMap.AlignLight.set(Value.kOn);
+  //     }
+  //   } else {
+  //     RobotMap.AlignLight.set(Value.kOff);
+  //   }
+  // }
 
   @Override
   public void periodic() {

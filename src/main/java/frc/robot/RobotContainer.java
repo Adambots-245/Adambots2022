@@ -115,7 +115,7 @@ public class RobotContainer {
     SmartDashboard.putData("Turn 45 Deg.", new TurnToAngleCommand(driveTrainSubsystem, 45, true));
     // SmartDashboard.putData("DriveForward",new  DriveForwardDistanceCommand(driveTrainSubsystem, Constants.ENCODER_TICKS_PER_INCH * 75, -0.75));
 
-    // SmartDashboard.putData("Prime Catapult", new CatapultPrimeCommand(catapultSubsystem));
+    SmartDashboard.putData("Prime Catapult", new CatapultPrimeCommand(catapultSubsystem));
 
     SmartDashboard.putData("Home Tension", new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
     SmartDashboard.putData("Second Ball Auton Tension", new BandHomeCommand(catapultSubsystem, Constants.SECOND_BALL_AUTON_TENSION));
@@ -151,8 +151,13 @@ public class RobotContainer {
       Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
       Buttons.secondaryBackButton.whenPressed(new IntakeOutCommand(intakeSubsystem));
       Buttons.secondaryStartButton.whenPressed(new IntakeInCommand(intakeSubsystem));
-      Buttons.secondaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
-      Buttons.secondaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
+
+      // Buttons.secondaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
+      // Buttons.secondaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
+      Buttons.secondaryDPadN.whenPressed(new RunBandCommand(catapultSubsystem, -1.0));
+      Buttons.secondaryDPadS.whenPressed(new RunBandCommand(catapultSubsystem, 1.0));
+      Buttons.secondaryDPadN.whenReleased(new RunBandCommand(catapultSubsystem, 0.0));
+      Buttons.secondaryDPadS.whenReleased(new RunBandCommand(catapultSubsystem, 0.0));
 
       // buttons for vision
       Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
@@ -183,8 +188,8 @@ public class RobotContainer {
         () -> deaden(Buttons.secondaryJoystick.getRightY()))
         );
 
-    LightUpLEDsCommand lightUp = new LightUpLEDsCommand(candleSubsystem);
-    // candleSubsystem.setDefaultCommand(lightUp);
+    LightUpLEDsCommand lightUp = new LightUpLEDsCommand(candleSubsystem, RobotMap.intakePhotoEye , RobotMap.intakeCatapultPhotoEye);
+    candleSubsystem.setDefaultCommand(lightUp);
     
     //  catapultSubsystem.setDefaultCommand(
     //    new RunBandCommand(catapultSubsystem, 1),

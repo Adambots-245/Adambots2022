@@ -109,6 +109,10 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeCatapultBool = !intakeCatapultPhotoEye.isDetecting();
     intakeBool = !intakePhotoEye.isDetecting();
 
+    if (intakeCatapultBool) {
+      
+    }
+
     // This method will be called once per scheduler run
 
     // SmartDashboard.putBoolean("intake", intakeSwitch.isDetecting());

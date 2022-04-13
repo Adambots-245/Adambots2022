@@ -10,6 +10,7 @@ package frc.robot.commands.autonCommands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.sensors.Gyro;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.GyroPIDSubsystem;
@@ -68,7 +69,10 @@ public class TurnToAngleCommand extends CommandBase {
     if (gyroPIDSubsystem.getController().atSetpoint()) {accumulate++;}
     else {accumulate = 0;}
 
+
     double turnSpeed = pidValue;
+    if (pidValue < 0) turnSpeed -= Constants.FEED_FORWARD;
+    if (pidValue > 0) turnSpeed += Constants.FEED_FORWARD;
     // double upperLimit = 0.45;
     // double lowerLimit = 0.03;
     // if (pidValue < upperLimit && pidValue > lowerLimit){

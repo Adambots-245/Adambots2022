@@ -281,11 +281,11 @@ public class CANdleSubsystem extends SubsystemBase {
         break;
       case Strobe:
         candleChannel = 6;
-        toAnimate = new StrobeAnimation(240, 10, 180, 0, 0.01, LEDS_IN_STRIP, 8);
+        toAnimate = new StrobeAnimation(0, 255, 0, 0, 0.0001, LEDS_IN_STRIP, 0);
         break;
       case Twinkle:
         candleChannel = 7;
-        toAnimate = new TwinkleAnimation(30, 70, 60, 0, 0.4, LEDS_IN_STRIP, TwinklePercent.Percent42, 8);
+        toAnimate = new TwinkleAnimation(0, 255, 0, 0, 0.4, LEDS_IN_STRIP, TwinklePercent.Percent100, 0);
         break;
       case TwinkleOff:
         candleChannel = 8;

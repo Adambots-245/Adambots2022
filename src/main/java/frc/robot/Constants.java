@@ -30,6 +30,12 @@ public final class Constants {
 
     public static ShuffleboardTab debugTab;
 
+    public static final double GYRO_kP = 0.0125; //0.0492
+	public static final double GYRO_kI = 0.0; //0.001
+	public static final double GYRO_kD = 0.001; // 0.01371
+    public static final double FEED_FORWARD = 0.07;
+
+
     public static final double HOME_TENSION = 6.3; //Tensions are good with double bands
     public static final double TARMAC_TENSION = 5.7;
     public static final double SAFE_ZONE_TENSION = 1.66; //3
@@ -68,7 +74,7 @@ public final class Constants {
 
 	public static final int RING_LIGHT_PORT = 4;
     public static final int YELLOW_LEDS_SOL_PORT = 6;
-    public static final int CANDLE_CAN_PORT = 1;
+    public static final int CANDLE_CAN_PORT = 50;
 
     // sensor IDs
     public static final int LIDAR_DIO = 5; //Not used
@@ -127,8 +133,8 @@ public final class Constants {
     public static final int ANGLE_RANGE = 5;
     public static final double HUB_TURN_SPEED = 0.3;
     public static final String VISION_TABLE_NAME = "Vision";
-    public static final String HUB_ANGLE_ENTRY_NAME = "hubangle";
-    public static final String HUB_DISTANCE_ENTRY_NAME = "hubdistance";
+    public static final String HUB_ANGLE_ENTRY_NAME = "hubAngle";
+    public static final String HUB_DISTANCE_ENTRY_NAME = "hubDistance";
     public static final int HUB_CAMERA_EXPOSURE = 22;
     public static final double CAMERA_DIAGONAL_FOV = 68.5;
     
@@ -155,9 +161,6 @@ public final class Constants {
     public static final double SHOOTER_OFFSET_DISTANCE = Constants.KNOWN_LIDAR_DISTANCE_TO_TARGET*Math.tan(Constants.KNOWN_OFFSET_ANGLE);
 	
     //gyro PID constants
-	public static final double GYRO_kP = 0.0125; //0.0492
-	public static final double GYRO_kI = 0.0; //0.001
-	public static final double GYRO_kD = 0.0011; // 0.01371
 	public static final double GYRO_TOLERANCE = 1; //degrees tolerance for measurement
 	public static final double GYRO_RATE_TOLERANCE_DEG_PER_SEC = 10; // degrees per second
     public static final float GYRO_TARGET_ANGLE = 0;
