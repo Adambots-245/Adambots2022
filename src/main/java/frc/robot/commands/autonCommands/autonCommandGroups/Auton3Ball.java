@@ -38,10 +38,8 @@ public class Auton3Ball extends SequentialCommandGroup{
             new IntakeOutCommand(intakeSubsystem),
             new MoveHangOutCommand(hangSubsystem),
 
-            new ParallelDeadlineGroup(
-                new CatapultTimeFireCommand(catapultSubsystem), //shoot first ball
-                new WaitCommand(0.1)
-            ),
+            new AutonTimeFireCommand(catapultSubsystem), //shoot first ball
+
             new AutonStartIntakeCommand(intakeSubsystem, () -> -1),
    
             // new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * Utils.firstDistance(Utils.BallPosition.ONE), -0.75)
@@ -52,17 +50,15 @@ public class Auton3Ball extends SequentialCommandGroup{
     
             new ParallelDeadlineGroup(
                 new AutonSmartIntakeCommand(intakeSubsystem, -1.0), //Waiting for intake to suck ball into catapult TODO: Add dealine group
-                new WaitCommand(5)
+                new WaitCommand(3.5)
             ),
             new WaitCommand(0.5),
-            new ParallelDeadlineGroup(
-                new CatapultTimeFireCommand(catapultSubsystem), //shoot first ball
-                new WaitCommand(0.1)
-            ),
+
+            new AutonTimeFireCommand(catapultSubsystem), //shoot first ball
 
             new ParallelRaceGroup(
                 new TurnToAngleCommand(driveTrain, 119, true),
-                new WaitCommand(1.25)
+                new WaitCommand(1.75)
             ),
             new WaitCommand(0.3),
             new DriveForwardDistanceCommand(driveTrain, Constants.ENCODER_TICKS_PER_INCH * 50, -0.75), //suck 3rd ball
@@ -72,16 +68,15 @@ public class Auton3Ball extends SequentialCommandGroup{
             
             new ParallelRaceGroup(
                 new TurnToAngleCommand(driveTrain, -62, true),
-                new WaitCommand(1.25)
+                new WaitCommand(1.75)
             ),
 
             new AutonSmartIntakeCommand(intakeSubsystem, -1.0), //Waiting for intake to suck ball into catapult
             new WaitCommand(0.5),
             new StopIntakeCommand(intakeSubsystem),
-            new ParallelDeadlineGroup(                          //shoot 3rd ball
-                new CatapultTimeFireCommand(catapultSubsystem), //shoot first ball
-                new WaitCommand(0.1)
-            ),
+
+            new AutonTimeFireCommand(catapultSubsystem), //shoot first ball
+
             new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION)
         );  
     }

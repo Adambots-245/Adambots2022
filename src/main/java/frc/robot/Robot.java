@@ -106,11 +106,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    for(int i = 0; i < 10; ++i) {
-      RobotMap.candleLEDs.clearAnimation(i);
-    }
+    // for(int i = 0; i < 10; ++i) {
+    //   RobotMap.candleLEDs.clearAnimation(i);
+    // }
 
-    RobotMap.candleLEDs.setLEDs(0, 0, 0, 0, 0, 300);
+    // RobotMap.candleLEDs.setLEDs(0, 0, 0, 0, 0, 300);
 
     RobotMap.FrontLeftMotor.setNeutralMode(NeutralMode.Coast);
     RobotMap.BackLeftMotor.setNeutralMode(NeutralMode.Coast);

@@ -19,7 +19,7 @@ public class LightUpLEDsCommand extends CommandBase {
   private NetworkTable table;
   private NetworkTableEntry hubAngleEntry;
   private int defaultR = 255;
-  private int defaultG = 200;
+  private int defaultG = 120;
   private int defaultB = 0;
 
   /** Creates a new LightUpLEDs. */

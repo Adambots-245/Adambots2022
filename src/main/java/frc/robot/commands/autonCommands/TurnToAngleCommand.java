@@ -66,9 +66,12 @@ public class TurnToAngleCommand extends CommandBase {
   @Override
   public void execute() {
     pidValue = gyroPIDSubsystem.getController().calculate(gyroPIDSubsystem.getMeasurement(), targetAngle);
-    if (gyroPIDSubsystem.getController().atSetpoint()) {accumulate++;}
-    else {accumulate = 0;}
-
+    if (gyroPIDSubsystem.getController().atSetpoint()) {
+      accumulate++;
+    }
+    else {
+      accumulate = 0;
+    }
 
     double turnSpeed = pidValue;
     if (pidValue < 0) turnSpeed -= Constants.FEED_FORWARD;
@@ -84,7 +87,7 @@ public class TurnToAngleCommand extends CommandBase {
     // if (pidValue < lowerLimit && pidValue > -lowerLimit){
     //   turnSpeed = 0;
     // }
-    System.out.println("Turnspeed: " + turnSpeed);
+    // System.out.println("Turnspeed: " + turnSpeed);
     
     // System.out.println("executing turn to angle");
     // System.out.println("yaw:" + gyro.getYaw());
@@ -118,8 +121,8 @@ public class TurnToAngleCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return false;
+    return false;
 
-    return accumulate >= 10;
+    // return accumulate >= 10;
   }
 }

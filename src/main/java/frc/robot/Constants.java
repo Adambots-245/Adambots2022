@@ -35,11 +35,10 @@ public final class Constants {
 	public static final double GYRO_kD = 0.001; // 0.01371
     public static final double FEED_FORWARD = 0.07;
 
-
-    public static final double HOME_TENSION = 6.3; //Tensions are good with double bands
-    public static final double TARMAC_TENSION = 5.7;
-    public static final double SAFE_ZONE_TENSION = 1.66; //3
-    public static final double SECOND_BALL_AUTON_TENSION = 4.4;
+    public static final double HOME_TENSION = 6.35;//6.8
+    public static final double TARMAC_TENSION = 5.5;
+    public static final double SECOND_BALL_AUTON_TENSION = 3.95; //4.4
+    public static final double SAFE_ZONE_TENSION = 3.0;
     // motor IDs
     public static final int FL_TALON = 12;
     public static final int BL_TALON = 13;

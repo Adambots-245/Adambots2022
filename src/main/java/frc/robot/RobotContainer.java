@@ -167,7 +167,7 @@ public class RobotContainer {
 
   private void dash(){
     // autoChooser.setDefaultOption("None", null);
-    autoChooser.setDefaultOption("Auton2Ball", new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
+    autoChooser.setDefaultOption("Auton2Ball", new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem, hangSubsystem));
     // autoChooser.addOption("Auton2Ball", new Auton1Ball(catapultSubsystem, driveTrainSubsystem, intakeSubsystem));
     autoChooser.addOption("Auton3Ball", new Auton3Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem, hangSubsystem));
     // autoChooser.addOption("Position1Auton5Ball", new Position1Auton5Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem));
@@ -213,7 +213,7 @@ public class RobotContainer {
       Log.info("Chosen Auton Command: ", autoChooser.getSelected().toString());
     } else{
       Log.info("Chosen Auton Command: None");
-      return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem);
+      return new Auton2Ball(driveTrainSubsystem, intakeSubsystem, catapultSubsystem, hangSubsystem);
      }
      
       
