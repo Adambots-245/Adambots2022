@@ -56,17 +56,17 @@ public class RobotContainer {
                                                                             RobotMap.bandHomeSwitch,
                                                                             RobotMap.BandMotor, 
                                                                             RobotMap.CatapultStop);
-  private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.winchMotor1, 
-                                                                RobotMap.winchMotor2, 
-                                                                RobotMap.leftRungSwitch, 
-                                                                RobotMap.rightRungSwitch, 
-                                                                RobotMap.rungArmRetractedSwitch, 
-                                                                RobotMap.rungArmMidSwitch, 
-                                                                RobotMap.rungArmAdvancedSwitch, 
-                                                                RobotMap.hangAngle, 
-                                                                RobotMap.hangClamp,
-                                                                RobotMap.leftClampedSwitch,
-                                                                RobotMap.rightClampedSwitch);
+  // private final HangSubsystem hangSubsystem = new HangSubsystem(RobotMap.winchMotor1, 
+  //                                                               RobotMap.winchMotor2, 
+  //                                                               RobotMap.leftRungSwitch, 
+  //                                                               RobotMap.rightRungSwitch, 
+  //                                                               RobotMap.rungArmRetractedSwitch, 
+  //                                                               RobotMap.rungArmMidSwitch, 
+  //                                                               RobotMap.rungArmAdvancedSwitch, 
+  //                                                               RobotMap.hangAngle, 
+  //                                                               RobotMap.hangClamp,
+  //                                                               RobotMap.leftClampedSwitch,
+  //                                                               RobotMap.rightClampedSwitch);
   
   // commands
   private DriveForwardDistanceCommand autonDriveForwardDistanceCommand;
@@ -108,20 +108,20 @@ public class RobotContainer {
 
       // Buttons.secondaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.5, 90, true));
 
-      Buttons.secondaryRB.whileHeld(new WinchCommand(hangSubsystem));
-      Buttons.secondaryLB.whileHeld(new UnwinchCommand(hangSubsystem));
-      Buttons.secondaryAButton.whenPressed(new ClampRungCommand(hangSubsystem));
-      Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
-      Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
-      Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
+      // Buttons.secondaryRB.whileHeld(new WinchCommand(hangSubsystem));
+      // Buttons.secondaryLB.whileHeld(new UnwinchCommand(hangSubsystem));
+      // Buttons.secondaryAButton.whenPressed(new ClampRungCommand(hangSubsystem));
+      // Buttons.secondaryYButton.whenPressed(new UnclampRungCommand(hangSubsystem));
+      // Buttons.secondaryBButton.whenPressed(new MoveHangOutCommand(hangSubsystem));
+      // Buttons.secondaryXButton.whenPressed(new MoveHangInCommand(hangSubsystem));
  
-      // Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
-      // Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
-      Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
+      Buttons.primaryBButton.whenPressed(new CatapultStopInCommand(catapultSubsystem));
+      Buttons.primaryXButton.whenPressed(new CatapultStopOutCommand(catapultSubsystem));
+      // Buttons.primaryDPadW.whenPressed(new BandHomeCommand(catapultSubsystem, Constants.HOME_TENSION));
       Buttons.primaryDPadN.whileHeld(new RunBandCommand(catapultSubsystem, -1.0));
       Buttons.primaryDPadS.whileHeld(new RunBandCommand(catapultSubsystem, 1.0));
-      Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
-      Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
+      // Buttons.primaryXButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.TARMAC_TENSION));
+      // Buttons.primaryBButton.whenPressed(new BandMoveCommand(catapultSubsystem, Constants.SAFE_ZONE_TENSION));
      // Buttons.primaryRB.whenPressed(new BallPrimeAndFireCommandGroup(catapultSubsystem));
      // Buttons.primaryLB.whenPressed(new CatapultBackdriveCommand(catapultSubsystem));
 
@@ -133,7 +133,7 @@ public class RobotContainer {
       //Buttons.primaryAButton.whenPressed(new SetNormalSpeedCommand(driveTrainSubsystem));
 
       // buttons for vision
-      Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
+      // Buttons.primaryYButton.whenPressed(new AllignToHubCommand(driveTrainSubsystem));
 
       // Buttons.primaryYButton.whenPressed(new TurnToAngleCommand(driveTrainSubsystem, 0.1, 10, true));
   }

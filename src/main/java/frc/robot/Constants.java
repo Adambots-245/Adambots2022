@@ -65,7 +65,7 @@ public final class Constants {
     // public static final int RAISE_BLASTER_HOOD_SOL_PORT = 2;
 
 	public static final int RING_LIGHT_PORT = 4;
-    public static final int YELLOW_LEDS_SOL_PORT = 6;
+    public static final int YELLOW_LEDS_SOL_PORT = 0;
 
     // sensor IDs
     public static final int LIDAR_DIO = 5; //Not used

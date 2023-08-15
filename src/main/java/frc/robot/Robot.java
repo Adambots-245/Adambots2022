@@ -50,20 +50,20 @@ public class Robot extends TimedRobot {
     Log.instance();
     Log.setFilter(Level.OFF);
     
-    if (Robot.isReal() && false) {
-      // Starts vision thread only if not running in simulation mode
-      // Vision System calculates the angle to the target and posts it to the NetworkTable
-      vision = new VisionProcessorSubsystem(RobotMap.RingLight, new HubGripPipeline());
-      visionThread = vision.getVisionThread();
-      visionThread.setDaemon(true);
-      visionThread.start();
-    }
-    else{
-      visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
-      visionThread.start();
-    }
+    // if (Robot.isReal() && false) {
+    //   // Starts vision thread only if not running in simulation mode
+    //   // Vision System calculates the angle to the target and posts it to the NetworkTable
+    //   vision = new VisionProcessorSubsystem(RobotMap.RingLight, new HubGripPipeline());
+    //   visionThread = vision.getVisionThread();
+    //   visionThread.setDaemon(true);
+    //   visionThread.start();
+    // }
+    // else{
+    //   visionThread = new CameraSubsystem(RobotMap.RingLight).getVisionThread();
+    //   visionThread.start();
+    // }
 
-    RobotMap.YellowLight.set(true);
+    // RobotMap.YellowLight.set(true);
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.

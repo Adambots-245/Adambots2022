@@ -16,8 +16,8 @@ public class CatapultFireCommand extends CommandBase {
    */
 
   private final CatapultSubsystem catapultSubsystem;
-  private boolean prevSwitchState;
-  private boolean finished;
+  // private boolean prevSwitchState;
+  // private boolean finished;
 
   public CatapultFireCommand(CatapultSubsystem catapultSubsystem) {
     this.catapultSubsystem = catapultSubsystem;
@@ -29,8 +29,8 @@ public class CatapultFireCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    finished = false;
-    prevSwitchState = catapultSubsystem.getCatapultSwitch();
+    // finished = false;
+    // prevSwitchState = catapultSubsystem.getCatapultSwitch();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,8 +38,8 @@ public class CatapultFireCommand extends CommandBase {
   public void execute() {
     catapultSubsystem.runCatapult(1); //Run the catapult every cycle until we fire
 
-    finished = !catapultSubsystem.getCatapultSwitch() && prevSwitchState; //Stop if switch goes from high to low (aka we fired)
-    prevSwitchState = catapultSubsystem.getCatapultSwitch();
+    // finished = !catapultSubsystem.getCatapultSwitch() && prevSwitchState; //Stop if switch goes from high to low (aka we fired)
+    // prevSwitchState = catapultSubsystem.getCatapultSwitch();
   }
 
   // Called once the command ends or is interrupted.
@@ -50,6 +50,7 @@ public class CatapultFireCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished; //Return true once we have fired
+    // return finished; //Return true once we have fired
+    return true; //Return true once we have fired
   }
 }

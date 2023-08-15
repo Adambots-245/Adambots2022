@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,7 +28,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private BaseMotorController bandMotor;
   private DigitalInput chooChooLimitSwitch;
   private DigitalInput bandHomeLimitSwitch;
-  private Solenoid catapultStop;
+  private DoubleSolenoid catapultStop;
 
   private Boolean ChooChooLimitSwitchState = false;
   private Boolean prevChooChooLimitSwitchState = false;
@@ -37,7 +39,7 @@ public class CatapultSubsystem extends SubsystemBase {
   private int accumulate = 0;
   private double bandSpeed = 0;
 
-  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandHomeLimitSwitch, BaseMotorController bandMotor, Solenoid catapultStop) {
+  public CatapultSubsystem(BaseMotorController catapultMotor, DigitalInput chooChooLimitSwitch, DigitalInput bandHomeLimitSwitch, BaseMotorController bandMotor, DoubleSolenoid catapultStop) {
     super();
 
     this.catapultMotor = catapultMotor;
@@ -100,11 +102,11 @@ public class CatapultSubsystem extends SubsystemBase {
   }
 
   public void raiseStop() {
-    catapultStop.set(true);
+    catapultStop.set(Value.kForward);
   }
 
   public void lowerStop(){
-    catapultStop.set(false);
+    catapultStop.set(Value.kReverse);
   }
 
   public void runBandMotor(double speed){
@@ -118,13 +120,16 @@ public class CatapultSubsystem extends SubsystemBase {
     else {
       accumulate = Math.max(accumulate-1, -5);
     }
-    ChooChooLimitSwitchState = (accumulate >= 3);
+    // ChooChooLimitSwitchState = (accumulate >= -4);
+    ChooChooLimitSwitchState = chooChooLimitSwitch.get();
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Band Encoder In", bandMotor.getSelectedSensorPosition()/4096/20);
     SmartDashboard.putNumber("Error", error);
+
+    // System.out.println(getBandSwitch());
 
     accumulateLogic();
     if (encoderMode) {bandMotor();}
